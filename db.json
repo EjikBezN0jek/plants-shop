@@ -1,0 +1,398 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "date": 1653928703051,
+      "name": "Cactus",
+      "price": 25,
+      "colors": ["red", "black", "gray"],
+      "categories": ["potted", "indoor"],
+      "rating": 2.7,
+      "badges": [],
+      "description": "Cras varius eu erat posuere laoreet. Duis eget leo dictum, aliquet nisi et, rutrum justo.",
+      "images": []
+    },
+    {
+      "id": 2,
+      "date": 1642728703051,
+      "name": "Oak",
+      "price": 1000,
+      "colors": ["red"],
+      "categories": ["outdoor"],
+      "rating": 0,
+      "badges": ["new"],
+      "description": "Morbi lobortis fringilla turpis vitae luctus. Cras varius eu erat posuere laoreet.",
+      "images": []
+    },
+    {
+      "id": 3,
+      "date": 1602721000000,
+      "name": "Aenean ultricies",
+      "price": 450,
+      "colors": ["black"],
+      "categories": ["indoor"],
+      "rating": 1.5,
+      "badges": [],
+      "description": "Duis id turpis scelerisque mi suscipit laoreet eu in lacus.",
+      "images": []
+    },
+    {
+      "id": 4,
+      "date": 1682728703051,
+      "name": "Oak",
+      "price": 1000,
+      "colors": ["red"],
+      "categories": ["outdoor"],
+      "rating": 0,
+      "badges": ["hot"],
+      "description": "Sed sodales gravida turpis sit amet vulputate. Etiam id lorem facilisis sem scelerisque vulputate et at velit.",
+      "images": []
+    },
+    {
+      "id": 5,
+      "date": 1702728100000,
+      "name": "Aenean ultricies",
+      "price": 450,
+      "colors": ["black", "white"],
+      "categories": ["indoor"],
+      "rating": 0,
+      "badges": [],
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "images": []
+    },
+    {
+      "id": 6,
+      "date": 1202728701000,
+      "name": "Sociis natoque",
+      "price": 150,
+      "colors": ["gray"],
+      "categories": ["potted"],
+      "rating": 5,
+      "badges": ["new"],
+      "description": "Sed sodales gravida turpis sit amet vulputate.",
+      "images": []
+    },
+    {
+      "id": 7,
+      "date": 1648728703051,
+      "name": "New Product",
+      "price": 80,
+      "colors": ["black", "white"],
+      "categories": ["outdoor"],
+      "rating": 0,
+      "badges": ["new"],
+      "description": " Nunc felis nisl, facilisis non justo ac, pellentesque sodales dui.",
+      "images": []
+    },
+    {
+      "id": 8,
+      "date": 1652804153237,
+      "name": "Bonsai",
+      "price": 150,
+      "colors": ["red", "black", "white"],
+      "categories": ["potted", "indoor"],
+      "rating": 0,
+      "badges": ["new"],
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "images": []
+    },
+    {
+      "date": 1652905430128,
+      "name": "Qwerty",
+      "price": 50,
+      "colors": ["red"],
+      "categories": ["ggggg"],
+      "rating": 0,
+      "badges": ["hot"],
+      "description": "qwe",
+      "reviews": [],
+      "images": [],
+      "id": 9
+    },
+    {
+      "date": 1653312426685,
+      "name": "test",
+      "price": 10000,
+      "colors": ["white", "gray", "black", "red"],
+      "categories": ["ggggg", "outdoor", "indoor", "potted"],
+      "rating": 0,
+      "badges": ["new", "hot", "sale"],
+      "description": "test",
+      "reviews": [],
+      "images": [],
+      "id": 10
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "potted",
+      "label": "Potted"
+    },
+    {
+      "id": 2,
+      "name": "indoor",
+      "label": "Indoor"
+    },
+    {
+      "id": 3,
+      "name": "outdoor",
+      "label": "Outdoor"
+    },
+    {
+      "id": 4,
+      "name": "ggggg",
+      "label": "Ggggg"
+    }
+  ],
+  "colors": [
+    {
+      "id": 1,
+      "name": "red",
+      "label": "Red"
+    },
+    {
+      "id": 2,
+      "name": "black",
+      "label": "Black"
+    },
+    {
+      "id": 3,
+      "name": "gray",
+      "label": "Gray"
+    },
+    {
+      "id": 4,
+      "name": "white",
+      "label": "White"
+    }
+  ],
+
+  "badges": [
+    {
+      "id": 1,
+      "name": "new",
+      "label": "NEW"
+    },
+    {
+      "id": 2,
+      "name": "hot",
+      "label": "HOT"
+    },
+    {
+      "id": 3,
+      "name": "sale",
+      "label": "SALE"
+    }
+  ],
+  "countries": [
+    {
+      "id": 1,
+      "name": "Botswana",
+      "cities": [
+        {
+          "id": 1,
+          "name": "Oslo"
+        },
+        {
+          "id": 2,
+          "name": "Boston"
+        },
+        {
+          "id": 3,
+          "name": "Paris"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "United Arab Emirates",
+      "cities": [
+        {
+          "id": 1,
+          "name": "Dubai"
+        },
+        {
+          "id": 2,
+          "name": "Tashkent"
+        },
+        {
+          "id": 3,
+          "name": "Doha"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Russian Federation",
+      "cities": [
+        {
+          "id": 1,
+          "name": "Moscow"
+        },
+        {
+          "id": 2,
+          "name": "Philadelphia"
+        },
+        {
+          "id": 3,
+          "name": "Bucharest"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Uruguay",
+      "cities": [
+        {
+          "id": 1,
+          "name": "Abidjan"
+        },
+        {
+          "id": 2,
+          "name": "Karachi"
+        },
+        {
+          "id": 3,
+          "name": "Beijing"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Hungary",
+      "cities": [
+        {
+          "id": 1,
+          "name": "Lisbon"
+        },
+        {
+          "id": 2,
+          "name": "Podgorica"
+        },
+        {
+          "id": 3,
+          "name": "Guangzhou"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Cuba",
+      "cities": [
+        {
+          "id": 1,
+          "name": "Thun"
+        },
+        {
+          "id": 2,
+          "name": "Amman"
+        },
+        {
+          "id": 3,
+          "name": "Luxembourg"
+        }
+      ]
+    }
+  ],
+  "orders": [
+    {
+      "date": 1652905515475,
+      "firstName": "Заварной",
+      "lastName": "Крем",
+      "country": "Russian Federation",
+      "city": "Moscow",
+      "address": "qwe",
+      "email": "supertotoska04@gmail.com",
+      "phone": "111-111-1111",
+      "payment": "visa",
+      "cart": [
+        {
+          "product": {
+            "id": 1,
+            "name": "Cactus",
+            "price": 25,
+            "colors": ["red", "black", "gray"],
+            "categories": ["potted", "indoor"],
+            "rating": 3,
+            "badges": [],
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sodales gravida turpis sit amet vulputate. Morbi lobortis fringilla turpis vitae luctus. Cras varius eu erat posuere laoreet. Duis eget leo dictum, aliquet nisi et, rutrum justo. Duis id turpis scelerisque mi suscipit laoreet eu in lacus. Donec varius auctor vehicula. Etiam ultricies placerat mi eu pellentesque. Etiam id lorem facilisis sem scelerisque vulputate et at velit.",
+            "images": []
+          },
+          "quantity": 2
+        },
+        {
+          "product": {
+            "date": 1652905430128,
+            "name": "Qwerty",
+            "price": 50,
+            "colors": ["red", "gray"],
+            "categories": ["ggggg"],
+            "rating": 0,
+            "badges": ["new"],
+            "description": "qwe",
+            "reviews": [],
+            "images": [],
+            "id": 9
+          },
+          "quantity": 1
+        }
+      ],
+      "totalCost": 105,
+      "status": "pending",
+      "id": 1
+    }
+  ],
+  "order-status": [
+    {
+      "id": 1,
+      "name": "pending",
+      "label": "PENDING"
+    },
+    {
+      "id": 2,
+      "name": "ready to ship",
+      "label": "READY TO SHIP"
+    },
+    {
+      "id": 3,
+      "name": "on the way",
+      "label": "ON THE WAY"
+    },
+    {
+      "id": 4,
+      "name": "delivered",
+      "label": "DELIVERED"
+    }
+  ],
+  "reviews": [
+    {
+      "id": 1,
+      "date": 1651774308700,
+      "name": "Totoska",
+      "comment": "",
+      "rating": 5,
+      "productId": 1
+    },
+    {
+      "id": 2,
+      "date": 1652884264812,
+      "name": "Заварной крем",
+      "comment": "",
+      "rating": 1,
+      "productId": 1
+    },
+    {
+      "date": 1653061719052,
+      "name": "Заварной крем",
+      "comment": "",
+      "rating": 2,
+      "productId": 1,
+      "id": 3
+    }
+  ],
+  "prices": {
+    "min": 25,
+    "max": 10000
+  }
+}
