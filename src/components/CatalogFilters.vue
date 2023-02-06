@@ -31,7 +31,11 @@
       </div>
     </div>
 
-    <RangeSlider :prices="prices" />
+    <!-- <RangeSlider :prices="prices" /> -->
+    <RangeSlider
+      :prices="prices"
+      v-model:pricesSelected="pricesSelected"
+      @update:prices-selected="pricesSelected" />
   </div>
 </template>
 
@@ -39,6 +43,7 @@
 import type { ICategory } from '@/types/category';
 import type { IColor } from '@/types/color';
 import type { IPrices } from '@/types/prices';
+import type { ISelectedPrices } from '@/types/prices';
 
 import { useVModelWrapper } from '@/hooks/useVModelWrapper';
 
@@ -50,17 +55,20 @@ interface IProps {
   colors: string[];
   category: string;
   prices?: IPrices;
+  pricesSelected?: ISelectedPrices;
 }
 const props = defineProps<IProps>();
 
 interface IEmits {
   (e: 'update:colors', query: IColor[]): void;
   (e: 'update:category', name: string): void;
+  (e: 'update:pricesSelected', query: ISelectedPrices): void;
 }
 const emit = defineEmits<IEmits>();
 
 const colorsSelected = useVModelWrapper(props, emit, 'colors');
 const categorySelected = useVModelWrapper(props, emit, 'category');
+const pricesSelected = useVModelWrapper(props, emit, 'pricesSelected');
 
 const isActiveCategory = (category = '') => {
   return category === props.category;
