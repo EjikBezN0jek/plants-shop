@@ -31,11 +31,10 @@
       </div>
     </div>
 
-    <!-- <RangeSlider :prices="prices" /> -->
     <RangeSlider
+      v-if="prices"
       :prices="prices"
-      v-model:pricesSelected="pricesSelected"
-      @update:prices-selected="pricesSelected" />
+      v-model="pricesSelected" />
   </div>
 </template>
 
@@ -43,7 +42,6 @@
 import type { ICategory } from '@/types/category';
 import type { IColor } from '@/types/color';
 import type { IPrices } from '@/types/prices';
-import type { ISelectedPrices } from '@/types/prices';
 
 import { useVModelWrapper } from '@/hooks/useVModelWrapper';
 
@@ -55,14 +53,14 @@ interface IProps {
   colors: string[];
   category: string;
   prices?: IPrices;
-  pricesSelected?: ISelectedPrices;
+  pricesSelected?: IPrices;
 }
 const props = defineProps<IProps>();
 
 interface IEmits {
   (e: 'update:colors', query: IColor[]): void;
   (e: 'update:category', name: string): void;
-  (e: 'update:pricesSelected', query: ISelectedPrices): void;
+  (e: 'update:pricesSelected', query: IPrices): void;
 }
 const emit = defineEmits<IEmits>();
 

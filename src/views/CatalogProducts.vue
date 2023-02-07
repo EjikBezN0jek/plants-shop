@@ -51,7 +51,6 @@ import type { ICategory } from '@/types/category';
 import type { IColor } from '@/types/color';
 import type { ISorting } from '@/types/sorting';
 import type { IPrices } from '@/types/prices';
-import type { ISelectedPrices } from '@/types/prices';
 
 const products = ref<IProduct[]>();
 
@@ -64,8 +63,8 @@ const getProducts = async () => {
     _order: sorting.value.order,
     _page: pagination.value.current,
     _limit: 3,
-    price_gte: pricesSelected.value.min,
-    price_lte: pricesSelected.value.max,
+    price_gte: pricesSelected.value?.min,
+    price_lte: pricesSelected.value?.max,
   };
 
   const { data, pagination: p } = await fetchAllProducts(params);
@@ -117,12 +116,13 @@ const goToCategory = () => {
 
 //Range prices
 const prices = ref<IPrices>();
-const pricesSelected = ref<ISelectedPrices>({ min: 400, max: 7500 });
+const pricesSelected = ref<IPrices>();
 
 onMounted(async () => {
   if (categoryFromUrl) categorySelected.value = categoryFromUrl;
-  getProducts();
   prices.value = await fetchAllPrices();
+  pricesSelected.value = { min: prices.value.max * 0.01, max: prices.value.max * 0.75 };
+  getProducts();
   categoriesList.value = await fetchAllCategories();
   colorsList.value = await fetchAllColors();
 });

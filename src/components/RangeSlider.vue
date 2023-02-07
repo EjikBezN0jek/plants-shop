@@ -20,13 +20,16 @@
         type="range"
         :min="prices?.min"
         :max="prices?.max"
-        v-model="pricesSelected.min"
+        v-model.number="pricesSelected.min"
+        @change="emit('update:modelValue', pricesSelected)"
         @update:model-value="sliderMinHandler" />
+
       <input
         type="range"
         :min="prices?.min"
         :max="prices?.max"
-        v-model="pricesSelected.max"
+        v-model.number="pricesSelected.max"
+        @change="emit('update:modelValue', pricesSelected)"
         @update:model-value="sliderMaxHandler" />
     </div>
     <div class="prices">
@@ -37,24 +40,21 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import type { IPrices } from '@/types/prices';
-import type { ISelectedPrices } from '@/types/prices';
-
-import { useVModelWrapper } from '@/hooks/useVModelWrapper';
 
 interface IProps {
+  modelValue: IPrices;
   prices: IPrices;
-  pricesSelected: ISelectedPrices;
 }
 const props = defineProps<IProps>();
 
 interface IEmits {
-  (e: 'update:pricesSelected', query: ISelectedPrices): void;
+  (e: 'update:modelValue', query: IPrices): void;
 }
 const emit = defineEmits<IEmits>();
 
-const pricesSelected = useVModelWrapper(props, emit, 'pricesSelected');
+const pricesSelected = ref(props.modelValue);
 
 const minGap = 1000;
 
@@ -62,14 +62,14 @@ const progressLeftStyle = computed(() => `${(pricesSelected.value.min / props.pr
 const progressRightStyle = computed(() => `${100 - (pricesSelected.value.max / props.prices?.max) * 100}%`);
 
 const sliderMinHandler = () => {
-  if (Number(pricesSelected.value.max) - Number(pricesSelected.value.min) <= minGap) {
-    pricesSelected.value.min = Number(pricesSelected.value.max) - minGap;
+  if (pricesSelected.value.max - pricesSelected.value.min <= minGap) {
+    pricesSelected.value.min = pricesSelected.value.max - minGap;
   }
 };
 
 const sliderMaxHandler = () => {
-  if (Number(pricesSelected.value.max) - Number(pricesSelected.value.min) <= minGap) {
-    pricesSelected.value.max = Number(pricesSelected.value.min) + minGap;
+  if (pricesSelected.value.max - pricesSelected.value.min <= minGap) {
+    pricesSelected.value.max = pricesSelected.value.min + minGap;
   }
 };
 </script>
