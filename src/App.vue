@@ -1,30 +1,26 @@
 <template>
-  <nav>
-    <router-link :to="{ name: 'home' }">Home</router-link> |
-    <router-link :to="{ name: 'catalog' }">Catalog</router-link>
-  </nav>
+  <TabMenu :model="items" />
   <router-view />
 </template>
 
+<script lang="ts" setup>
+import TabMenu from 'primevue/tabmenu';
+import { ref } from 'vue';
+
+const items = ref([
+  { label: 'Home', icon: 'pi pi-fw pi-home', to: '/' },
+  { label: 'Catalog', icon: 'pi pi-fw pi-shopping-bag', to: '/catalog' },
+  { label: 'Cart', icon: 'pi pi-fw pi-shopping-cart' },
+  { label: 'Log in', icon: 'pi pi-fw pi-user' },
+]);
+</script>
+
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
 }
 </style>

@@ -4,6 +4,7 @@
       v-for="page in pagination.last"
       :key="page"
       @click="emit('changePage', page)"
+      class="button"
       :class="{ active: isActivePage(page) }">
       {{ page }}
     </button>
@@ -28,11 +29,17 @@ const isActivePage = (page: number) => page === props.pagination.current;
 </script>
 
 <style lang="scss" scoped>
-.active {
-  color: green;
-  border: 4px solid green;
+.button {
+  padding: 0.5rem;
   border-radius: 2px;
   background: white;
+  color: #6c757d;
+  font-weight: 600;
+  border: 1px solid #ced4da;
+}
+.active {
+  color: #4caf50;
+  border: 1px solid #4caf50;
 }
 
 .pagination {

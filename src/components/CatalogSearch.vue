@@ -1,18 +1,22 @@
 <template>
   <div class="search">
-    <label>
-      <input
-        v-model.trim="search"
+    <span class="p-input-icon-left p-input-icon-right">
+      <i class="pi pi-search" />
+      <InputText
         type="text"
-        placeholder="Search..."
-        class="search" />
-      <button @click="clearInput">Clear</button>
-    </label>
+        v-model.trim="search"
+        placeholder="Search" />
+      <i
+        class="pi pi-times clear"
+        @click="clearInput" />
+    </span>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { useVModelWrapper } from '@/hooks/useVModelWrapper';
+
+import InputText from 'primevue/inputtext';
 
 interface IProps {
   modelValue: string;
@@ -32,4 +36,8 @@ const clearInput = () => {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.clear {
+  cursor: pointer;
+}
+</style>
