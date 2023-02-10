@@ -1,4 +1,8 @@
 <template>
+  <img
+    alt="Vue logo"
+    src="@/assets/logo.png"
+    class="logo" />
   <TabMenu :model="items" />
   <router-view />
 </template>
@@ -16,11 +20,20 @@ const items = ref([
 </script>
 
 <style lang="scss">
+@import '@/assets/css/variables.scss';
+
 #app {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  color: $secondary-color;
+  font-size: 16px;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
 }
 </style>

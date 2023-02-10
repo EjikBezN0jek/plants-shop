@@ -10,7 +10,7 @@
       "rating": 2.7,
       "badges": [],
       "description": "Cras varius eu erat posuere laoreet. Duis eget leo dictum, aliquet nisi et, rutrum justo.",
-      "images": []
+      "img": "logo.png"
     },
     {
       "id": 2,
@@ -22,7 +22,7 @@
       "rating": 0,
       "badges": ["new"],
       "description": "Morbi lobortis fringilla turpis vitae luctus. Cras varius eu erat posuere laoreet.",
-      "images": []
+      "img": "logo.png"
     },
     {
       "id": 3,
@@ -34,7 +34,7 @@
       "rating": 1.5,
       "badges": [],
       "description": "Duis id turpis scelerisque mi suscipit laoreet eu in lacus.",
-      "images": []
+      "img": "logo.png"
     },
     {
       "id": 4,
@@ -46,7 +46,7 @@
       "rating": 0,
       "badges": ["hot"],
       "description": "Sed sodales gravida turpis sit amet vulputate. Etiam id lorem facilisis sem scelerisque vulputate et at velit.",
-      "images": []
+      "img": "logo.png"
     },
     {
       "id": 5,
@@ -58,7 +58,7 @@
       "rating": 0,
       "badges": [],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "images": []
+      "img": "logo.png"
     },
     {
       "id": 6,
@@ -70,7 +70,7 @@
       "rating": 5,
       "badges": ["new"],
       "description": "Sed sodales gravida turpis sit amet vulputate.",
-      "images": []
+      "img": "logo.png"
     },
     {
       "id": 7,
@@ -82,7 +82,7 @@
       "rating": 0,
       "badges": ["new"],
       "description": " Nunc felis nisl, facilisis non justo ac, pellentesque sodales dui.",
-      "images": []
+      "img": "logo.png"
     },
     {
       "id": 8,
@@ -94,7 +94,7 @@
       "rating": 0,
       "badges": ["new"],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "images": []
+      "img": "logo.png"
     },
     {
       "date": 1652905430128,
@@ -106,7 +106,7 @@
       "badges": ["hot"],
       "description": "qwe",
       "reviews": [],
-      "images": [],
+      "img": "logo.png",
       "id": 9
     },
     {
@@ -119,7 +119,7 @@
       "badges": ["new", "hot", "sale"],
       "description": "test",
       "reviews": [],
-      "images": [],
+      "img": "logo.png",
       "id": 10
     }
   ],

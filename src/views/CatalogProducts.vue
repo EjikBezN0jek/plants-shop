@@ -1,32 +1,41 @@
 <template>
-  <div>
+  <div class="catalog">
     <CatalogSearch
       v-model="searchQuery"
       @update:model-value="searchProducts" />
 
-    <p>All products: {{ pagination.items }}</p>
+    <h1>{{ categorySelectedLabel }} plants</h1>
 
-    <ProductList :products="products" />
+    <div class="container">
+      <CatalogFilters
+        v-model:colors="colorsSelected"
+        @update:colors="refetchProducts"
+        v-model:category="categorySelected"
+        @update:category="goToCategory"
+        :colors-list="colorsList"
+        :categories-list="categoriesList"
+        :prices="prices"
+        v-model:pricesSelected="pricesSelected"
+        @update:prices-selected="refetchProducts" />
 
-    <CatalogPagination
-      v-if="pagination.last > 1"
-      :pagination="pagination"
-      @change-page="changePage" />
+      <div class="content">
+        <div class="sorting">
+          <p class="products">
+            <span>{{ pagination.items }}</span> products
+          </p>
+          <CatalogSorting
+            v-model="sorting"
+            @update:model-value="refetchProducts" />
+        </div>
 
-    <CatalogSorting
-      v-model="sorting"
-      @update:model-value="refetchProducts" />
+        <ProductList :products="products" />
 
-    <CatalogFilters
-      v-model:colors="colorsSelected"
-      @update:colors="refetchProducts"
-      v-model:category="categorySelected"
-      @update:category="goToCategory"
-      :colors-list="colorsList"
-      :categories-list="categoriesList"
-      :prices="prices"
-      v-model:pricesSelected="pricesSelected"
-      @update:prices-selected="refetchProducts" />
+        <CatalogPagination
+          v-if="pagination.last > 1"
+          :pagination="pagination"
+          @change-page="changePage" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -62,7 +71,7 @@ const getProducts = async () => {
     _sort: sorting.value.target,
     _order: sorting.value.order,
     _page: pagination.value.current,
-    _limit: 3,
+    _limit: 5,
     price_gte: pricesSelected.value?.min,
     price_lte: pricesSelected.value?.max,
   };
@@ -107,11 +116,17 @@ const categoryFromUrl = route.params.category;
 
 const categoriesList = ref<ICategory[]>();
 const categorySelected = ref('');
+const categorySelectedLabel = ref('All');
 
 const router = useRouter();
 const goToCategory = () => {
   router.push({ name: 'catalog', params: { category: categorySelected.value } });
   refetchProducts();
+  if (categoriesList.value && categorySelected.value) {
+    categorySelectedLabel.value = categoriesList.value.find(item => item.name === categorySelected.value).label;
+  } else {
+    categorySelectedLabel.value = 'All';
+  }
 };
 
 //Range prices
@@ -121,11 +136,40 @@ const pricesSelected = ref<IPrices>();
 onMounted(async () => {
   if (categoryFromUrl) categorySelected.value = categoryFromUrl;
   prices.value = await fetchAllPrices();
-  pricesSelected.value = { min: prices.value.max * 0.01, max: prices.value.max * 0.75 };
+  pricesSelected.value = { min: prices.value.max * 0.0025, max: prices.value.max * 0.75 };
   getProducts();
   categoriesList.value = await fetchAllCategories();
   colorsList.value = await fetchAllColors();
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+@import '@/assets/css/variables.scss';
+
+.catalog {
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+  gap: 50px;
+}
+
+.content {
+  width: 100%;
+}
+
+.sorting {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.products {
+  font-size: 14px;
+  span {
+    font-weight: bold;
+    color: $primary-color;
+  }
+}
+</style>

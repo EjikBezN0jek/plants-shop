@@ -1,19 +1,17 @@
 <template>
   <div>
-    <h3>Sort by</h3>
-    <select v-model="sorting">
-      <option
-        v-for="{ label, target, order } in sortOptions"
-        :key="label"
-        :value="{ target, order }">
-        {{ label }}
-      </option>
-    </select>
+    <Dropdown
+      v-model="sorting"
+      :options="sortOptions"
+      option-label="label"
+      placeholder="sort by" />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { useVModelWrapper } from '@/hooks/useVModelWrapper';
+
+import Dropdown from 'primevue/dropdown';
 
 import type { ISorting } from '@/types/sorting';
 
@@ -54,4 +52,8 @@ const sortOptions = [
 ];
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.p-dropdown {
+  width: 200px;
+}
+</style>

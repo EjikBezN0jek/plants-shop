@@ -29,17 +29,17 @@ const isActivePage = (page: number) => page === props.pagination.current;
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/css/variables.scss';
 .button {
-  padding: 0.5rem;
-  border-radius: 2px;
-  background: white;
-  color: #6c757d;
+  padding: 0 10px;
+  font-size: 16px;
+  background: none;
+  color: $complementary-color;
   font-weight: 600;
-  border: 1px solid #ced4da;
+  border: none;
 }
 .active {
-  color: #4caf50;
-  border: 1px solid #4caf50;
+  color: $primary-color;
 }
 
 .pagination {

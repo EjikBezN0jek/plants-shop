@@ -1,14 +1,5 @@
 <template>
   <div class="range">
-    <div class="selected-prices">
-      <p>
-        Min: <span class="bold">{{ pricesSelected.min }}</span>
-      </p>
-      <p>
-        Max: <span class="bold">{{ pricesSelected.max }}</span>
-      </p>
-    </div>
-
     <div class="slider">
       <div
         ref="progress"
@@ -33,8 +24,8 @@
         @update:model-value="sliderMaxHandler" />
     </div>
     <div class="prices">
-      <p>{{ prices?.min }}</p>
-      <p>{{ prices?.max }}</p>
+      <p>$ {{ pricesSelected.min }}</p>
+      <p>$ {{ pricesSelected.max }}</p>
     </div>
   </div>
 </template>
@@ -75,22 +66,23 @@ const sliderMaxHandler = () => {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/css/variables.scss';
 .range {
-  align-self: center;
+  width: 200px;
 }
 .slider {
   position: relative;
-  width: 150px;
-  height: 5px;
-  background: #b9b9bbe1;
+  width: 100%;
+  height: 3px;
+  background: $complementary-color;
   border-radius: 5px;
 
   & .progress {
     position: absolute;
     right: 25%;
     left: 25%;
-    height: 5px;
-    background: #187705;
+    height: 3px;
+    background: $primary-color;
     border-radius: 5px;
   }
 }
@@ -112,9 +104,10 @@ const sliderMaxHandler = () => {
     &::-webkit-slider-thumb {
       height: 15px;
       width: 15px;
+      border: 1px solid white;
       border-radius: 50%;
       -webkit-appearance: none;
-      background: #187705;
+      background: $primary-color;
       pointer-events: auto;
     }
 
@@ -122,7 +115,7 @@ const sliderMaxHandler = () => {
       height: 15px;
       width: 15px;
       border-radius: 50%;
-      background: #187705;
+      background: $primary-color;
       pointer-events: auto;
     }
   }
@@ -131,6 +124,10 @@ const sliderMaxHandler = () => {
 .prices {
   display: flex;
   justify-content: space-between;
+
+  p {
+    color: $secondary-color;
+  }
 }
 
 .bold {

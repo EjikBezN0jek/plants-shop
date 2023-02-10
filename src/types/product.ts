@@ -7,5 +7,5 @@ export interface IProduct {
   rating: number;
   badges: string[];
   description: string;
-  images: [];
+  img: string;
 }
