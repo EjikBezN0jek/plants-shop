@@ -33,7 +33,11 @@ const items = ref([
 }
 
 .logo {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
+}
+
+.p-tabmenu-nav {
+  justify-content: center;
 }
 </style>
