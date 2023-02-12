@@ -67,8 +67,13 @@ const sliderMaxHandler = () => {
 
 <style lang="scss" scoped>
 @import '@/assets/css/variables.scss';
+@import '@/assets/css/mixins.scss';
 .range {
-  width: 200px;
+  width: 300px;
+
+  @include sm {
+    width: 200px;
+  }
 }
 .slider {
   position: relative;

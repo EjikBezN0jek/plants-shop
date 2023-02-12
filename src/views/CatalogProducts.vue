@@ -1,12 +1,8 @@
 <template>
   <div class="catalog">
-    <CatalogSearch
-      v-model="searchQuery"
-      @update:model-value="searchProducts" />
+    <h1 class="title">{{ categorySelectedLabel }} plants</h1>
 
-    <h1>{{ categorySelectedLabel }} plants</h1>
-
-    <div class="container">
+    <div class="catalog-container">
       <CatalogFilters
         v-model:colors="colorsSelected"
         @update:colors="refetchProducts"
@@ -19,13 +15,20 @@
         @update:prices-selected="refetchProducts" />
 
       <div class="content">
-        <div class="sorting">
-          <p class="products">
-            <span>{{ pagination.items }}</span> products
-          </p>
-          <CatalogSorting
-            v-model="sorting"
-            @update:model-value="refetchProducts" />
+        <div class="row">
+          <div class="column">
+            <p class="products">
+              <span>{{ pagination.items }}</span> products
+            </p>
+            <CatalogSorting
+              v-model="sorting"
+              @update:model-value="refetchProducts" />
+          </div>
+          <div class="column">
+            <CatalogSearch
+              v-model="searchQuery"
+              @update:model-value="searchProducts" />
+          </div>
         </div>
 
         <ProductList :products="products" />
@@ -145,28 +148,42 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 @import '@/assets/css/variables.scss';
+@import '@/assets/css/mixins.scss';
 
-.catalog {
-  padding: 20px;
-}
-
-.container {
-  display: flex;
-  gap: 50px;
+.catalog-container {
+  @include sm {
+    display: flex;
+    gap: 50px;
+  }
 }
 
 .content {
   width: 100%;
+  padding: 15px 0;
+  @include sm {
+    padding: 0;
+  }
 }
 
-.sorting {
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  @include md {
+    justify-content: space-between;
+  }
+}
+
+.column {
   display: flex;
   align-items: center;
   gap: 30px;
 }
 
 .products {
-  font-size: 14px;
   span {
     font-weight: bold;
     color: $primary-color;

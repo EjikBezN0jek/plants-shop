@@ -1,35 +1,48 @@
 <template>
-  <div class="filters">
-    <div class="categories">
-      <h3>Categories</h3>
-      <button
-        class="category"
-        @click="categorySelected = ''"
-        :class="{ active: isActiveCategory() }">
-        All
-      </button>
-      <button
-        v-for="{ id, name, label } in categoriesList"
-        :key="id"
-        class="category"
-        :class="{ active: isActiveCategory(name) }"
-        @click="categorySelected = name">
-        {{ label }}
-      </button>
-    </div>
+  <div
+    class="filters-toggler"
+    @click="toggleFilters">
+    <h3>Filters</h3>
+    <i
+      class="pi pi-angle-down"
+      style="font-size: 1.5rem"
+      :class="{ ['pi-angle-up']: isOpenFilters }" />
+  </div>
+  <div
+    class="filters"
+    :class="{ open: isOpenFilters }">
+    <div class="wrapper">
+      <div class="categories">
+        <h3>Categories</h3>
+        <button
+          class="category"
+          @click="categorySelected = ''"
+          :class="{ active: isActiveCategory() }">
+          All
+        </button>
+        <button
+          v-for="{ id, name, label } in categoriesList"
+          :key="id"
+          class="category"
+          :class="{ active: isActiveCategory(name) }"
+          @click="categorySelected = name">
+          {{ label }}
+        </button>
+      </div>
 
-    <div class="colors">
-      <h3>Potter colors</h3>
-      <div
-        v-for="{ id, name, label } in colorsList"
-        :key="id"
-        class="field-checkbox">
-        <Checkbox
-          v-model="colorsSelected"
-          :value="name"
-          :input-id="name"
-          :aria-label="label" />
-        <label :for="name">{{ label }}</label>
+      <div class="colors">
+        <h3>Potter colors</h3>
+        <div
+          v-for="{ id, name, label } in colorsList"
+          :key="id"
+          class="field-checkbox">
+          <Checkbox
+            v-model="colorsSelected"
+            :value="name"
+            :input-id="name"
+            :aria-label="label" />
+          <label :for="name">{{ label }}</label>
+        </div>
       </div>
     </div>
 
@@ -44,6 +57,8 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue';
+
 import type { ICategory } from '@/types/category';
 import type { IColor } from '@/types/color';
 import type { IPrices } from '@/types/prices';
@@ -78,15 +93,62 @@ const pricesSelected = useVModelWrapper(props, emit, 'pricesSelected');
 const isActiveCategory = (category = '') => {
   return category === props.category;
 };
+
+const isOpenFilters = ref(false);
+
+const toggleFilters = () => {
+  isOpenFilters.value ? (isOpenFilters.value = false) : (isOpenFilters.value = true);
+};
 </script>
 
 <style lang="scss" scoped>
 @import '@/assets/css/variables.scss';
+@import '@/assets/css/mixins.scss';
 
 .filters {
+  display: none;
+  &.open {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    border: 1px solid $complementary-color;
+    border-radius: 5px;
+    padding: 10px;
+    @include sm {
+      border: none;
+      padding: 0;
+    }
+  }
+
+  @include sm {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    border: none;
+    padding: 0;
+  }
+}
+
+.filters-toggler {
   display: flex;
-  flex-direction: column;
-  gap: 50px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+
+  @include sm {
+    display: none;
+  }
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-around;
+
+  @include sm {
+    flex-direction: column;
+    gap: 50px;
+  }
 }
 
 .category {
@@ -127,6 +189,10 @@ const isActiveCategory = (category = '') => {
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
+}
+
+.prices {
+  align-self: center;
 }
 
 .field-checkbox {

@@ -37,9 +37,6 @@ const clearInput = () => {
 </script>
 
 <style lang="scss" scoped>
-.p-component {
-  width: 450px;
-}
 .clear {
   cursor: pointer;
 }
