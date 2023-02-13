@@ -105,31 +105,8 @@ const toggleFilters = () => {
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
 
-.filters {
-  display: none;
-  &.open {
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
-    border: 1px solid $complementary-color;
-    border-radius: 5px;
-    padding: 10px;
-    @include sm {
-      border: none;
-      padding: 0;
-    }
-  }
-
-  @include sm {
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
-    border: none;
-    padding: 0;
-  }
-}
-
 .filters-toggler {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -138,6 +115,26 @@ const toggleFilters = () => {
 
   @include sm {
     display: none;
+  }
+}
+.filters {
+  display: none;
+  flex-direction: column;
+  gap: 50px;
+  border: 1px solid $complementary-color;
+  border-radius: 5px;
+  padding: 10px;
+
+  @include sm {
+    border: none;
+    padding: 0;
+    gap: 50px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &.open {
+    display: flex;
   }
 }
 

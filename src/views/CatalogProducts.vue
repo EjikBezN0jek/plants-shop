@@ -1,6 +1,9 @@
 <template>
   <div class="catalog">
-    <h1 class="title">{{ categorySelectedLabel }} plants</h1>
+    <p class="title">{{ categorySelectedLabel }} plants</p>
+    <p class="products">
+      <span>{{ pagination.items }}</span> products
+    </p>
 
     <div class="catalog-container">
       <CatalogFilters
@@ -16,19 +19,12 @@
 
       <div class="content">
         <div class="row">
-          <div class="column">
-            <p class="products">
-              <span>{{ pagination.items }}</span> products
-            </p>
-            <CatalogSorting
-              v-model="sorting"
-              @update:model-value="refetchProducts" />
-          </div>
-          <div class="column">
-            <CatalogSearch
-              v-model="searchQuery"
-              @update:model-value="searchProducts" />
-          </div>
+          <CatalogSorting
+            v-model="sorting"
+            @update:model-value="refetchProducts" />
+          <CatalogSearch
+            v-model="searchQuery"
+            @update:model-value="searchProducts" />
         </div>
 
         <ProductList :products="products" />
@@ -150,10 +146,23 @@ onMounted(async () => {
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
 
+.catalog {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
 .catalog-container {
   @include sm {
     display: flex;
     gap: 50px;
+  }
+}
+
+.title {
+  padding: 10px 0 0;
+  @include sm {
+    padding: 20px 0 0;
   }
 }
 
@@ -175,12 +184,6 @@ onMounted(async () => {
   @include md {
     justify-content: space-between;
   }
-}
-
-.column {
-  display: flex;
-  align-items: center;
-  gap: 30px;
 }
 
 .products {

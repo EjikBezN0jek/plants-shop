@@ -1,6 +1,10 @@
 <template>
   <div class="container">
     <div class="menu">
+      <SideMenu
+        :menu-items="menuItems"
+        :is-open-sidemenu="isOpenSidemenu"
+        @toggle-menu="toggleSidemenu" />
       <i
         class="pi pi-bars"
         style="font-size: 2.5rem"
@@ -13,35 +17,32 @@
         class="pi pi-shopping-cart"
         style="font-size: 2.5rem" />
     </div>
-
-    <TabMenu
-      :model="items"
-      class="tab-menu" />
-    <router-view />
+    <MenuNav :menu-items="menuItems" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import TabMenu from 'primevue/tabmenu';
+import SideMenu from '@/components/SideMenu.vue';
+import MenuNav from '@/components/MenuNav.vue';
+
 import { ref } from 'vue';
 
-const items = ref([
+const menuItems = ref([
   { label: 'Home', icon: 'pi pi-fw pi-home', to: '/' },
   { label: 'Catalog', icon: 'pi pi-fw pi-shopping-bag', to: '/catalog' },
-  { label: 'Cart', icon: 'pi pi-fw pi-shopping-cart' },
-  { label: 'Log in', icon: 'pi pi-fw pi-user' },
+  { label: 'Cart', icon: 'pi pi-fw pi-shopping-cart', to: '/cart' },
+  { label: 'Log in', icon: 'pi pi-fw pi-user', to: '/login' },
 ]);
 
 const isOpenSidemenu = ref(false);
 
 const toggleSidemenu = () => {
   isOpenSidemenu.value ? (isOpenSidemenu.value = false) : (isOpenSidemenu.value = true);
-  console.log(isOpenSidemenu.value);
+  isOpenSidemenu.value ? document.body.classList.add('hidden') : document.body.classList.remove('hidden');
 };
 </script>
 
 <style lang="scss">
-@import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
 
 .menu {
@@ -52,8 +53,8 @@ const toggleSidemenu = () => {
 
   @include sm {
     display: block;
-    & .pi-bars,
-    & .pi-shopping-cart {
+    .pi-bars,
+    .pi-shopping-cart {
       display: none;
     }
   }
@@ -62,17 +63,5 @@ const toggleSidemenu = () => {
 .logo {
   width: 40px;
   height: 40px;
-}
-
-.p-tabmenu-nav {
-  justify-content: center;
-}
-
-.tab-menu {
-  display: none;
-
-  @include sm {
-    display: block;
-  }
 }
 </style>

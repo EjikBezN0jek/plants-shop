@@ -53,6 +53,10 @@ body {
     'Segoe UI Emoji', 'Segoe UI Symbol';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  &.hidden {
+    overflow: hidden;
+  }
 }
 
 p {

@@ -46,21 +46,23 @@ const props = defineProps<IProps>();
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
 
-p {
-  margin: 0;
-}
 .products {
   padding: 50px 0;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 30px;
+
+  @include sm {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 }
 .product {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  width: calc(25% - 22.5px);
+
   min-height: 350px;
   border: 1px solid $complementary-color;
   border-radius: 5px;
@@ -74,6 +76,16 @@ p {
     display: flex;
     align-items: center;
     gap: 5px;
+  }
+
+  @include sm {
+    width: calc(50% - 22.5px);
+  }
+  @include md {
+    width: calc(33.3% - 22.5px);
+  }
+  @include lg {
+    width: calc(25% - 22.5px);
   }
 }
 
