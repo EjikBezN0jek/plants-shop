@@ -22,3 +22,6 @@ export const fetchAllCategories = async (): Promise<ICategory[]> => (await axios
 export const fetchAllColors = async (): Promise<IColor[]> => (await axiosInstance.get('colors')).data;
 
 export const fetchAllPrices = async (): Promise<IPrices> => (await axiosInstance.get('prices')).data;
+
+export const fetchProductById = async (id: number): Promise<IProduct> =>
+  (await axiosInstance.get(`products/${id}`)).data;

@@ -53,7 +53,7 @@ const sortOptions = [
 </script>
 
 <style lang="scss" scoped>
-.p-dropdown {
+::v-deep(.p-dropdown) {
   width: 200px;
 }
 </style>

@@ -37,7 +37,7 @@ const clearInput = () => {
 </script>
 
 <style lang="scss" scoped>
-.p-inputtext.p-component {
+::v-deep(.p-inputtext.p-component) {
   height: 40px;
 }
 .clear {

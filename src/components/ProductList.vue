@@ -3,9 +3,10 @@
     <div
       class="products"
       v-if="products?.length">
-      <div
+      <router-link
         v-for="product in products"
         :key="product.id"
+        :to="{ name: 'product', params: { id: product.id, name: product.name } }"
         class="product">
         <img
           :src="`/images/products/${product.img}`"
@@ -24,7 +25,7 @@
           :readonly="true"
           :cancel="false"
           :model-value="product.rating" />
-      </div>
+      </router-link>
     </div>
     <h2 v-else>No products!</h2>
   </div>
@@ -62,11 +63,12 @@ const props = defineProps<IProps>();
   flex-direction: column;
   align-items: center;
   gap: 10px;
-
   min-height: 350px;
   border: 1px solid $complementary-color;
   border-radius: 5px;
   padding: 0 0 20px;
+  text-decoration: none;
+  color: $secondary-color;
   cursor: pointer;
 
   &:hover {

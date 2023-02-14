@@ -92,6 +92,7 @@ const { pagination, setPagination, resetCurrentPage, setCurrentPage } = usePagin
 const changePage = (page: number) => {
   setCurrentPage(page);
   getProducts();
+  document.documentElement.scrollTop = 0;
 };
 
 //Search
@@ -150,6 +151,7 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  padding: 20px 0;
 }
 
 .catalog-container {
