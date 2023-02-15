@@ -45,10 +45,20 @@ import Button from 'primevue/button';
 }
 
 .image {
-  // width: 100%;
-  max-width: 100%;
-  height: auto;
+  object-fit: cover;
+  width: 100%;
+  height: 450px;
   filter: contrast(111%);
   filter: blur(1px);
+
+  @include sm {
+    height: 600px;
+  }
+  @include md {
+    height: 740px;
+  }
+  @include lg {
+    height: 800px;
+  }
 }
 </style>

@@ -55,6 +55,7 @@ import { useRoute } from 'vue-router';
 import Rating from 'primevue/rating';
 import Button from 'primevue/button';
 import Breadcrumb from 'primevue/breadcrumb';
+
 import type { IProduct } from '@/types/product';
 
 import { fetchProductById } from '@/api/catalog';
@@ -82,11 +83,29 @@ onMounted(async () => {
 .product {
   background: $image-background-color;
   display: flex;
-  gap: 50px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   &__colors {
     display: flex;
     align-items: center;
     gap: 5px;
+  }
+
+  @include sm {
+    flex-direction: row;
+  }
+
+  @include lg {
+    gap: 50px;
+  }
+}
+
+.p-button-lg {
+  align-self: center;
+  @include sm {
+    align-self: flex-start;
   }
 }
 
@@ -108,12 +127,20 @@ onMounted(async () => {
   flex-direction: column;
   align-items: flex-start;
   gap: 15px;
-  padding: 70px 0;
+  padding: 0 20px 20px;
+
+  @include sm {
+    padding: 70px 0;
+  }
 }
 .image {
-  max-width: 500px;
+  max-width: 300px;
   height: 100%;
   border-radius: 5px 5px 0 0;
+
+  @include lg {
+    max-width: 500px;
+  }
 }
 
 .price {

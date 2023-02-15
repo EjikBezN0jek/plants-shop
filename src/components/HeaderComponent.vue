@@ -18,14 +18,15 @@
         style="font-size: 2.5rem" />
     </div>
 
-    <TabMenu :model="menuItems" />
+    <MegaMenu
+      :model="menuItems"
+      class="big-menu" />
   </div>
 </template>
 
 <script lang="ts" setup>
 import SideMenu from '@/components/SideMenu.vue';
-import TabMenu from 'primevue/tabmenu';
-
+import MegaMenu from 'primevue/megamenu';
 import { ref } from 'vue';
 
 const menuItems = ref([
@@ -43,29 +44,22 @@ const toggleSidemenu = () => {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
 
 .header {
-  padding: 0 10px;
-
-  @include md {
-    padding: 0 20px;
-  }
-
-  @include xxl {
-    padding: 0 75px;
-  }
+  width: 100%;
 }
 .menu {
-  padding: 10px;
+  padding: 20px 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   @include sm {
     display: block;
+    padding: 10px;
     .pi-bars,
     .pi-shopping-cart {
       display: none;
@@ -78,15 +72,16 @@ const toggleSidemenu = () => {
   height: 40px;
 }
 
-::v-deep(.p-tabmenu) {
+.big-menu {
   display: none;
 
   @include sm {
-    display: block;
+    display: flex;
+    background: none !important;
+    justify-content: center;
+    border: none !important;
+    border-top: 1px solid $complementary-color !important;
+    border-bottom: 1px solid $complementary-color !important;
   }
-}
-
-::v-deep(.p-tabmenu-nav) {
-  justify-content: center;
 }
 </style>

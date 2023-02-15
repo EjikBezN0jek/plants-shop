@@ -35,7 +35,7 @@ interface IEmits {
 const emit = defineEmits<IEmits>();
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
 
