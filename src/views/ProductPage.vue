@@ -44,7 +44,11 @@
           class="color"
           :class="color"></div>
       </div>
-      <Button class="p-button-lg">Add to cart</Button>
+      <Button
+        class="p-button-lg"
+        @click="addToCart(product)"
+        >Add to cart</Button
+      >
     </div>
   </div>
 </template>
@@ -57,6 +61,7 @@ import Button from 'primevue/button';
 import Breadcrumb from 'primevue/breadcrumb';
 
 import type { IProduct } from '@/types/product';
+import type { ICartItem } from '@/types/cartItem';
 
 import { fetchProductById } from '@/api/catalog';
 
@@ -70,6 +75,28 @@ const home = ref({
 });
 
 const items = [{ label: 'catalog', url: '/catalog' }];
+
+// const cartItems = ref<ICartItem[]>();
+const cartItems = ref([]);
+const quantity = ref(0);
+const colorSelected = ref('');
+
+const addToCart = (product: IProduct) => {
+  const formatProduct = {
+    cartId: product.id + product.price,
+    quantity: 1,
+    id: product.id,
+    name: product.name,
+    color: colorSelected.value,
+    price: product.price,
+  };
+
+  // cartItems.value?.find(item => item.id === product.id)
+  //   ? formatProduct.quantity + 1
+  //   : cartItems.value?.push(formatProduct);
+  // cartItems.value?.push(formatProduct);
+  console.log(formatProduct, cartItems.value, quantity.value);
+};
 
 onMounted(async () => {
   product.value = await fetchProductById(+route.params.id);
