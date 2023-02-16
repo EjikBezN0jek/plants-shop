@@ -105,15 +105,6 @@ onMounted(async () => {
   &.gray {
     background: gray;
   }
-
-  &:hover {
-    border: 4px solid $secondary-color;
-    opacity: 0.7;
-  }
-  &:checked {
-    border: 4px solid $primary-color;
-    opacity: 1;
-  }
 }
 
 .quantity {
