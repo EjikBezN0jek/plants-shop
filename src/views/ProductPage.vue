@@ -9,7 +9,7 @@
     <div class="info">
       <Breadcrumb
         :home="home"
-        :model="items" />
+        :model="breadcrumbItems" />
       <h1>{{ product.name }}</h1>
       <Rating
         :readonly="true"
@@ -38,15 +38,35 @@
       </div>
       <div class="characteristic">
         <p class="characteristic-name">Potter colors:</p>
-        <div
+        <input
           v-for="color in product.colors"
           :key="color"
-          class="color"
-          :class="color"></div>
+          type="radio"
+          name="color"
+          class="select-color"
+          :value="color"
+          v-model="colorSelected"
+          :class="color" />
       </div>
+      <div
+        v-if="itemExist"
+        class="cart-buttons">
+        <router-link
+          to="/cart"
+          class="cart-btn">
+          Go to cart
+        </router-link>
+        <div class="quantity">
+          <button @click="decrementProductQuantity">-</button>
+          <div>{{ itemExist.quantity }}</div>
+          <button @click="incrementProductQuantity">+</button>
+        </div>
+      </div>
+
       <Button
+        v-else
         class="p-button-lg"
-        @click="addToCart(product)"
+        @click="addToCart"
         >Add to cart</Button
       >
     </div>
@@ -54,58 +74,147 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import Rating from 'primevue/rating';
 import Button from 'primevue/button';
 import Breadcrumb from 'primevue/breadcrumb';
 
 import type { IProduct } from '@/types/product';
-import type { ICartItem } from '@/types/cartItem';
 
 import { fetchProductById } from '@/api/catalog';
 
 const route = useRoute();
 
-const product = ref<IProduct>();
-
 const home = ref({
   icon: 'pi pi-home',
   to: '/',
 });
+const breadcrumbItems = [{ label: 'catalog', url: '/catalog' }];
 
-const items = [{ label: 'catalog', url: '/catalog' }];
+const product = ref<IProduct>();
 
-// const cartItems = ref<ICartItem[]>();
 const cartItems = ref([]);
-const quantity = ref(0);
 const colorSelected = ref('');
+const itemExist = ref();
+const cartId = ref('');
 
-const addToCart = (product: IProduct) => {
-  const formatProduct = {
-    cartId: product.id + product.price,
-    quantity: 1,
-    id: product.id,
-    name: product.name,
-    color: colorSelected.value,
-    price: product.price,
-  };
-
-  // cartItems.value?.find(item => item.id === product.id)
-  //   ? formatProduct.quantity + 1
-  //   : cartItems.value?.push(formatProduct);
-  // cartItems.value?.push(formatProduct);
-  console.log(formatProduct, cartItems.value, quantity.value);
+const addToCart = () => {
+  if (product.value) {
+    const formatProduct = {
+      cartId: cartId.value,
+      quantity: 1,
+      id: product.value.id,
+      name: product.value.name,
+      color: colorSelected.value,
+      price: product.value.price,
+      img: product.value.img,
+    };
+    cartItems.value.push(formatProduct);
+    localStorage.setItem('cart', JSON.stringify(cartItems.value));
+    productExist();
+  }
 };
+const productExist = () => {
+  itemExist.value = cartItems.value.find(item => item.cartId === cartId.value);
+};
+const incrementProductQuantity = () => {
+  itemExist.value.quantity += 1;
+  localStorage.setItem('cart', JSON.stringify(cartItems.value));
+  refreshCart();
+};
+const decrementProductQuantity = () => {
+  if (itemExist.value.quantity > 1) itemExist.value.quantity -= 1;
+  localStorage.setItem('cart', JSON.stringify(cartItems.value));
+  if (itemExist.value.quantity === 1) {
+    localStorage.setItem('cart', JSON.stringify(cartItems.value.filter(item => item.cartId !== cartId.value)));
+  }
+  refreshCart();
+};
+const refreshCart = () => {
+  cartItems.value = JSON.parse(localStorage.getItem('cart')) || [];
+  productExist();
+};
+
+watch(colorSelected, newX => {
+  cartId.value = product.value?.id + newX;
+  productExist();
+});
 
 onMounted(async () => {
   product.value = await fetchProductById(+route.params.id);
+  colorSelected.value = product.value.colors[0];
+  refreshCart();
 });
 </script>
 
 <style lang="scss" scoped>
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
+
+.cart-buttons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.cart-btn {
+  background: $secondary-color;
+  color: #ffffff;
+  border-radius: 3px;
+  font-size: 1.25rem;
+  padding: 0.532rem 1.25rem;
+  text-decoration: none;
+}
+.quantity {
+  display: flex;
+  align-items: center;
+  color: $primary-color;
+  font-weight: bold;
+  font-size: 24px;
+  gap: 15px;
+
+  & button {
+    height: 45px;
+    padding: 0.532rem 1.25rem;
+    border-radius: 3px;
+    color: #ffffff;
+    font-size: 24px;
+    background: $primary-color;
+    border: none;
+  }
+}
+.select-color {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  border-radius: 50%;
+  border: 4px solid $image-background-color;
+  &.red {
+    background: red;
+  }
+  &.white {
+    background: white;
+    border: 1px solid $complementary-color;
+  }
+  &.black {
+    background: black;
+  }
+  &.gray {
+    background: gray;
+  }
+
+  &:hover {
+    border: 4px solid $secondary-color;
+    opacity: 0.7;
+  }
+  &:checked {
+    border: 4px solid $primary-color;
+    opacity: 1;
+  }
+}
 
 .product {
   background: $image-background-color;
@@ -143,6 +252,7 @@ onMounted(async () => {
 .characteristic {
   display: flex;
   gap: 10px;
+  align-items: center;
 }
 
 .characteristic-name {
@@ -177,8 +287,8 @@ onMounted(async () => {
 }
 
 .color {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: orange;
 
