@@ -151,20 +151,12 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  padding: 20px 0;
 }
 
 .catalog-container {
   @include sm {
     display: flex;
     gap: 50px;
-  }
-}
-
-.title {
-  padding: 10px 0 0;
-  @include sm {
-    padding: 20px 0 0;
   }
 }
 

@@ -33,6 +33,7 @@ const menuItems = ref([
   { label: 'Home', icon: 'pi pi-fw pi-home', to: '/' },
   { label: 'Catalog', icon: 'pi pi-fw pi-shopping-bag', to: '/catalog' },
   { label: 'Cart', icon: 'pi pi-fw pi-shopping-cart', to: '/cart' },
+  { label: 'Wishlist', icon: 'pi pi-fw pi-heart', to: '/wishlist' },
   { label: 'Log in', icon: 'pi pi-fw pi-user', to: '/login' },
 ]);
 

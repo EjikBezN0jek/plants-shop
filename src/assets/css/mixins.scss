@@ -97,6 +97,10 @@ h3 {
 .title {
   font-size: 32px;
   font-weight: bold;
+  padding: 10px 0 0;
+  @include sm {
+    padding: 20px 0 0;
+  }
 
   @include md {
     font-size: 48px;
@@ -121,4 +125,20 @@ h3 {
   color: white;
   text-decoration: none;
   cursor: pointer;
+}
+
+.btn-link {
+  background: $primary-color;
+  color: #ffffff;
+  border-radius: 3px;
+  width: 200px;
+  height: 40px;
+  padding: 10px;
+  text-decoration: none;
+
+  &:hover {
+    background: #449e48;
+    color: #ffffff;
+    border-color: #449e48;
+  }
 }

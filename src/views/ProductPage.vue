@@ -48,27 +48,42 @@
           v-model="colorSelected"
           :class="color" />
       </div>
+
       <div
-        v-if="itemExist"
+        v-if="itemExistInCart"
         class="cart-buttons">
-        <router-link
-          to="/cart"
-          class="cart-btn">
-          Go to cart
-        </router-link>
         <div class="quantity">
           <button @click="decrementProductQuantity">-</button>
-          <div>{{ itemExist.quantity }}</div>
+          <p>{{ itemExistInCart.quantity }}</p>
           <button @click="incrementProductQuantity">+</button>
         </div>
+        <router-link
+          to="/cart"
+          class="btn-link">
+          Go to cart
+        </router-link>
+        <i
+          class="pi"
+          style="font-size: 2rem"
+          :class="{ 'pi-heart': !isLiked, 'pi-heart-fill': isLiked }"
+          @click="toggleWishlist"></i>
       </div>
 
-      <Button
+      <div
         v-else
-        class="p-button-lg"
-        @click="addToCart"
-        >Add to cart</Button
-      >
+        class="cart-buttons">
+        <Button
+          class="p-button-lg"
+          @click="addToCart"
+          >Add to cart</Button
+        >
+
+        <i
+          class="pi"
+          style="font-size: 2rem"
+          :class="{ 'pi-heart': !itemExistInWishlist, 'pi-heart-fill': itemExistInWishlist }"
+          @click="toggleWishlist"></i>
+      </div>
     </div>
   </div>
 </template>
@@ -96,8 +111,11 @@ const product = ref<IProduct>();
 
 const cartItems = ref([]);
 const colorSelected = ref('');
-const itemExist = ref();
+const itemExistInCart = ref();
 const cartId = ref('');
+const wishlistItems = ref([]);
+const wishlistId = ref('');
+const itemExistInWishlist = ref();
 
 const addToCart = () => {
   if (product.value) {
@@ -109,42 +127,88 @@ const addToCart = () => {
       color: colorSelected.value,
       price: product.value.price,
       img: product.value.img,
+      totalCost: product.value.price,
     };
     cartItems.value.push(formatProduct);
     localStorage.setItem('cart', JSON.stringify(cartItems.value));
-    productExist();
+    productExistInCart();
   }
 };
-const productExist = () => {
-  itemExist.value = cartItems.value.find(item => item.cartId === cartId.value);
+const productExistInCart = () => {
+  itemExistInCart.value = cartItems.value.find(item => item.cartId === cartId.value);
 };
 const incrementProductQuantity = () => {
-  itemExist.value.quantity += 1;
+  itemExistInCart.value.quantity += 1;
+  recalculationTotal();
   localStorage.setItem('cart', JSON.stringify(cartItems.value));
   refreshCart();
 };
 const decrementProductQuantity = () => {
-  if (itemExist.value.quantity > 1) itemExist.value.quantity -= 1;
+  if (itemExistInCart.value.quantity > 1) itemExistInCart.value.quantity -= 1;
+  recalculationTotal();
   localStorage.setItem('cart', JSON.stringify(cartItems.value));
-  if (itemExist.value.quantity === 1) {
+  if (itemExistInCart.value.quantity === 1) {
     localStorage.setItem('cart', JSON.stringify(cartItems.value.filter(item => item.cartId !== cartId.value)));
   }
   refreshCart();
 };
+
+const recalculationTotal = () => {
+  itemExistInCart.value.totalCost = (product.value?.price ?? 0) * itemExistInCart.value.quantity;
+};
 const refreshCart = () => {
   cartItems.value = JSON.parse(localStorage.getItem('cart')) || [];
-  productExist();
+  productExistInCart();
 };
 
-watch(colorSelected, newX => {
-  cartId.value = product.value?.id + newX;
-  productExist();
+const productExistInWishlist = () => {
+  itemExistInWishlist.value = wishlistItems.value.find(item => item.wishlistId === wishlistId.value);
+};
+
+const toggleWishlist = () => {
+  if (itemExistInWishlist.value) {
+    localStorage.setItem(
+      'wishlist',
+      JSON.stringify(wishlistItems.value.filter(item => item.wishlistId !== wishlistId.value))
+    );
+    refreshWishlist();
+  } else {
+    if (product.value) {
+      const formatProduct = {
+        wishlistId: wishlistId.value,
+        id: product.value.id,
+        name: product.value.name,
+        color: colorSelected.value,
+        price: product.value.price,
+        img: product.value.img,
+      };
+      wishlistItems.value.push(formatProduct);
+      localStorage.setItem('wishlist', JSON.stringify(wishlistItems.value));
+      productExistInWishlist();
+    }
+  }
+};
+
+const refreshWishlist = () => {
+  wishlistItems.value = JSON.parse(localStorage.getItem('wishlist')) || [];
+  productExistInWishlist();
+};
+
+watch(colorSelected, newColor => {
+  cartId.value = product.value?.id + newColor;
+  productExistInCart();
+});
+
+watch(colorSelected, newColor => {
+  wishlistId.value = product.value?.id + newColor;
+  productExistInWishlist();
 });
 
 onMounted(async () => {
   product.value = await fetchProductById(+route.params.id);
   colorSelected.value = product.value.colors[0];
   refreshCart();
+  refreshWishlist();
 });
 </script>
 
@@ -152,35 +216,46 @@ onMounted(async () => {
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
 
+::v-deep(.pi-heart-fill) {
+  color: $primary-color;
+}
+
 .cart-buttons {
   display: flex;
   align-items: center;
   gap: 20px;
+  flex-wrap: wrap;
 }
-.cart-btn {
-  background: $secondary-color;
-  color: #ffffff;
-  border-radius: 3px;
-  font-size: 1.25rem;
-  padding: 0.532rem 1.25rem;
-  text-decoration: none;
-}
+
 .quantity {
   display: flex;
   align-items: center;
-  color: $primary-color;
+  justify-content: center;
+  background: $complementary-color;
+  width: 130px;
   font-weight: bold;
-  font-size: 24px;
+  border-radius: 3px;
   gap: 15px;
 
   & button {
-    height: 45px;
-    padding: 0.532rem 1.25rem;
+    height: 40px;
+    width: 40px;
     border-radius: 3px;
-    color: #ffffff;
+    color: $secondary-color;
     font-size: 24px;
-    background: $primary-color;
+    background: none;
     border: none;
+    cursor: pointer;
+
+    &:hover {
+      background: $primary-color;
+      color: white;
+    }
+  }
+
+  & p {
+    width: 20px;
+    text-align: center;
   }
 }
 .select-color {
@@ -239,6 +314,11 @@ onMounted(async () => {
 }
 
 .p-button-lg {
+  width: 200px;
+  height: 40px;
+  padding: 10px;
+  font-size: 18px;
+  display: block;
   align-self: center;
   @include sm {
     align-self: flex-start;

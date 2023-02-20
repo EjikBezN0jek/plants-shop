@@ -21,6 +21,7 @@
             class="color"
             :class="color"></div>
         </div>
+
         <Rating
           :readonly="true"
           :cancel="false"
