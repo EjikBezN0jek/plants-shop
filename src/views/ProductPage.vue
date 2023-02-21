@@ -59,13 +59,13 @@
         </div>
         <router-link
           to="/cart"
-          class="btn-link">
-          Go to cart
+          class="btn-link btn-secondary">
+          GO TO CART
         </router-link>
         <i
           class="pi"
           style="font-size: 2rem"
-          :class="{ 'pi-heart': !isLiked, 'pi-heart-fill': isLiked }"
+          :class="{ 'pi-heart': !itemExistInWishlist, 'pi-heart-fill': itemExistInWishlist }"
           @click="toggleWishlist"></i>
       </div>
 
@@ -75,7 +75,7 @@
         <Button
           class="p-button-lg"
           @click="addToCart"
-          >Add to cart</Button
+          >ADD TO CART</Button
         >
 
         <i
@@ -144,10 +144,12 @@ const incrementProductQuantity = () => {
   refreshCart();
 };
 const decrementProductQuantity = () => {
-  if (itemExistInCart.value.quantity > 1) itemExistInCart.value.quantity -= 1;
+  itemExistInCart.value.quantity -= 1;
   recalculationTotal();
-  localStorage.setItem('cart', JSON.stringify(cartItems.value));
-  if (itemExistInCart.value.quantity === 1) {
+  if (itemExistInCart.value.quantity >= 1) {
+    localStorage.setItem('cart', JSON.stringify(cartItems.value));
+  }
+  if (itemExistInCart.value.quantity < 1) {
     localStorage.setItem('cart', JSON.stringify(cartItems.value.filter(item => item.cartId !== cartId.value)));
   }
   refreshCart();
@@ -215,10 +217,6 @@ onMounted(async () => {
 <style lang="scss" scoped>
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
-
-::v-deep(.pi-heart-fill) {
-  color: $primary-color;
-}
 
 .cart-buttons {
   display: flex;
@@ -385,6 +383,10 @@ onMounted(async () => {
   &.gray {
     background: gray;
   }
+}
+
+::v-deep(.pi-heart-fill) {
+  color: $primary-color;
 }
 
 ::v-deep(.p-breadcrumb-list) {

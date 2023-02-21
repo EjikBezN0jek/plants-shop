@@ -62,7 +62,7 @@
       <router-link
         to="/catalog"
         class="btn-link">
-        Go to catalog
+        GO TO CATALOG
       </router-link>
     </div>
   </div>
@@ -81,6 +81,10 @@ const cartItems = ref([]);
 
 const itemExist = ref();
 
+const recalculationTotal = () => {
+  itemExist.value.totalCost = itemExist.value.price * itemExist.value.quantity;
+};
+
 const allProductsTotalCounter = (data: ICartItem[]) => {
   const initialValue = 0;
   return data.reduce((acc, item) => acc + item.totalCost, initialValue);
@@ -89,10 +93,6 @@ const allProductsTotalCounter = (data: ICartItem[]) => {
 const deleteFromCart = (id: string) => {
   localStorage.setItem('cart', JSON.stringify(cartItems.value.filter(item => item.cartId !== id)));
   refreshCart();
-};
-
-const refreshCart = () => {
-  cartItems.value = JSON.parse(localStorage.getItem('cart')) || [];
 };
 
 const incrementProductQuantity = (id: string) => {
@@ -104,21 +104,23 @@ const incrementProductQuantity = (id: string) => {
 };
 const decrementProductQuantity = (id: string) => {
   itemExist.value = cartItems.value.find(item => item.cartId === id);
-  if (itemExist.value.quantity > 1) itemExist.value.quantity -= 1;
+  itemExist.value.quantity -= 1;
   recalculationTotal();
-  localStorage.setItem('cart', JSON.stringify(cartItems.value));
-  if (itemExist.value.quantity === 1) {
+  if (itemExist.value.quantity >= 1) {
+    localStorage.setItem('cart', JSON.stringify(cartItems.value));
+  }
+  if (itemExist.value.quantity < 1) {
     localStorage.setItem('cart', JSON.stringify(cartItems.value.filter(item => item.cartId !== id)));
   }
   refreshCart();
 };
 
-const recalculationTotal = () => {
-  itemExist.value.totalCost = itemExist.value.price * itemExist.value.quantity;
+const refreshCart = () => {
+  cartItems.value = JSON.parse(localStorage.getItem('cart')) || [];
 };
 
 onMounted(async () => {
-  cartItems.value = JSON.parse(localStorage.getItem('cart')) || [];
+  refreshCart();
 });
 </script>
 
@@ -153,22 +155,9 @@ onMounted(async () => {
   gap: 20px;
 }
 
-::v-deep(.p-datatable .p-datatable-tbody > tr > td) {
-  padding: 20px 0;
-}
-
-::v-deep(.p-datatable .p-datatable-thead > tr > th) {
-  padding: 20px 0;
-  background: none;
-}
-
-::v-deep(.p-button.p-button-icon-only) {
-  width: 40px;
-  height: 40px;
-}
-
-::v-deep(.p-datatable .p-datatable-tbody > tr:focus) {
-  outline: none;
+.product-image {
+  width: 100px;
+  height: 100%;
 }
 
 .select-color {
@@ -226,8 +215,22 @@ onMounted(async () => {
     text-align: center;
   }
 }
-.product-image {
-  width: 100px;
-  height: 100%;
+
+::v-deep(.p-datatable .p-datatable-tbody > tr > td) {
+  padding: 20px 0;
+}
+
+::v-deep(.p-datatable .p-datatable-thead > tr > th) {
+  padding: 20px 0;
+  background: none;
+}
+
+::v-deep(.p-button.p-button-icon-only) {
+  width: 40px;
+  height: 40px;
+}
+
+::v-deep(.p-datatable .p-datatable-tbody > tr:focus) {
+  outline: none;
 }
 </style>
