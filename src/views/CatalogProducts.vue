@@ -145,7 +145,7 @@ const badgesSelected = ref<string[]>([]);
 onMounted(async () => {
   if (categoryFromUrl) categorySelected.value = categoryFromUrl;
   prices.value = await fetchAllPrices();
-  pricesSelected.value = { min: prices.value.max * 0.0025, max: prices.value.max * 0.75 };
+  pricesSelected.value = { min: prices.value.max * 0.0025, max: prices.value.max * 1 };
   getProducts();
   categoriesList.value = await fetchAllCategories();
   colorsList.value = await fetchAllColors();

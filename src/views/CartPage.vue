@@ -2,60 +2,112 @@
   <div class="cart">
     <h1 class="title">Cart</h1>
 
-    <DataTable
-      :value="cartItems"
+    <div
       v-if="cartItems.length"
-      responsiveLayout="scroll">
-      <Column header="PRODUCT NAME">
-        <template #body="slotProps">
+      class="product-list">
+      <div class="product-list-mobile">
+        <div
+          class="list-item"
+          v-for="product in cartItems"
+          :key="product.cartId">
           <router-link
-            :to="{ name: 'product', params: { id: slotProps.data.id, name: slotProps.data.name } }"
+            :to="{ name: 'product', params: { id: product.id, name: product.name } }"
             class="product">
             <img
-              :src="`/images/products/${slotProps.data.img}`"
+              :src="`/images/products/${product.img}`"
               alt="product-img"
               class="product-image" />
-            <p>{{ slotProps.data.name }}</p>
           </router-link>
-        </template>
-      </Column>
 
-      <Column header="POTTER COLOR">
-        <template #body="slotProps">
-          <div
-            class="color"
-            :class="slotProps.data.color"></div>
-        </template>
-      </Column>
-      <Column header="PRICE">
-        <template #body="slotProps"> $ {{ slotProps.data.price }} </template>
-      </Column>
+          <div class="rows">
+            <div class="row">
+              <p class="product-name">{{ product.name }}</p>
+              <Button
+                icon="pi pi-times"
+                @click="deleteFromCart(product.cartId)"></Button>
+            </div>
 
-      <Column header="QUANTITY">
-        <template #body="slotProps">
-          <div class="quantity">
-            <button @click="decrementProductQuantity(slotProps.data.cartId)">-</button>
-            <p>{{ slotProps.data.quantity }}</p>
-            <button @click="incrementProductQuantity(slotProps.data.cartId)">+</button>
+            <div class="row">
+              <div
+                class="color"
+                :class="product.color"></div>
+              <div class="quantity">
+                <button @click="decrementProductQuantity(product.cartId)">-</button>
+                <p>{{ product.quantity }}</p>
+                <button @click="incrementProductQuantity(product.cartId)">+</button>
+              </div>
+            </div>
+
+            <div class="row">
+              <p>$ {{ product.price }}</p>
+              <p>
+                Total: <span class="total">$ {{ product.totalCost }}</span>
+              </p>
+            </div>
           </div>
+        </div>
+        <div class="cart-footer">
+          <p>
+            CART TOTAL: <span class="total cart-total">$ {{ allProductsTotalCounter(cartItems) }}</span>
+          </p>
+        </div>
+      </div>
+
+      <DataTable
+        :value="cartItems"
+        responsiveLayout="scroll"
+        class="table">
+        <Column header="PRODUCT NAME">
+          <template #body="slotProps">
+            <router-link
+              :to="{ name: 'product', params: { id: slotProps.data.id, name: slotProps.data.name } }"
+              class="product">
+              <img
+                :src="`/images/products/${slotProps.data.img}`"
+                alt="product-img"
+                class="product-image" />
+              <p>{{ slotProps.data.name }}</p>
+            </router-link>
+          </template>
+        </Column>
+
+        <Column header="POTTER COLOR">
+          <template #body="slotProps">
+            <div
+              class="color"
+              :class="slotProps.data.color"></div>
+          </template>
+        </Column>
+        <Column header="PRICE">
+          <template #body="slotProps"> $ {{ slotProps.data.price }} </template>
+        </Column>
+
+        <Column header="QUANTITY">
+          <template #body="slotProps">
+            <div class="quantity">
+              <button @click="decrementProductQuantity(slotProps.data.cartId)">-</button>
+              <p>{{ slotProps.data.quantity }}</p>
+              <button @click="incrementProductQuantity(slotProps.data.cartId)">+</button>
+            </div>
+          </template>
+        </Column>
+        <Column header="TOTAL">
+          <template #body="slotProps">
+            <div class="total">$ {{ slotProps.data.totalCost }}</div>
+          </template>
+        </Column>
+        <Column>
+          <template #body="slotProps">
+            <Button
+              icon="pi pi-times"
+              @click="deleteFromCart(slotProps.data.cartId)"></Button>
+          </template>
+        </Column>
+        <template #footer>
+          CART TOTAL: <span class="total cart-total">$ {{ allProductsTotalCounter(cartItems) }}</span>
         </template>
-      </Column>
-      <Column header="TOTAL">
-        <template #body="slotProps">
-          <div class="total">$ {{ slotProps.data.totalCost }}</div>
-        </template>
-      </Column>
-      <Column>
-        <template #body="slotProps">
-          <Button
-            icon="pi pi-times"
-            @click="deleteFromCart(slotProps.data.cartId)"></Button>
-        </template>
-      </Column>
-      <template #footer>
-        CART TOTAL: <span class="total cart-total">$ {{ allProductsTotalCounter(cartItems) }}</span>
-      </template>
-    </DataTable>
+      </DataTable>
+    </div>
 
     <div
       v-else
@@ -129,6 +181,57 @@ onMounted(async () => {
 <style lang="scss" scoped>
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
+
+.product-list-mobile {
+  @include sm {
+    display: none;
+  }
+}
+
+.list-item {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid $complementary-color;
+}
+
+.product-name {
+  text-align: left;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  & p {
+    flex-shrink: 0;
+  }
+}
+
+.cart-footer {
+  background: #f8f9fa;
+  color: #495057;
+  border: 1px solid #e9ecef;
+  border-width: 0 0 1px 0;
+  padding: 1rem 1rem;
+  font-weight: 600;
+}
+
+.table {
+  display: none;
+  @include sm {
+    display: block;
+  }
+}
 
 .cart {
   display: flex;
