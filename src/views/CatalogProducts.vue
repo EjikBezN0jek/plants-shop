@@ -15,7 +15,10 @@
         :categories-list="categoriesList"
         :prices="prices"
         v-model:pricesSelected="pricesSelected"
-        @update:prices-selected="refetchProducts" />
+        @update:prices-selected="refetchProducts"
+        :badges-list="badgesList"
+        v-model:badges="badgesSelected"
+        @update:badges="refetchProducts" />
 
       <div class="content">
         <div class="row">
@@ -42,7 +45,7 @@
 import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
-import { fetchAllProducts, fetchAllCategories, fetchAllColors, fetchAllPrices } from '@/api/catalog';
+import { fetchAllProducts, fetchAllCategories, fetchAllColors, fetchAllPrices, fetchAllBadges } from '@/api/catalog';
 
 import CatalogPagination from '@/components/CatalogPagination.vue';
 import CatalogSearch from '@/components/CatalogSearch.vue';
@@ -59,6 +62,7 @@ import type { ICategory } from '@/types/category';
 import type { IColor } from '@/types/color';
 import type { ISorting } from '@/types/sorting';
 import type { IPrices } from '@/types/prices';
+import type { IBadge } from '@/types/badge';
 
 const products = ref<IProduct[]>();
 
@@ -66,6 +70,7 @@ const getProducts = async () => {
   const params = {
     colors_like: colorsSelected.value,
     categories_like: categorySelected.value,
+    badges_like: badgesSelected.value,
     name_like: searchQuery.value,
     _sort: sorting.value.target,
     _order: sorting.value.order,
@@ -133,6 +138,10 @@ const goToCategory = () => {
 const prices = ref<IPrices>();
 const pricesSelected = ref<IPrices>();
 
+//Badges
+const badgesList = ref<IBadge[]>();
+const badgesSelected = ref<string[]>([]);
+
 onMounted(async () => {
   if (categoryFromUrl) categorySelected.value = categoryFromUrl;
   prices.value = await fetchAllPrices();
@@ -140,6 +149,7 @@ onMounted(async () => {
   getProducts();
   categoriesList.value = await fetchAllCategories();
   colorsList.value = await fetchAllColors();
+  badgesList.value = await fetchAllBadges();
 });
 </script>
 

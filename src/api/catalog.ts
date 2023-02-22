@@ -3,6 +3,7 @@ import type { IProduct } from '@/types/product';
 import type { ICategory } from '@/types/category';
 import type { IColor } from '@/types/color';
 import type { IPrices } from '@/types/prices';
+import type { IBadge } from '@/types/badge';
 import type { IResponseList } from '@/types/';
 
 import { getResponsePagination } from '@/api/helpers';
@@ -22,6 +23,8 @@ export const fetchAllCategories = async (): Promise<ICategory[]> => (await axios
 export const fetchAllColors = async (): Promise<IColor[]> => (await axiosInstance.get('colors')).data;
 
 export const fetchAllPrices = async (): Promise<IPrices> => (await axiosInstance.get('prices')).data;
+
+export const fetchAllBadges = async (): Promise<IBadge[]> => (await axiosInstance.get('badges')).data;
 
 export const fetchProductById = async (id: number): Promise<IProduct> =>
   (await axiosInstance.get(`products/${id}`)).data;

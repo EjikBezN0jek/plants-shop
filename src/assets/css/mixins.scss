@@ -128,6 +128,7 @@ h3 {
 }
 
 .btn-link {
+  display: block;
   background: $primary-color;
   color: #ffffff;
   border-radius: 3px;
@@ -135,6 +136,7 @@ h3 {
   height: 40px;
   padding: 10px;
   text-decoration: none;
+  text-align: center;
 
   &:hover {
     background: #449e48;
@@ -145,4 +147,60 @@ h3 {
 
 .btn-secondary {
   background: $secondary-color;
+}
+
+.color {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  border-radius: 50%;
+
+  &.red {
+    background: red;
+  }
+  &.white {
+    background: white;
+    border: 1px solid $complementary-color;
+  }
+  &.black {
+    background: black;
+  }
+  &.gray {
+    background: gray;
+  }
+}
+
+.badges {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background: $secondary-color;
+  font-size: 10px;
+  width: 35px;
+  height: 35px;
+  border-radius: 10px;
+  font-weight: bold;
+
+  &.new {
+    background: $primary-color;
+  }
+  &.sale {
+    background: red;
+  }
+  &.hot {
+    background: orange;
+  }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wishlist">
     <h1 class="title">Wishlist</h1>
     <DataTable
       :value="wishlistItems"
@@ -7,20 +7,22 @@
       responsiveLayout="scroll">
       <Column header="PRODUCT NAME">
         <template #body="slotProps">
-          <div class="product">
+          <router-link
+            :to="{ name: 'product', params: { id: slotProps.data.id, name: slotProps.data.name } }"
+            class="product">
             <img
               :src="`/images/products/${slotProps.data.img}`"
               alt="product-img"
               class="product-image" />
             <p>{{ slotProps.data.name }}</p>
-          </div>
+          </router-link>
         </template>
       </Column>
 
       <Column header="POTTER COLOR">
         <template #body="slotProps">
           <div
-            class="select-color"
+            class="color"
             :class="slotProps.data.color"></div>
         </template>
       </Column>
@@ -28,25 +30,10 @@
         <template #body="slotProps"> $ {{ slotProps.data.price }} </template>
       </Column>
 
-      <!-- <Column header="QUANTITY">
-        <template #body="slotProps">
-          <div class="quantity">
-            <button @click="decrementProductQuantity(slotProps.data.cartId)">-</button>
-            <p>{{ slotProps.data.quantity }}</p>
-            <button @click="incrementProductQuantity(slotProps.data.cartId)">+</button>
-          </div>
-        </template>
-      </Column> -->
-      <!-- <Column header="TOTAL">
-        <template #body="slotProps">
-          <div class="total">$ {{ slotProps.data.totalCost }}</div>
-        </template>
-      </Column> -->
-
       <Column>
         <template #body="slotProps">
           <router-link
-            v-if="itemExistInCart"
+            v-if="isProductExistInCart(slotProps.data.wishlistId)"
             to="/cart"
             class="btn-link btn-secondary">
             GO TO CART
@@ -54,10 +41,10 @@
 
           <Button
             v-else
+            class="p-button-lg"
             @click="addToCart(slotProps.data)"
             >ADD TO CART</Button
           >
-          <!-- <Button @click="addToCart(slotProps.data)">ADD TO CART</Button> -->
         </template>
       </Column>
       <Column>
@@ -67,9 +54,6 @@
             @click="deleteFromWishlist(slotProps.data.wishlistId)"></Button>
         </template>
       </Column>
-      <!-- <template #footer>
-        CART TOTAL: <span class="total cart-total">$ {{ allProductsTotalCounter(cartItems) }}</span>
-      </template> -->
     </DataTable>
 
     <div
@@ -99,7 +83,7 @@ const cartItems = ref([]);
 const itemExistInCart = ref();
 
 const deleteFromWishlist = (id: string) => {
-  localStorage.setItem('cart', JSON.stringify(wishlistItems.value.filter(item => item.wishlistId !== id)));
+  localStorage.setItem('wishlist', JSON.stringify(wishlistItems.value.filter(item => item.wishlistId !== id)));
   refreshWishlist();
 };
 
@@ -117,6 +101,11 @@ const addToCart = (data: ICartItem) => {
   cartItems.value.push(formatProduct);
   localStorage.setItem('cart', JSON.stringify(cartItems.value));
   productExistInCart(data.wishlistId);
+  refreshWishlist();
+};
+
+const isProductExistInCart = (id: string) => {
+  if (cartItems.value.find(item => item.cartId === id)) return true;
 };
 
 const productExistInCart = (id: string) => {
@@ -135,37 +124,46 @@ onMounted(async () => {
 <style lang="scss" scoped>
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
+
+.wishlist {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
 .product {
   display: flex;
   align-items: center;
   gap: 20px;
+  text-decoration: none;
+  cursor: pointer;
+  color: $table-text-color;
 }
 .product-image {
   width: 100px;
   height: 100%;
 }
 
-.select-color {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  width: 40px;
+.p-button-lg {
+  width: 200px;
   height: 40px;
-  margin: 0;
-  border-radius: 50%;
-  border: 4px solid $image-background-color;
-  &.red {
-    background: red;
-  }
-  &.white {
-    background: white;
-    border: 1px solid $complementary-color;
-  }
-  &.black {
-    background: black;
-  }
-  &.gray {
-    background: gray;
-  }
+  padding: 10px;
+  font-size: 18px;
+  display: block;
+}
+
+.btn-secondary {
+  font-size: 18px;
+}
+
+::v-deep(.p-datatable .p-datatable-tbody > tr:focus) {
+  outline: none;
 }
 </style>

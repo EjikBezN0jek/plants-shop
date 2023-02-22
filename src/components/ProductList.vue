@@ -8,6 +8,15 @@
         :key="product.id"
         :to="{ name: 'product', params: { id: product.id, name: product.name } }"
         class="product">
+        <div class="badges">
+          <div
+            class="badge"
+            v-for="badge in product.badges"
+            :key="badge"
+            :class="badge">
+            {{ badge.toUpperCase() }}
+          </div>
+        </div>
         <img
           :src="`/images/products/${product.img}`"
           alt="product-image"
@@ -60,6 +69,7 @@ const props = defineProps<IProps>();
   }
 }
 .product {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -111,21 +121,10 @@ const props = defineProps<IProps>();
 .color {
   width: 20px;
   height: 20px;
-  border-radius: 50%;
-  background: orange;
+  background: none;
+}
 
-  &.red {
-    background: red;
-  }
-  &.white {
-    background: white;
-    border: 1px solid $complementary-color;
-  }
-  &.black {
-    background: black;
-  }
-  &.gray {
-    background: gray;
-  }
+.badges {
+  flex-direction: column;
 }
 </style>

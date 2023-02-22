@@ -44,6 +44,21 @@
           <label :for="name">{{ label }}</label>
         </div>
       </div>
+
+      <div class="badges-list">
+        <h3>Badges</h3>
+        <div
+          v-for="{ id, name, label } in badgesList"
+          :key="id"
+          class="field-checkbox">
+          <Checkbox
+            v-model="badgesSelected"
+            :value="name"
+            :input-id="name"
+            :aria-label="label" />
+          <label :for="name">{{ label }}</label>
+        </div>
+      </div>
     </div>
 
     <div class="prices">
@@ -62,6 +77,7 @@ import { ref } from 'vue';
 import type { ICategory } from '@/types/category';
 import type { IColor } from '@/types/color';
 import type { IPrices } from '@/types/prices';
+import type { IBadge } from '@/types/badge';
 
 import Checkbox from 'primevue/checkbox';
 
@@ -76,6 +92,8 @@ interface IProps {
   category: string;
   prices?: IPrices;
   pricesSelected?: IPrices;
+  badges: string[];
+  badgesList?: IBadge[];
 }
 const props = defineProps<IProps>();
 
@@ -83,12 +101,14 @@ interface IEmits {
   (e: 'update:colors', query: IColor[]): void;
   (e: 'update:category', name: string): void;
   (e: 'update:pricesSelected', query: IPrices): void;
+  (e: 'update:badges', query: IBadge[]): void;
 }
 const emit = defineEmits<IEmits>();
 
 const colorsSelected = useVModelWrapper(props, emit, 'colors');
 const categorySelected = useVModelWrapper(props, emit, 'category');
 const pricesSelected = useVModelWrapper(props, emit, 'pricesSelected');
+const badgesSelected = useVModelWrapper(props, emit, 'badges');
 
 const isActiveCategory = (category = '') => {
   return category === props.category;
@@ -181,7 +201,8 @@ const toggleFilters = () => {
 
 .categories,
 .colors,
-.prices {
+.prices,
+.badges-list {
   display: flex;
   flex-direction: column;
   align-items: flex-start;

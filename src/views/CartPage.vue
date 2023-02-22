@@ -8,20 +8,22 @@
       responsiveLayout="scroll">
       <Column header="PRODUCT NAME">
         <template #body="slotProps">
-          <div class="product">
+          <router-link
+            :to="{ name: 'product', params: { id: slotProps.data.id, name: slotProps.data.name } }"
+            class="product">
             <img
               :src="`/images/products/${slotProps.data.img}`"
               alt="product-img"
               class="product-image" />
             <p>{{ slotProps.data.name }}</p>
-          </div>
+          </router-link>
         </template>
       </Column>
 
       <Column header="POTTER COLOR">
         <template #body="slotProps">
           <div
-            class="select-color"
+            class="color"
             :class="slotProps.data.color"></div>
         </template>
       </Column>
@@ -153,35 +155,14 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   gap: 20px;
+  text-decoration: none;
+  cursor: pointer;
+  color: $table-text-color;
 }
 
 .product-image {
   width: 100px;
   height: 100%;
-}
-
-.select-color {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  width: 40px;
-  height: 40px;
-  margin: 0;
-  border-radius: 50%;
-  border: 4px solid $image-background-color;
-  &.red {
-    background: red;
-  }
-  &.white {
-    background: white;
-    border: 1px solid $complementary-color;
-  }
-  &.black {
-    background: black;
-  }
-  &.gray {
-    background: gray;
-  }
 }
 
 .quantity {

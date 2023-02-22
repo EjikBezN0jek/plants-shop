@@ -10,7 +10,19 @@
       <Breadcrumb
         :home="home"
         :model="breadcrumbItems" />
-      <h1>{{ product.name }}</h1>
+      <div class="wrapper">
+        <h1>{{ product.name }}</h1>
+        <div class="badges">
+          <div
+            class="badge"
+            v-for="badge in product.badges"
+            :key="badge"
+            :class="badge">
+            {{ badge.toUpperCase() }}
+          </div>
+        </div>
+      </div>
+
       <Rating
         :readonly="true"
         :cancel="false"
@@ -26,16 +38,6 @@
           {{ category }}
         </p>
       </div>
-      <div
-        class="characteristic"
-        v-if="product.badges.length">
-        <span class="characteristic-name">Tags:</span>
-        <p
-          v-for="badge in product.badges"
-          :key="badge">
-          {{ badge }}
-        </p>
-      </div>
       <div class="characteristic">
         <p class="characteristic-name">Potter colors:</p>
         <input
@@ -43,7 +45,7 @@
           :key="color"
           type="radio"
           name="color"
-          class="select-color"
+          class="color"
           :value="color"
           v-model="colorSelected"
           :class="color" />
@@ -218,6 +220,16 @@ onMounted(async () => {
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
 
+.wrapper {
+  position: relative;
+}
+
+.badges {
+  left: calc(100% + 20px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 .cart-buttons {
   display: flex;
   align-items: center;
@@ -256,28 +268,8 @@ onMounted(async () => {
     text-align: center;
   }
 }
-.select-color {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  width: 40px;
-  height: 40px;
-  margin: 0;
-  border-radius: 50%;
+.color {
   border: 4px solid $image-background-color;
-  &.red {
-    background: red;
-  }
-  &.white {
-    background: white;
-    border: 1px solid $complementary-color;
-  }
-  &.black {
-    background: black;
-  }
-  &.gray {
-    background: gray;
-  }
 
   &:hover {
     border: 4px solid $secondary-color;
@@ -362,27 +354,6 @@ onMounted(async () => {
   font-size: 24px;
   font-weight: bold;
   color: $primary-color;
-}
-
-.color {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: orange;
-
-  &.red {
-    background: red;
-  }
-  &.white {
-    background: white;
-    border: 1px solid $complementary-color;
-  }
-  &.black {
-    background: black;
-  }
-  &.gray {
-    background: gray;
-  }
 }
 
 ::v-deep(.pi-heart-fill) {
