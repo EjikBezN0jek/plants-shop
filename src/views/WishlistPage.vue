@@ -129,9 +129,10 @@ import Column from 'primevue/column';
 import Button from 'primevue/button';
 
 import type { ICartItem } from '@/types/cartItem';
+import type { IWishlistItem } from '@/types/wishlistItem';
 
-const wishlistItems = ref([]);
-const cartItems = ref([]);
+const wishlistItems = ref<IWishlistItem[]>([]);
+const cartItems = ref<ICartItem[]>([]);
 const itemExistInCart = ref();
 
 const deleteFromWishlist = (id: string) => {
@@ -139,7 +140,7 @@ const deleteFromWishlist = (id: string) => {
   refreshWishlist();
 };
 
-const addToCart = (data: ICartItem) => {
+const addToCart = (data: IWishlistItem) => {
   const formatProduct = {
     cartId: data.wishlistId,
     quantity: 1,

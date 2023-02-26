@@ -98,6 +98,8 @@ import Button from 'primevue/button';
 import Breadcrumb from 'primevue/breadcrumb';
 
 import type { IProduct } from '@/types/product';
+import type { ICartItem } from '@/types/cartItem';
+import type { IWishlistItem } from '@/types/wishlistItem';
 
 import { fetchProductById } from '@/api/catalog';
 
@@ -110,12 +112,11 @@ const home = ref({
 const breadcrumbItems = [{ label: 'catalog', url: '/catalog' }];
 
 const product = ref<IProduct>();
-
-const cartItems = ref([]);
+const cartItems = ref<ICartItem[]>([]);
 const colorSelected = ref('');
 const itemExistInCart = ref();
 const cartId = ref('');
-const wishlistItems = ref([]);
+const wishlistItems = ref<IWishlistItem[]>([]);
 const wishlistId = ref('');
 const itemExistInWishlist = ref();
 

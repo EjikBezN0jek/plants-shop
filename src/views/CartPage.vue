@@ -131,8 +131,7 @@ import Button from 'primevue/button';
 
 import type { ICartItem } from '@/types/cartItem';
 
-const cartItems = ref([]);
-
+const cartItems = ref<ICartItem[]>([]);
 const itemExist = ref();
 
 const recalculationTotal = () => {
