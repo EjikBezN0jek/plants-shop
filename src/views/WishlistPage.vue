@@ -133,12 +133,7 @@ import type { IWishlistItem } from '@/types/wishlistItem';
 
 const wishlistItems = ref<IWishlistItem[]>([]);
 const cartItems = ref<ICartItem[]>([]);
-const itemExistInCart = ref();
-
-const deleteFromWishlist = (id: string) => {
-  localStorage.setItem('wishlist', JSON.stringify(wishlistItems.value.filter(item => item.wishlistId !== id)));
-  refreshWishlist();
-};
+// const itemExistInCart = ref();
 
 const addToCart = (data: IWishlistItem) => {
   const formatProduct = {
@@ -153,17 +148,22 @@ const addToCart = (data: IWishlistItem) => {
   };
   cartItems.value.push(formatProduct);
   localStorage.setItem('cart', JSON.stringify(cartItems.value));
-  productExistInCart(data.wishlistId);
+  // productExistInCart(data.wishlistId);
   refreshWishlist();
 };
 
 const isProductExistInCart = (id: string) => {
-  if (cartItems.value.find(item => item.cartId === id)) return true;
+  return !!cartItems.value.find(item => item.cartId === id);
 };
 
-const productExistInCart = (id: string) => {
-  itemExistInCart.value = cartItems.value.find(item => item.cartId === id);
+const deleteFromWishlist = (id: string) => {
+  localStorage.setItem('wishlist', JSON.stringify(wishlistItems.value.filter(item => item.wishlistId !== id)));
+  refreshWishlist();
 };
+
+// const productExistInCart = (id: string) => {
+//   itemExistInCart.value = cartItems.value.find(item => item.cartId === id);
+// };
 
 const refreshWishlist = () => {
   wishlistItems.value = JSON.parse(localStorage.getItem('wishlist')) || [];
@@ -171,12 +171,20 @@ const refreshWishlist = () => {
 
 onMounted(async () => {
   refreshWishlist();
+  cartItems.value = JSON.parse(localStorage.getItem('cart')) || [];
 });
 </script>
 
 <style lang="scss" scoped>
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
+
+.wishlist {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px 0;
+}
 
 .product-list-mobile {
   @include sm {
@@ -219,12 +227,6 @@ onMounted(async () => {
   @include sm {
     display: block;
   }
-}
-
-.wishlist {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
 }
 
 .wrapper {

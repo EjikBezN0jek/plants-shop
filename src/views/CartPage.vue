@@ -24,7 +24,7 @@
               <p class="product-name">{{ product.name }}</p>
               <Button
                 icon="pi pi-times"
-                @click="deleteFromCart(product.cartId)"></Button>
+                @click="removeProduct(product)"></Button>
             </div>
 
             <div class="row">
@@ -32,9 +32,9 @@
                 class="color"
                 :class="product.color"></div>
               <div class="quantity">
-                <button @click="decrementProductQuantity(product.cartId)">-</button>
+                <button @click="decrementProductQuantity(product)">-</button>
                 <p>{{ product.quantity }}</p>
-                <button @click="incrementProductQuantity(product.cartId)">+</button>
+                <button @click="incrementProductQuantity(product)">+</button>
               </div>
             </div>
 
@@ -55,7 +55,7 @@
 
       <DataTable
         :value="cartItems"
-        responsiveLayout="scroll"
+        responsive-layout="scroll"
         class="table">
         <Column header="PRODUCT NAME">
           <template #body="slotProps">
@@ -85,9 +85,9 @@
         <Column header="QUANTITY">
           <template #body="slotProps">
             <div class="quantity">
-              <button @click="decrementProductQuantity(slotProps.data.cartId)">-</button>
+              <button @click="decrementProductQuantity(slotProps.data)">-</button>
               <p>{{ slotProps.data.quantity }}</p>
-              <button @click="incrementProductQuantity(slotProps.data.cartId)">+</button>
+              <button @click="incrementProductQuantity(slotProps.data)">+</button>
             </div>
           </template>
         </Column>
@@ -100,7 +100,7 @@
           <template #body="slotProps">
             <Button
               icon="pi pi-times"
-              @click="deleteFromCart(slotProps.data.cartId)"></Button>
+              @click="removeProduct(slotProps.data.cartId)"></Button>
           </template>
         </Column>
         <template #footer>
@@ -123,7 +123,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -132,54 +132,55 @@ import Button from 'primevue/button';
 import type { ICartItem } from '@/types/cartItem';
 
 const cartItems = ref<ICartItem[]>([]);
-const itemExist = ref();
 
-const recalculationTotal = () => {
-  itemExist.value.totalCost = itemExist.value.price * itemExist.value.quantity;
+const allProductsTotalCounter = (product: ICartItem[]) => {
+  return product.reduce((acc, item) => acc + item.totalCost, 0);
 };
 
-const allProductsTotalCounter = (data: ICartItem[]) => {
-  const initialValue = 0;
-  return data.reduce((acc, item) => acc + item.totalCost, initialValue);
+const recalculationTotal = (product: ICartItem) => {
+  product.totalCost = product.price * product.quantity;
 };
 
-const deleteFromCart = (id: string) => {
-  localStorage.setItem('cart', JSON.stringify(cartItems.value.filter(item => item.cartId !== id)));
-  refreshCart();
+const incrementProductQuantity = (product: ICartItem) => {
+  product.quantity += 1;
+  recalculationTotal(product);
 };
 
-const incrementProductQuantity = (id: string) => {
-  itemExist.value = cartItems.value.find(item => item.cartId === id);
-  itemExist.value.quantity += 1;
-  recalculationTotal();
+const decrementProductQuantity = (product: ICartItem) => {
+  product.quantity -= 1;
+  recalculationTotal(product);
+  if (product.quantity < 1) removeProduct(product);
+};
+
+const removeProduct = (product: ICartItem) => {
+  cartItems.value = cartItems.value.filter(item => item.cartId !== product.cartId);
+};
+
+const initCart = () => {
+  cartItems.value = JSON.parse(localStorage.getItem('cart') ?? '') ?? [];
+};
+
+const saveCart = () => {
   localStorage.setItem('cart', JSON.stringify(cartItems.value));
-  refreshCart();
-};
-const decrementProductQuantity = (id: string) => {
-  itemExist.value = cartItems.value.find(item => item.cartId === id);
-  itemExist.value.quantity -= 1;
-  recalculationTotal();
-  if (itemExist.value.quantity >= 1) {
-    localStorage.setItem('cart', JSON.stringify(cartItems.value));
-  }
-  if (itemExist.value.quantity < 1) {
-    localStorage.setItem('cart', JSON.stringify(cartItems.value.filter(item => item.cartId !== id)));
-  }
-  refreshCart();
 };
 
-const refreshCart = () => {
-  cartItems.value = JSON.parse(localStorage.getItem('cart')) || [];
-};
+watch(cartItems, saveCart, { deep: true });
 
 onMounted(async () => {
-  refreshCart();
+  initCart();
 });
 </script>
 
 <style lang="scss" scoped>
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
+
+.cart {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px 0;
+}
 
 .product-list-mobile {
   @include sm {
@@ -230,12 +231,6 @@ onMounted(async () => {
   @include sm {
     display: block;
   }
-}
-
-.cart {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
 }
 
 .wrapper {

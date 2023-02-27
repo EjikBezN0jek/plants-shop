@@ -116,9 +116,6 @@ const cartItems = ref<ICartItem[]>([]);
 const colorSelected = ref('');
 const itemExistInCart = ref();
 const cartId = ref('');
-const wishlistItems = ref<IWishlistItem[]>([]);
-const wishlistId = ref('');
-const itemExistInWishlist = ref();
 
 const addToCart = () => {
   if (product.value) {
@@ -140,6 +137,11 @@ const addToCart = () => {
 const productExistInCart = () => {
   itemExistInCart.value = cartItems.value.find(item => item.cartId === cartId.value);
 };
+
+const recalculationTotal = () => {
+  itemExistInCart.value.totalCost = (product.value?.price ?? 0) * itemExistInCart.value.quantity;
+};
+
 const incrementProductQuantity = () => {
   itemExistInCart.value.quantity += 1;
   recalculationTotal();
@@ -158,13 +160,14 @@ const decrementProductQuantity = () => {
   refreshCart();
 };
 
-const recalculationTotal = () => {
-  itemExistInCart.value.totalCost = (product.value?.price ?? 0) * itemExistInCart.value.quantity;
-};
 const refreshCart = () => {
   cartItems.value = JSON.parse(localStorage.getItem('cart')) || [];
   productExistInCart();
 };
+
+const wishlistItems = ref<IWishlistItem[]>([]);
+const wishlistId = ref('');
+const itemExistInWishlist = ref();
 
 const productExistInWishlist = () => {
   itemExistInWishlist.value = wishlistItems.value.find(item => item.wishlistId === wishlistId.value);

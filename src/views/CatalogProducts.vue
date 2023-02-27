@@ -161,6 +161,7 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  padding: 20px 0;
 }
 
 .catalog-container {
