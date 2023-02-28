@@ -131,7 +131,6 @@ const addToCart = () => {
       totalCost: product.value.price,
     };
     cartItems.value.push(formatProduct);
-    saveCart();
   }
 };
 
@@ -204,10 +203,8 @@ const toggleWishlist = () => {
         img: product.value.img,
       };
       wishlistItems.value.push(formatProduct);
-      saveWishlist();
     }
   }
-  getProductFromWishlist();
 };
 
 const initWishlist = () => {
@@ -227,7 +224,14 @@ watch(colorSelected, newColor => {
   getProductFromWishlist();
 });
 
-watch(wishlistItems, saveWishlist, { deep: true });
+watch(
+  wishlistItems,
+  () => {
+    saveWishlist();
+    getProductFromWishlist();
+  },
+  { deep: true }
+);
 
 onMounted(async () => {
   product.value = await fetchProductById(+route.params.id);
@@ -241,6 +245,49 @@ onMounted(async () => {
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
 
+.product {
+  background: $image-background-color;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__colors {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  @include sm {
+    flex-direction: row;
+  }
+
+  @include lg {
+    gap: 50px;
+  }
+}
+
+.image {
+  max-width: 300px;
+  height: 100%;
+  border-radius: 5px 5px 0 0;
+
+  @include lg {
+    max-width: 500px;
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 0 20px 20px;
+
+  @include sm {
+    padding: 70px 0;
+  }
+}
 .wrapper {
   position: relative;
 }
@@ -249,6 +296,39 @@ onMounted(async () => {
   left: calc(100% + 20px);
   top: 50%;
   transform: translateY(-50%);
+}
+
+.price {
+  font-size: 24px;
+  font-weight: bold;
+  color: $primary-color;
+}
+
+.description {
+  text-align: left;
+}
+
+.characteristic {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.characteristic-name {
+  font-weight: bold;
+}
+
+.color {
+  border: 4px solid $image-background-color;
+
+  &:hover {
+    border: 4px solid $secondary-color;
+    opacity: 0.7;
+  }
+  &:checked {
+    border: 4px solid $primary-color;
+    opacity: 1;
+  }
 }
 
 .cart-buttons {
@@ -289,40 +369,6 @@ onMounted(async () => {
     text-align: center;
   }
 }
-.color {
-  border: 4px solid $image-background-color;
-
-  &:hover {
-    border: 4px solid $secondary-color;
-    opacity: 0.7;
-  }
-  &:checked {
-    border: 4px solid $primary-color;
-    opacity: 1;
-  }
-}
-
-.product {
-  background: $image-background-color;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  &__colors {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  @include sm {
-    flex-direction: row;
-  }
-
-  @include lg {
-    gap: 50px;
-  }
-}
 
 .p-button-lg {
   width: 200px;
@@ -334,47 +380,6 @@ onMounted(async () => {
   @include sm {
     align-self: flex-start;
   }
-}
-
-.description {
-  text-align: left;
-}
-
-.characteristic {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.characteristic-name {
-  font-weight: bold;
-}
-
-.info {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 15px;
-  padding: 0 20px 20px;
-
-  @include sm {
-    padding: 70px 0;
-  }
-}
-.image {
-  max-width: 300px;
-  height: 100%;
-  border-radius: 5px 5px 0 0;
-
-  @include lg {
-    max-width: 500px;
-  }
-}
-
-.price {
-  font-size: 24px;
-  font-weight: bold;
-  color: $primary-color;
 }
 
 ::v-deep(.pi-heart-fill) {

@@ -2,9 +2,7 @@
   <div class="cart">
     <h1 class="title">Cart</h1>
 
-    <div
-      v-if="cartItems.length"
-      class="product-list">
+    <div v-if="cartItems.length">
       <div class="product-list-mobile">
         <div
           class="list-item"
@@ -196,6 +194,20 @@ onMounted(async () => {
   border-bottom: 1px solid $complementary-color;
 }
 
+.product {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  text-decoration: none;
+  cursor: pointer;
+  color: $table-text-color;
+}
+
+.product-image {
+  width: 100px;
+  height: 100%;
+}
+
 .product-name {
   text-align: left;
 }
@@ -215,51 +227,6 @@ onMounted(async () => {
   & p {
     flex-shrink: 0;
   }
-}
-
-.cart-footer {
-  background: #f8f9fa;
-  color: #495057;
-  border: 1px solid #e9ecef;
-  border-width: 0 0 1px 0;
-  padding: 1rem 1rem;
-  font-weight: 600;
-}
-
-.table {
-  display: none;
-  @include sm {
-    display: block;
-  }
-}
-
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  align-items: center;
-}
-
-.cart-total {
-  font-size: 24px;
-}
-
-.total {
-  color: $primary-color;
-  font-weight: bold;
-}
-.product {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  text-decoration: none;
-  cursor: pointer;
-  color: $table-text-color;
-}
-
-.product-image {
-  width: 100px;
-  height: 100%;
 }
 
 .quantity {
@@ -292,6 +259,38 @@ onMounted(async () => {
     width: 20px;
     text-align: center;
   }
+}
+
+.total {
+  color: $primary-color;
+  font-weight: bold;
+}
+
+.cart-footer {
+  background: #f8f9fa;
+  color: #495057;
+  border: 1px solid #e9ecef;
+  border-width: 0 0 1px 0;
+  padding: 1rem 1rem;
+  font-weight: 600;
+}
+
+.cart-total {
+  font-size: 24px;
+}
+
+.table {
+  display: none;
+  @include sm {
+    display: block;
+  }
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
 }
 
 ::v-deep(.p-datatable .p-datatable-tbody > tr > td) {

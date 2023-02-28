@@ -2,9 +2,7 @@
   <div class="wishlist">
     <h1 class="title">Wishlist</h1>
 
-    <div
-      v-if="wishlistItems.length"
-      class="product-list">
+    <div v-if="wishlistItems.length">
       <div class="product-list-mobile">
         <div
           class="list-item"
@@ -206,6 +204,19 @@ onMounted(async () => {
   border-bottom: 1px solid $complementary-color;
 }
 
+.product {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  text-decoration: none;
+  cursor: pointer;
+  color: $table-text-color;
+}
+.product-image {
+  width: 100px;
+  height: 100%;
+}
+
 .product-name {
   text-align: left;
 }
@@ -242,19 +253,6 @@ onMounted(async () => {
   align-items: center;
 }
 
-.product {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  text-decoration: none;
-  cursor: pointer;
-  color: $table-text-color;
-}
-.product-image {
-  width: 100px;
-  height: 100%;
-}
-
 .p-button-lg {
   width: 150px;
   height: 40px;
@@ -277,9 +275,6 @@ onMounted(async () => {
 .p-button.p-button-icon-only {
   height: 40px;
   width: 40px;
-}
-
-.btn-secondary {
 }
 
 ::v-deep(.p-datatable .p-datatable-tbody > tr:focus) {
