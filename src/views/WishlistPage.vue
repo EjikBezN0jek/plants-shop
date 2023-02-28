@@ -24,7 +24,7 @@
               <p class="product-name">{{ product.name }}</p>
               <Button
                 icon="pi pi-times"
-                @click="deleteFromWishlist(product.wishlistId)"></Button>
+                @click="removeProduct(product)"></Button>
             </div>
 
             <div class="row">
@@ -54,7 +54,7 @@
       </div>
       <DataTable
         :value="wishlistItems"
-        responsiveLayout="scroll"
+        responsive-layout="scroll"
         class="table">
         <Column header="PRODUCT NAME">
           <template #body="slotProps">
@@ -102,7 +102,7 @@
           <template #body="slotProps">
             <Button
               icon="pi pi-times"
-              @click="deleteFromWishlist(slotProps.data.wishlistId)"></Button>
+              @click="removeProduct(slotProps.data)"></Button>
           </template>
         </Column>
       </DataTable>
@@ -122,7 +122,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -133,45 +133,51 @@ import type { IWishlistItem } from '@/types/wishlistItem';
 
 const wishlistItems = ref<IWishlistItem[]>([]);
 const cartItems = ref<ICartItem[]>([]);
-// const itemExistInCart = ref();
 
-const addToCart = (data: IWishlistItem) => {
+const addToCart = (product: IWishlistItem) => {
   const formatProduct = {
-    cartId: data.wishlistId,
+    cartId: product.wishlistId,
     quantity: 1,
-    id: data.id,
-    name: data.name,
-    color: data.color,
-    price: data.price,
-    img: data.img,
-    totalCost: data.price,
+    id: product.id,
+    name: product.name,
+    color: product.color,
+    price: product.price,
+    img: product.img,
+    totalCost: product.price,
   };
   cartItems.value.push(formatProduct);
-  localStorage.setItem('cart', JSON.stringify(cartItems.value));
-  // productExistInCart(data.wishlistId);
-  refreshWishlist();
+  saveCart();
 };
 
 const isProductExistInCart = (id: string) => {
   return !!cartItems.value.find(item => item.cartId === id);
 };
 
-const deleteFromWishlist = (id: string) => {
-  localStorage.setItem('wishlist', JSON.stringify(wishlistItems.value.filter(item => item.wishlistId !== id)));
-  refreshWishlist();
+const removeProduct = (product: IWishlistItem) => {
+  wishlistItems.value = wishlistItems.value.filter(item => item.wishlistId !== product.wishlistId);
 };
 
-// const productExistInCart = (id: string) => {
-//   itemExistInCart.value = cartItems.value.find(item => item.cartId === id);
-// };
-
-const refreshWishlist = () => {
-  wishlistItems.value = JSON.parse(localStorage.getItem('wishlist')) || [];
+const initWishlist = () => {
+  wishlistItems.value = JSON.parse(localStorage.getItem('wishlist') ?? '') ?? [];
 };
+
+const saveWishlist = () => {
+  localStorage.setItem('wishlist', JSON.stringify(wishlistItems.value));
+};
+
+const initCart = () => {
+  cartItems.value = JSON.parse(localStorage.getItem('cart') ?? '') ?? [];
+};
+
+const saveCart = () => {
+  localStorage.setItem('cart', JSON.stringify(cartItems.value));
+};
+
+watch(wishlistItems, saveWishlist, { deep: true });
 
 onMounted(async () => {
-  refreshWishlist();
-  cartItems.value = JSON.parse(localStorage.getItem('cart')) || [];
+  initWishlist();
+  initCart();
 });
 </script>
 

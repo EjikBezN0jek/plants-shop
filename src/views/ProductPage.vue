@@ -52,11 +52,11 @@
       </div>
 
       <div
-        v-if="itemExistInCart"
+        v-if="itemInCart"
         class="cart-buttons">
         <div class="quantity">
           <button @click="decrementProductQuantity">-</button>
-          <p>{{ itemExistInCart.quantity }}</p>
+          <p>{{ itemInCart.quantity }}</p>
           <button @click="incrementProductQuantity">+</button>
         </div>
         <router-link
@@ -67,7 +67,7 @@
         <i
           class="pi"
           style="font-size: 2rem"
-          :class="{ 'pi-heart': !itemExistInWishlist, 'pi-heart-fill': itemExistInWishlist }"
+          :class="{ 'pi-heart': !itemInWishlist, 'pi-heart-fill': itemInWishlist }"
           @click="toggleWishlist"></i>
       </div>
 
@@ -83,7 +83,7 @@
         <i
           class="pi"
           style="font-size: 2rem"
-          :class="{ 'pi-heart': !itemExistInWishlist, 'pi-heart-fill': itemExistInWishlist }"
+          :class="{ 'pi-heart': !itemInWishlist, 'pi-heart-fill': itemInWishlist }"
           @click="toggleWishlist"></i>
       </div>
     </div>
@@ -112,10 +112,11 @@ const home = ref({
 const breadcrumbItems = [{ label: 'catalog', url: '/catalog' }];
 
 const product = ref<IProduct>();
+
 const cartItems = ref<ICartItem[]>([]);
-const colorSelected = ref('');
-const itemExistInCart = ref();
+const itemInCart = ref();
 const cartId = ref('');
+const colorSelected = ref('');
 
 const addToCart = () => {
   if (product.value) {
@@ -130,56 +131,68 @@ const addToCart = () => {
       totalCost: product.value.price,
     };
     cartItems.value.push(formatProduct);
-    localStorage.setItem('cart', JSON.stringify(cartItems.value));
-    productExistInCart();
+    saveCart();
   }
 };
-const productExistInCart = () => {
-  itemExistInCart.value = cartItems.value.find(item => item.cartId === cartId.value);
+
+const getProductFromCart = () => {
+  itemInCart.value = cartItems.value.find(item => item.cartId === cartId.value);
 };
 
-const recalculationTotal = () => {
-  itemExistInCart.value.totalCost = (product.value?.price ?? 0) * itemExistInCart.value.quantity;
+const initCart = () => {
+  cartItems.value = JSON.parse(localStorage.getItem('cart') ?? '') ?? [];
 };
 
 const incrementProductQuantity = () => {
-  itemExistInCart.value.quantity += 1;
+  itemInCart.value.quantity += 1;
   recalculationTotal();
-  localStorage.setItem('cart', JSON.stringify(cartItems.value));
-  refreshCart();
-};
-const decrementProductQuantity = () => {
-  itemExistInCart.value.quantity -= 1;
-  recalculationTotal();
-  if (itemExistInCart.value.quantity >= 1) {
-    localStorage.setItem('cart', JSON.stringify(cartItems.value));
-  }
-  if (itemExistInCart.value.quantity < 1) {
-    localStorage.setItem('cart', JSON.stringify(cartItems.value.filter(item => item.cartId !== cartId.value)));
-  }
-  refreshCart();
 };
 
-const refreshCart = () => {
-  cartItems.value = JSON.parse(localStorage.getItem('cart')) || [];
-  productExistInCart();
+const decrementProductQuantity = () => {
+  itemInCart.value.quantity -= 1;
+  recalculationTotal();
+  if (itemInCart.value.quantity < 1) {
+    removeProductFromCart();
+  }
 };
+
+const recalculationTotal = () => {
+  itemInCart.value.totalCost = itemInCart.value.price * itemInCart.value.quantity;
+};
+
+const removeProductFromCart = () => {
+  cartItems.value = cartItems.value.filter(item => item.cartId !== itemInCart.value.cartId);
+};
+
+const saveCart = () => {
+  localStorage.setItem('cart', JSON.stringify(cartItems.value));
+};
+
+watch(colorSelected, newColor => {
+  cartId.value = product.value?.id + newColor;
+  getProductFromCart();
+});
+
+watch(
+  cartItems,
+  () => {
+    saveCart();
+    getProductFromCart();
+  },
+  { deep: true }
+);
 
 const wishlistItems = ref<IWishlistItem[]>([]);
 const wishlistId = ref('');
-const itemExistInWishlist = ref();
+const itemInWishlist = ref();
 
-const productExistInWishlist = () => {
-  itemExistInWishlist.value = wishlistItems.value.find(item => item.wishlistId === wishlistId.value);
+const getProductFromWishlist = () => {
+  itemInWishlist.value = wishlistItems.value.find(item => item.wishlistId === wishlistId.value);
 };
 
 const toggleWishlist = () => {
-  if (itemExistInWishlist.value) {
-    localStorage.setItem(
-      'wishlist',
-      JSON.stringify(wishlistItems.value.filter(item => item.wishlistId !== wishlistId.value))
-    );
-    refreshWishlist();
+  if (itemInWishlist.value) {
+    removeProductFromWishlist();
   } else {
     if (product.value) {
       const formatProduct = {
@@ -191,32 +204,36 @@ const toggleWishlist = () => {
         img: product.value.img,
       };
       wishlistItems.value.push(formatProduct);
-      localStorage.setItem('wishlist', JSON.stringify(wishlistItems.value));
-      productExistInWishlist();
+      saveWishlist();
     }
   }
+  getProductFromWishlist();
 };
 
-const refreshWishlist = () => {
-  wishlistItems.value = JSON.parse(localStorage.getItem('wishlist')) || [];
-  productExistInWishlist();
+const initWishlist = () => {
+  wishlistItems.value = JSON.parse(localStorage.getItem('wishlist') ?? '') ?? [];
 };
 
-watch(colorSelected, newColor => {
-  cartId.value = product.value?.id + newColor;
-  productExistInCart();
-});
+const removeProductFromWishlist = () => {
+  wishlistItems.value = wishlistItems.value.filter(item => item.wishlistId !== itemInWishlist.value.wishlistId);
+};
+
+const saveWishlist = () => {
+  localStorage.setItem('wishlist', JSON.stringify(wishlistItems.value));
+};
 
 watch(colorSelected, newColor => {
   wishlistId.value = product.value?.id + newColor;
-  productExistInWishlist();
+  getProductFromWishlist();
 });
+
+watch(wishlistItems, saveWishlist, { deep: true });
 
 onMounted(async () => {
   product.value = await fetchProductById(+route.params.id);
   colorSelected.value = product.value.colors[0];
-  refreshCart();
-  refreshWishlist();
+  initCart();
+  initWishlist();
 });
 </script>
 

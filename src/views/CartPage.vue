@@ -100,7 +100,7 @@
           <template #body="slotProps">
             <Button
               icon="pi pi-times"
-              @click="removeProduct(slotProps.data.cartId)"></Button>
+              @click="removeProduct(slotProps.data)"></Button>
           </template>
         </Column>
         <template #footer>
