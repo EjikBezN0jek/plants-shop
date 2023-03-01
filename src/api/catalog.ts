@@ -28,3 +28,6 @@ export const fetchAllBadges = async (): Promise<IBadge[]> => (await axiosInstanc
 
 export const fetchProductById = async (id: number): Promise<IProduct> =>
   (await axiosInstance.get(`products/${id}`)).data;
+
+export const fetchRelatedProducts = async (params = {}): Promise<IProduct[]> =>
+  (await axiosInstance.get('products', { params: params })).data;

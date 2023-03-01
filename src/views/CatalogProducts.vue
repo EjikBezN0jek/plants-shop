@@ -30,7 +30,15 @@
             @update:model-value="searchProducts" />
         </div>
 
-        <ProductList :products="products" />
+        <div
+          v-if="products?.length"
+          class="product-list">
+          <ProductCard
+            v-for="product in products"
+            :key="product.id"
+            :product="product" />
+        </div>
+        <h2 v-else>No products!</h2>
 
         <CatalogPagination
           v-if="pagination.last > 1"
@@ -51,7 +59,7 @@ import CatalogPagination from '@/components/CatalogPagination.vue';
 import CatalogSearch from '@/components/CatalogSearch.vue';
 import CatalogSorting from '@/components/CatalogSorting.vue';
 import CatalogFilters from '@/components/CatalogFilters.vue';
-import ProductList from '@/components/ProductList.vue';
+import ProductCard from '@/components/ProductCard.vue';
 
 import { usePagination } from '@/hooks/usePagination';
 
@@ -195,6 +203,18 @@ onMounted(async () => {
   span {
     font-weight: bold;
     color: $primary-color;
+  }
+}
+
+.product-list {
+  padding: 50px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  @include sm {
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 }
 </style>

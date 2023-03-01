@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="product"
-    class="product">
+    class="product-container">
     <img
       :src="`/images/products/${product.img}`"
       alt="product-image"
@@ -12,7 +12,7 @@
         :model="breadcrumbItems" />
       <div class="wrapper">
         <h1>{{ product.name }}</h1>
-        <div class="badges">
+        <div class="badges info-badges">
           <div
             class="badge"
             v-for="badge in product.badges"
@@ -70,7 +70,6 @@
           :class="{ 'pi-heart': !itemInWishlist, 'pi-heart-fill': itemInWishlist }"
           @click="toggleWishlist"></i>
       </div>
-
       <div
         v-else
         class="cart-buttons">
@@ -88,20 +87,62 @@
       </div>
     </div>
   </div>
+  <div class="related">
+    <h2 v-if="relatedProducts?.length">Related Products</h2>
+    <ProductCarousel :products="relatedProducts"></ProductCarousel>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, onMounted, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 import Rating from 'primevue/rating';
 import Button from 'primevue/button';
 import Breadcrumb from 'primevue/breadcrumb';
+
+import ProductCarousel from '@/components/ProductCarousel.vue';
+
+import Swiper, { Navigation, Pagination } from 'swiper';
 
 import type { IProduct } from '@/types/product';
 import type { ICartItem } from '@/types/cartItem';
 import type { IWishlistItem } from '@/types/wishlistItem';
 
-import { fetchProductById } from '@/api/catalog';
+import { fetchProductById, fetchRelatedProducts } from '@/api/catalog';
+
+Swiper.use([Navigation, Pagination]);
+
+const createSwiper = () => {
+  const swiper = new Swiper('.swiper', {
+    slidesPerView: 1,
+    spaceBetween: 50,
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'bullets',
+      clickable: true,
+    },
+    breakpoints: { 576: { slidesPerView: 2 }, 768: { slidesPerView: 3 }, 992: { slidesPerView: 4 } },
+  });
+};
+
+const relatedProducts = ref<IProduct[]>();
+
+const getRelatedProducts = async () => {
+  const params = {
+    categories_like: product.value?.categories,
+    _limit: 8,
+    id_ne: product.value?.id,
+  };
+  relatedProducts.value = shuffleRelatedProducts(await fetchRelatedProducts(params));
+};
+
+const shuffleRelatedProducts = (products: IProduct[]) => {
+  return products.sort(() => Math.random() - 0.5);
+};
 
 const route = useRoute();
 
@@ -233,19 +274,27 @@ watch(
   { deep: true }
 );
 
+onBeforeRouteUpdate(async to => {
+  product.value = await fetchProductById(+to.params.id);
+  document.documentElement.scrollTop = 0;
+});
+
 onMounted(async () => {
   product.value = await fetchProductById(+route.params.id);
   colorSelected.value = product.value.colors[0];
   initCart();
   initWishlist();
+  getRelatedProducts();
+  createSwiper();
 });
 </script>
 
 <style lang="scss" scoped>
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
+@import '~swiper/swiper-bundle.min.css';
 
-.product {
+.product-container {
   background: $image-background-color;
   display: flex;
   flex-direction: column;
@@ -267,6 +316,10 @@ onMounted(async () => {
   }
 }
 
+.related {
+  padding: 50px 0;
+}
+
 .image {
   max-width: 300px;
   height: 100%;
@@ -283,16 +336,18 @@ onMounted(async () => {
   align-items: flex-start;
   gap: 15px;
   padding: 0 20px 20px;
+  width: 300px;
 
   @include sm {
     padding: 70px 0;
+    width: 450px;
   }
 }
 .wrapper {
   position: relative;
 }
 
-.badges {
+.info-badges {
   left: calc(100% + 20px);
   top: 50%;
   transform: translateY(-50%);
@@ -382,24 +437,9 @@ onMounted(async () => {
   }
 }
 
-::v-deep(.pi-heart-fill) {
-  color: $primary-color;
-}
-
 ::v-deep(.p-breadcrumb-list) {
   text-transform: uppercase;
   font-size: 14px;
-}
-
-::v-deep(.p-breadcrumb .p-breadcrumb-list li:last-child .p-menuitem-text) {
-  color: $primary-color;
-}
-::v-deep(.p-breadcrumb .p-breadcrumb-list li .p-menuitem-link .p-menuitem-icon) {
-  color: $primary-color;
-}
-
-::v-deep(.p-breadcrumb .p-breadcrumb-list li.p-menuitem-separator) {
-  color: $primary-color;
 }
 
 ::v-deep(.p-breadcrumb) {
@@ -407,4 +447,23 @@ onMounted(async () => {
   background: none;
   border: none;
 }
+
+::v-deep(.p-breadcrumb .p-breadcrumb-list li:last-child .p-menuitem-text),
+::v-deep(.p-breadcrumb .p-breadcrumb-list li .p-menuitem-link .p-menuitem-icon),
+::v-deep(.p-breadcrumb .p-breadcrumb-list li.p-menuitem-separator),
+::v-deep(.pi-heart-fill) {
+  color: $primary-color;
+}
+
+// ::v-deep(.swiper-pagination-bullet-active) {
+//   background-color: $primary-color;
+// }
+
+// ::v-deep(.swiper-pagination) {
+//   position: relative;
+// }
+
+// ::v-deep(.swiper-button-disabled) {
+//   display: none;
+// }
 </style>
