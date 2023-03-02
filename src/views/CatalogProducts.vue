@@ -1,49 +1,61 @@
 <template>
-  <div class="catalog">
-    <p class="title">{{ categorySelectedLabel }} plants</p>
-    <p class="products">
-      <span>{{ pagination.items }}</span> products
-    </p>
+  <div class="container">
+    <div class="catalog">
+      <p class="title">{{ categorySelectedLabel }} plants</p>
+      <p class="products">
+        <span>{{ pagination.items }}</span> products
+      </p>
 
-    <div class="catalog-container">
-      <CatalogFilters
-        v-model:colors="colorsSelected"
-        @update:colors="refetchProducts"
-        v-model:category="categorySelected"
-        @update:category="goToCategory"
-        :colors-list="colorsList"
-        :categories-list="categoriesList"
-        :prices="prices"
-        v-model:pricesSelected="pricesSelected"
-        @update:prices-selected="refetchProducts"
-        :badges-list="badgesList"
-        v-model:badges="badgesSelected"
-        @update:badges="refetchProducts" />
+      <div class="catalog-container">
+        <CatalogFilters
+          v-model:colors="colorsSelected"
+          @update:colors="refetchProducts"
+          v-model:category="categorySelected"
+          @update:category="goToCategory"
+          :colors-list="colorsList"
+          :categories-list="categoriesList"
+          :prices="prices"
+          v-model:pricesSelected="pricesSelected"
+          @update:prices-selected="refetchProducts"
+          :badges-list="badgesList"
+          v-model:badges="badgesSelected"
+          @update:badges="refetchProducts" />
 
-      <div class="content">
-        <div class="row">
-          <CatalogSorting
-            v-model="sorting"
-            @update:model-value="refetchProducts" />
-          <CatalogSearch
-            v-model="searchQuery"
-            @update:model-value="searchProducts" />
+        <div class="content">
+          <div class="row">
+            <CatalogSorting
+              v-model="sorting"
+              @update:model-value="refetchProducts" />
+            <CatalogSearch
+              v-model="searchQuery"
+              @update:model-value="searchProducts" />
+          </div>
+
+          <div
+            v-if="products?.length"
+            class="product-list">
+            <ProductCard
+              v-for="product in products"
+              :key="product.id"
+              :product="product" />
+          </div>
+          <h2 v-else>No products!</h2>
+
+          <!-- <CatalogPagination
+            v-if="pagination.last > 1"
+            :pagination="pagination"
+            @change-page="changePage" /> -->
+
+          <div
+            ref="observerItem"
+            class="observer" />
+          <button
+            v-if="isShowScroll"
+            class="scroll-up"
+            @click="scrollUp">
+            <i class="pi pi-angle-up"></i>
+          </button>
         </div>
-
-        <div
-          v-if="products?.length"
-          class="product-list">
-          <ProductCard
-            v-for="product in products"
-            :key="product.id"
-            :product="product" />
-        </div>
-        <h2 v-else>No products!</h2>
-
-        <CatalogPagination
-          v-if="pagination.last > 1"
-          :pagination="pagination"
-          @change-page="changePage" />
       </div>
     </div>
   </div>
@@ -55,7 +67,7 @@ import { useRouter, useRoute } from 'vue-router';
 
 import { fetchAllProducts, fetchAllCategories, fetchAllColors, fetchAllPrices, fetchAllBadges } from '@/api/catalog';
 
-import CatalogPagination from '@/components/CatalogPagination.vue';
+// import CatalogPagination from '@/components/CatalogPagination.vue';
 import CatalogSearch from '@/components/CatalogSearch.vue';
 import CatalogSorting from '@/components/CatalogSorting.vue';
 import CatalogFilters from '@/components/CatalogFilters.vue';
@@ -73,6 +85,7 @@ import type { IPrices } from '@/types/prices';
 import type { IBadge } from '@/types/badge';
 
 const products = ref<IProduct[]>();
+const isLoadMore = ref(false);
 
 const getProducts = async () => {
   const params = {
@@ -83,30 +96,38 @@ const getProducts = async () => {
     _sort: sorting.value.target,
     _order: sorting.value.order,
     _page: pagination.value.current,
-    _limit: 5,
+    _limit: 8,
     price_gte: pricesSelected.value?.min,
     price_lte: pricesSelected.value?.max,
   };
 
   const { data, pagination: p } = await fetchAllProducts(params);
-
-  products.value = data;
   setPagination(p);
+
+  isLoadMore.value ? (products.value = [...(products.value ?? []), ...data]) : (products.value = data);
+  isLoadMore.value = false;
 };
 
 const refetchProducts = () => {
   resetCurrentPage();
   getProducts();
+  isShowScroll.value = false;
 };
 
 //Pagination
 const { pagination, setPagination, resetCurrentPage, setCurrentPage } = usePagination();
 
-const changePage = (page: number) => {
-  setCurrentPage(page);
-  getProducts();
+//ScrollUp
+const isShowScroll = ref(false);
+const scrollUp = () => {
   document.documentElement.scrollTop = 0;
 };
+
+// const changePage = (page: number) => {
+//   setCurrentPage(page);
+//   getProducts();
+//   scrollUp()
+// };
 
 //Search
 const searchQuery = ref('');
@@ -150,11 +171,31 @@ const pricesSelected = ref<IPrices>();
 const badgesList = ref<IBadge[]>();
 const badgesSelected = ref<string[]>([]);
 
+//Observer
+const observerItem = ref();
+const initObserver = () => {
+  const options = {
+    rootMargin: '0px',
+    threshold: 1.0,
+  };
+  const callback = (entries: []) => {
+    if (entries[0].isIntersecting && pagination.value.current < pagination.value.last) {
+      setCurrentPage((pagination.value.current += 1));
+      isLoadMore.value = true;
+      isShowScroll.value = true;
+      getProducts();
+    }
+  };
+  const observer = new IntersectionObserver(callback, options);
+  observer.observe(observerItem.value);
+};
+
 onMounted(async () => {
   if (categoryFromUrl) categorySelected.value = categoryFromUrl;
   prices.value = await fetchAllPrices();
   pricesSelected.value = { min: prices.value.max * 0.0025, max: prices.value.max * 1 };
   getProducts();
+  initObserver();
   categoriesList.value = await fetchAllCategories();
   colorsList.value = await fetchAllColors();
   badgesList.value = await fetchAllBadges();
@@ -164,6 +205,39 @@ onMounted(async () => {
 <style scoped lang="scss">
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
+
+.scroll-up {
+  @include sm {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid $complementary-color;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & .pi-angle-up {
+      color: $primary-color;
+      font-size: 2rem;
+    }
+  }
+
+  @include md {
+    bottom: 40px;
+    right: 40px;
+  }
+}
+
+.observer {
+  background: none;
+  height: 50px;
+  width: 100%;
+}
 
 .catalog {
   display: flex;
@@ -207,7 +281,7 @@ onMounted(async () => {
 }
 
 .product-list {
-  padding: 50px 0;
+  padding: 50px 0 0;
   display: flex;
   flex-direction: column;
   gap: 30px;

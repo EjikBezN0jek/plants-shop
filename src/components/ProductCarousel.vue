@@ -28,6 +28,7 @@ const props = defineProps<IProps>();
 <style lang="scss" scoped>
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
+@import '~swiper/swiper-bundle.min.css';
 
 ::v-deep(.swiper-button-next::after),
 ::v-deep(.swiper-button-prev::after) {

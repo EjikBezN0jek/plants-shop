@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="product"
-    class="product-container">
+    class="product-container container">
     <img
       :src="`/images/products/${product.img}`"
       alt="product-image"
@@ -87,7 +87,8 @@
       </div>
     </div>
   </div>
-  <div class="related">
+
+  <div class="related container">
     <h2 v-if="relatedProducts?.length">Related Products</h2>
     <ProductCarousel :products="relatedProducts"></ProductCarousel>
   </div>
@@ -292,7 +293,6 @@ onMounted(async () => {
 <style lang="scss" scoped>
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
-@import '~swiper/swiper-bundle.min.css';
 
 .product-container {
   background: $image-background-color;
@@ -371,6 +371,7 @@ onMounted(async () => {
 
 .characteristic-name {
   font-weight: bold;
+  text-align: left;
 }
 
 .color {
