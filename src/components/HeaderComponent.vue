@@ -13,9 +13,14 @@
         alt="Vue logo"
         src="/images/logo.png"
         class="logo" />
-      <i
-        class="pi pi-shopping-cart"
-        style="font-size: 2.5rem" />
+      <router-link
+        to="/cart"
+        class="cart-link">
+        <div class="notice">{{ cartItemsQuantity }}</div>
+        <i
+          class="pi pi-shopping-cart"
+          style="font-size: 2.5rem"></i>
+      </router-link>
     </div>
 
     <MegaMenu
@@ -27,7 +32,7 @@
 <script lang="ts" setup>
 import SideMenu from '@/components/SideMenu.vue';
 import MegaMenu from 'primevue/megamenu';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const menuItems = ref([
   { label: 'Home', icon: 'pi pi-fw pi-home', to: '/' },
@@ -43,6 +48,15 @@ const toggleSidemenu = () => {
   isOpenSidemenu.value ? (isOpenSidemenu.value = false) : (isOpenSidemenu.value = true);
   isOpenSidemenu.value ? document.body.classList.add('hidden') : document.body.classList.remove('hidden');
 };
+
+const cartItemsQuantity = ref(0);
+const getCartItemsQuantity = () => {
+  cartItemsQuantity.value = (JSON.parse(localStorage.getItem('cart') ?? '') ?? []).length;
+};
+
+onMounted(async () => {
+  getCartItemsQuantity();
+});
 </script>
 
 <style lang="scss">
@@ -84,5 +98,30 @@ const toggleSidemenu = () => {
     border-top: 1px solid $complementary-color !important;
     border-bottom: 1px solid $complementary-color !important;
   }
+}
+
+.cart-link {
+  color: $secondary-color;
+  position: relative;
+  @include sm {
+    display: none;
+  }
+}
+
+.notice {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(30%, -30%);
+  width: 20px;
+  height: 20px;
+  background: $primary-color;
+  border-radius: 50%;
+  color: white;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 111;
 }
 </style>

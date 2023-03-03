@@ -2,10 +2,16 @@
   <div
     v-if="product"
     class="product-container container">
-    <img
+    <Image
       :src="`/images/products/${product.img}`"
       alt="product-image"
-      class="image" />
+      :preview="true">
+    </Image>
+    <!-- <img
+      :src="`/images/products/${product.img}`"
+      alt="product-image"
+      class="image" /> -->
+
     <div class="info">
       <Breadcrumb
         :home="home"
@@ -92,6 +98,8 @@
     <h2 v-if="relatedProducts?.length">Related Products</h2>
     <ProductCarousel :products="relatedProducts"></ProductCarousel>
   </div>
+
+  <CartWidget :cart-items-quantity="cartItemsQuantity" />
 </template>
 
 <script lang="ts" setup>
@@ -100,8 +108,10 @@ import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 import Rating from 'primevue/rating';
 import Button from 'primevue/button';
 import Breadcrumb from 'primevue/breadcrumb';
+import Image from 'primevue/image';
 
 import ProductCarousel from '@/components/ProductCarousel.vue';
+import CartWidget from '@/components/CartWidget.vue';
 
 import Swiper, { Navigation, Pagination } from 'swiper';
 
@@ -182,6 +192,7 @@ const getProductFromCart = () => {
 
 const initCart = () => {
   cartItems.value = JSON.parse(localStorage.getItem('cart') ?? '') ?? [];
+  getCartItemsQuantity();
 };
 
 const incrementProductQuantity = () => {
@@ -207,6 +218,7 @@ const removeProductFromCart = () => {
 
 const saveCart = () => {
   localStorage.setItem('cart', JSON.stringify(cartItems.value));
+  getCartItemsQuantity();
 };
 
 watch(colorSelected, newColor => {
@@ -259,6 +271,11 @@ const removeProductFromWishlist = () => {
 
 const saveWishlist = () => {
   localStorage.setItem('wishlist', JSON.stringify(wishlistItems.value));
+};
+
+const cartItemsQuantity = ref(0);
+const getCartItemsQuantity = () => {
+  cartItemsQuantity.value = (JSON.parse(localStorage.getItem('cart') ?? '') ?? []).length;
 };
 
 watch(colorSelected, newColor => {
@@ -325,8 +342,8 @@ onMounted(async () => {
   height: 100%;
   border-radius: 5px 5px 0 0;
 
-  @include lg {
-    max-width: 500px;
+  @include md {
+    max-width: 50%;
   }
 }
 
@@ -340,7 +357,7 @@ onMounted(async () => {
 
   @include sm {
     padding: 70px 0;
-    width: 450px;
+    width: 400px;
   }
 }
 .wrapper {
@@ -436,6 +453,20 @@ onMounted(async () => {
   @include sm {
     align-self: flex-start;
   }
+}
+
+::v-deep(.p-image.p-component.p-image-preview-container img) {
+  max-width: 300px;
+  height: 100%;
+  border-radius: 5px 5px 0 0;
+
+  @include md {
+    max-width: 50%;
+  }
+}
+
+::v-deep(.p-image-preview-indicator) {
+  border: 1px solid $primary-color;
 }
 
 ::v-deep(.p-breadcrumb-list) {

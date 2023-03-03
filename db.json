@@ -589,5 +589,22 @@
   "prices": {
     "min": 25,
     "max": 10000
-  }
+  },
+  "payment": [
+    {
+      "id": 1,
+      "name": "visa",
+      "label": "Visa"
+    },
+    {
+      "id": 2,
+      "name": "paypal",
+      "label": "Paypal"
+    },
+    {
+      "id": 3,
+      "name": "master card",
+      "label": "Master card"
+    }
+  ]
 }

@@ -5,6 +5,7 @@ import type { IColor } from '@/types/color';
 import type { IPrices } from '@/types/prices';
 import type { IBadge } from '@/types/badge';
 import type { IResponseList } from '@/types/';
+import type { IPaymentItem } from '@/types/paymentItem';
 
 import { getResponsePagination } from '@/api/helpers';
 import { clearObjectEmptyFields } from '@/helpers';
@@ -31,3 +32,5 @@ export const fetchProductById = async (id: number): Promise<IProduct> =>
 
 export const fetchRelatedProducts = async (params = {}): Promise<IProduct[]> =>
   (await axiosInstance.get('products', { params: params })).data;
+
+export const fetchPaymentItems = async (): Promise<IPaymentItem[]> => (await axiosInstance.get('payment')).data;

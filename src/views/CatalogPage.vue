@@ -59,6 +59,7 @@
       </div>
     </div>
   </div>
+  <CartWidget :cart-items-quantity="cartItemsQuantity" />
 </template>
 
 <script lang="ts" setup>
@@ -68,6 +69,7 @@ import { useRouter, useRoute } from 'vue-router';
 import { fetchAllProducts, fetchAllCategories, fetchAllColors, fetchAllPrices, fetchAllBadges } from '@/api/catalog';
 
 // import CatalogPagination from '@/components/CatalogPagination.vue';
+import CartWidget from '@/components/CartWidget.vue';
 import CatalogSearch from '@/components/CatalogSearch.vue';
 import CatalogSorting from '@/components/CatalogSorting.vue';
 import CatalogFilters from '@/components/CatalogFilters.vue';
@@ -111,23 +113,23 @@ const getProducts = async () => {
 const refetchProducts = () => {
   resetCurrentPage();
   getProducts();
-  isShowScroll.value = false;
 };
 
 //Pagination
 const { pagination, setPagination, resetCurrentPage, setCurrentPage } = usePagination();
-
-//ScrollUp
-const isShowScroll = ref(false);
-const scrollUp = () => {
-  document.documentElement.scrollTop = 0;
-};
 
 // const changePage = (page: number) => {
 //   setCurrentPage(page);
 //   getProducts();
 //   scrollUp()
 // };
+
+//ScrollUp
+const isShowScroll = ref(false);
+const scrollUp = () => {
+  document.documentElement.scrollTop = 0;
+  isShowScroll.value = false;
+};
 
 //Search
 const searchQuery = ref('');
@@ -178,7 +180,7 @@ const initObserver = () => {
     rootMargin: '0px',
     threshold: 1.0,
   };
-  const callback = (entries: []) => {
+  const callback = entries => {
     if (entries[0].isIntersecting && pagination.value.current < pagination.value.last) {
       setCurrentPage((pagination.value.current += 1));
       isLoadMore.value = true;
@@ -190,6 +192,11 @@ const initObserver = () => {
   observer.observe(observerItem.value);
 };
 
+const cartItemsQuantity = ref(0);
+const getCartItemsQuantity = () => {
+  cartItemsQuantity.value = (JSON.parse(localStorage.getItem('cart') ?? '') ?? []).length;
+};
+
 onMounted(async () => {
   if (categoryFromUrl) categorySelected.value = categoryFromUrl;
   prices.value = await fetchAllPrices();
@@ -199,6 +206,7 @@ onMounted(async () => {
   categoriesList.value = await fetchAllCategories();
   colorsList.value = await fetchAllColors();
   badgesList.value = await fetchAllBadges();
+  getCartItemsQuantity();
 });
 </script>
 
@@ -210,9 +218,9 @@ onMounted(async () => {
   @include sm {
     position: fixed;
     bottom: 30px;
-    right: 30px;
-    width: 50px;
-    height: 50px;
+    right: 60px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     background: white;
     border: 2px solid $complementary-color;
@@ -220,6 +228,7 @@ onMounted(async () => {
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 
     & .pi-angle-up {
       color: $primary-color;
@@ -228,8 +237,8 @@ onMounted(async () => {
   }
 
   @include md {
-    bottom: 40px;
-    right: 40px;
+    bottom: 30px;
+    right: 60px;
   }
 }
 

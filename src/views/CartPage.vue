@@ -49,6 +49,11 @@
             <p>
               CART TOTAL: <span class="total cart-total">$ {{ allProductsTotalCounter(cartItems) }}</span>
             </p>
+            <router-link
+              :to="{ name: 'checkout' }"
+              class="btn-link"
+              >Proceed to checkout</router-link
+            >
           </div>
         </div>
 
@@ -103,7 +108,14 @@
             </template>
           </Column>
           <template #footer>
-            CART TOTAL: <span class="total cart-total">$ {{ allProductsTotalCounter(cartItems) }}</span>
+            <p>
+              CART TOTAL: <span class="total cart-total">$ {{ allProductsTotalCounter(cartItems) }}</span>
+            </p>
+            <router-link
+              :to="{ name: 'checkout' }"
+              class="btn-link"
+              >Proceed to checkout</router-link
+            >
           </template>
         </DataTable>
       </div>
@@ -133,8 +145,8 @@ import type { ICartItem } from '@/types/cartItem';
 
 const cartItems = ref<ICartItem[]>([]);
 
-const allProductsTotalCounter = (product: ICartItem[]) => {
-  return product.reduce((acc, item) => acc + item.totalCost, 0);
+const allProductsTotalCounter = (products: ICartItem[]) => {
+  return products.reduce((acc, item) => acc + item.totalCost, 0);
 };
 
 const recalculationTotal = (product: ICartItem) => {
@@ -275,6 +287,11 @@ onMounted(async () => {
   border-width: 0 0 1px 0;
   padding: 1rem 1rem;
   font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
 }
 
 .cart-total {
@@ -293,6 +310,14 @@ onMounted(async () => {
   flex-direction: column;
   gap: 15px;
   align-items: center;
+}
+
+::v-deep(.p-datatable-footer) {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
 }
 
 ::v-deep(.p-datatable .p-datatable-tbody > tr > td) {

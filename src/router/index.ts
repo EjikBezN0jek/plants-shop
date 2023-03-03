@@ -10,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/catalog/:category?',
     name: 'catalog',
-    component: () => import('@/views/CatalogProducts.vue'),
+    component: () => import('@/views/CatalogPage.vue'),
   },
   {
     path: '/product/:name?/:id?',
@@ -30,7 +30,12 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/views/LogIn.vue'),
+    component: () => import('@/views/LoginPage.vue'),
+  },
+  {
+    path: '/checkout',
+    name: 'checkout',
+    component: () => import('@/views/CheckoutPage.vue'),
   },
 ];
 
