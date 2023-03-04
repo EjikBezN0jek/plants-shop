@@ -2,58 +2,226 @@
   <div class="container">
     <p class="title">Checkout</p>
     <div class="checkout">
-      <div class="form">
-        <h2>Billing detail</h2>
-      </div>
-      <div class="order">
-        <h2>Your order</h2>
-        <hr />
-        <div
-          v-for="product in cartItems"
-          :key="product.id">
-          <div class="products-list">
-            <p class="name">{{ product.name }}</p>
-            <div
-              class="color"
-              :class="product.color"></div>
-            <p class="quantity">x {{ product.quantity }}</p>
-            <p class="price">${{ product.price }}</p>
+      <h2>Billing detail</h2>
+      <Dialog
+        v-model:visible="showMessage"
+        :breakpoints="{ '960px': '80vw' }"
+        :style="{ width: '30vw' }"
+        position="top">
+        <div class="flex align-items-center flex-column pt-6 px-3">
+          <i
+            class="pi pi-check-circle"
+            :style="{ fontSize: '5rem', color: 'var(--green-500)' }"></i>
+          <h5>Order Successful!</h5>
+        </div>
+      </Dialog>
+
+      <form
+        @submit.prevent="handleSubmit(!v$.$invalid)"
+        class="p-fluid form">
+        <div class="customer-info">
+          <div class="input-wrapper">
+            <span class="p-float-label">
+              <Dropdown
+                id="dropdown"
+                v-model="v$.country.name.$model"
+                :options="countries"
+                option-label="name"
+                :class="{ 'p-invalid': v$.country.name.$invalid && submitted }" />
+              <label
+                for="dropdown"
+                :class="{ 'p-error': v$.country.name.$invalid && submitted }"
+                >Country*</label
+              >
+            </span>
+            <small
+              v-if="v$.country.name.$invalid && submitted"
+              class="p-error"
+              >{{ v$.country.name.required.$message.replace('Value', 'Country') }}</small
+            >
           </div>
-        </div>
-        <hr />
-        <div class="row">
-          <h4>Subtotal</h4>
-          <p class="subtotal">${{ productsTotal }}</p>
-        </div>
-        <hr />
-        <div class="row">
-          <h4>Shipping</h4>
-          <p>${{ shippingCost }}</p>
-        </div>
-        <hr />
-        <div class="row">
-          <h4>Total</h4>
-          <p class="total">${{ productsTotal + shippingCost }}</p>
-        </div>
-        <div
-          v-for="item in paymentItems"
-          :key="item.id">
-          <label class="payment-item">
-            <RadioButton
-              name="payment"
-              :value="item.name"
-              v-model="payment" />
-            {{ item.label }}</label
-          >
+
+          <div class="name">
+            <div class="input-wrapper">
+              <span class="p-float-label">
+                <InputText
+                  id="firstName"
+                  type="text"
+                  v-model="v$.firstName.$model"
+                  :class="{ 'p-invalid': v$.firstName.$invalid && submitted }" />
+                <label
+                  for="firstName"
+                  :class="{ 'p-error': v$.firstName.$invalid && submitted }">
+                  First Name*
+                </label>
+              </span>
+              <small
+                v-if="v$.firstName.$invalid && submitted"
+                class="p-error"
+                >{{ v$.firstName.required.$message.replace('Value', 'First Name') }}</small
+              >
+            </div>
+
+            <div class="input-wrapper">
+              <span class="p-float-label">
+                <InputText
+                  id="lastName"
+                  type="text"
+                  v-model="v$.lastName.$model"
+                  :class="{ 'p-invalid': v$.lastName.$invalid && submitted }" />
+                <label
+                  for="lastName"
+                  :class="{ 'p-error': v$.lastName.$invalid && submitted }"
+                  >Last Name*</label
+                >
+              </span>
+              <small
+                v-if="v$.lastName.$invalid && submitted"
+                class="p-error"
+                >{{ v$.lastName.required.$message.replace('Value', 'Last Name') }}</small
+              >
+            </div>
+          </div>
+          <div class="input-wrapper">
+            <span class="p-float-label">
+              <Dropdown
+                id="dropdown"
+                v-model="v$.city.name.$model"
+                :options="state.country?.cities"
+                option-label="name"
+                :class="{ 'p-invalid': v$.city.name.$invalid && submitted }" />
+              <label
+                for="dropdown"
+                :class="{ 'p-error': v$.city.name.$invalid && submitted }"
+                >City*</label
+              >
+            </span>
+            <small
+              v-if="v$.city.name.$invalid && submitted"
+              class="p-error"
+              >{{ v$.city.name.required.$message.replace('Value', 'City') }}</small
+            >
+          </div>
+
+          <div class="input-wrapper">
+            <span class="p-float-label">
+              <InputText
+                id="address"
+                type="text"
+                v-model="v$.address.$model"
+                :class="{ 'p-invalid': v$.address.$invalid && submitted }" />
+              <label
+                for="address"
+                :class="{ 'p-error': v$.address.$invalid && submitted }"
+                >Address*</label
+              >
+            </span>
+            <small
+              v-if="v$.address.$invalid && submitted"
+              class="p-error"
+              >{{ v$.address.required.$message.replace('Value', 'Address') }}</small
+            >
+          </div>
+
+          <div class="input-wrapper">
+            <span class="p-float-label">
+              <InputText
+                id="email"
+                type="text"
+                v-model="v$.email.$model"
+                aria-describedby="email-error"
+                :class="{ 'p-invalid': v$.email.$invalid && submitted }" />
+              <label
+                for="email"
+                :class="{ 'p-error': v$.email.$invalid && submitted }"
+                >Email*</label
+              >
+            </span>
+
+            <span v-if="v$.email.$error && submitted">
+              <span
+                id="email-error"
+                v-for="(error, index) of v$.email.$errors"
+                :key="index">
+                <small class="p-error">{{ error.$message }}</small>
+              </span>
+            </span>
+            <small
+              v-else-if="v$.email.$invalid && submitted"
+              class="p-error"
+              >{{ v$.email.required.$message.replace('Value', 'Email') }}</small
+            >
+          </div>
+
+          <span class="p-float-label">
+            <InputMask
+              id="phone"
+              v-model="state.phone"
+              mask="(999) 999-9999"
+              :auto-clear="true"
+              placeholder="(999) 999-9999" />
+            <label for="phone">Phone</label>
+          </span>
         </div>
 
-        <Button
-          class="p-button-lg"
-          type="submit"
-          @click="placeOrder()"
-          >PLACE ORDER</Button
-        >
-      </div>
+        <div class="order">
+          <h2>Your order</h2>
+          <hr />
+          <div
+            v-for="product in cartItems"
+            :key="product.id">
+            <div class="products-list">
+              <p class="name">{{ product.name }}</p>
+              <div
+                class="color"
+                :class="product.color"></div>
+              <p class="quantity">x {{ product.quantity }}</p>
+              <p class="price">${{ product.price }}</p>
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <h4>Subtotal</h4>
+            <p class="subtotal">${{ productsTotal }}</p>
+          </div>
+          <hr />
+          <div class="row">
+            <h4>Shipping</h4>
+            <p>${{ shippingCost }}</p>
+          </div>
+          <hr />
+          <div class="row">
+            <h4>Total</h4>
+            <p class="total">${{ productsTotal + shippingCost }}</p>
+          </div>
+          <hr />
+          <div class="input-wrapper payment-list">
+            <div
+              v-for="item in paymentItems"
+              :key="item.id">
+              <label class="payment-item">
+                <RadioButton
+                  name="payment"
+                  :value="item.name"
+                  v-model="v$.payment.$model" />
+                {{ item.label }}</label
+              >
+            </div>
+
+            <small
+              v-if="v$.payment.$invalid && submitted"
+              class="p-error"
+              >{{ v$.payment.required.$message.replace('Value', 'Payment') }}</small
+            >
+          </div>
+
+          <Button
+            class="p-button-lg"
+            type="submit"
+            >PLACE ORDER</Button
+          >
+        </div>
+      </form>
     </div>
   </div>
 </template>
@@ -63,23 +231,74 @@ import { ref, onMounted } from 'vue';
 
 import RadioButton from 'primevue/radiobutton';
 import Button from 'primevue/button';
-// import { email, required } from '@vuelidate/validators';
-// import { useVuelidate } from '@vuelidate/core';
+import Dropdown from 'primevue/dropdown';
+import InputText from 'primevue/inputtext';
+import InputMask from 'primevue/inputmask';
+import Dialog from 'primevue/dialog';
 
-import { fetchPaymentItems } from '@/api/catalog';
+import { email, required } from '@vuelidate/validators';
+import { useVuelidate } from '@vuelidate/core';
+
+import { fetchPaymentItems, fetchCountries, addOrder } from '@/api/checkout';
 
 import type { ICartItem } from '@/types/cartItem';
 import type { IPaymentItem } from '@/types/paymentItem';
+import type { ICountry } from '@/types/country';
+
+const state = ref({
+  firstName: '',
+  lastName: '',
+  country: ref<ICountry>(),
+  city: '',
+  address: '',
+  email: '',
+  phone: '',
+  payment: '',
+});
+
+const rules = {
+  firstName: { required },
+  lastName: { required },
+  country: { required },
+  city: { required },
+  address: { required },
+  email: { required, email },
+  payment: { required },
+};
+
+const submitted = ref(false);
+const showMessage = ref(false);
+
+const v$ = useVuelidate(rules, state);
+
+const handleSubmit = (isFormValid: any) => {
+  submitted.value = true;
+  if (isFormValid) {
+    toggleDialog();
+    placeOrder();
+    resetForm();
+  }
+};
+
+const toggleDialog = () => {
+  showMessage.value = !showMessage.value;
+};
+
+const resetForm = () => {
+  state.value.firstName = '';
+  state.value.lastName = '';
+  state.value.email = '';
+  state.value.country = undefined;
+  state.value.city = '';
+  state.value.address = '';
+  state.value.phone = '';
+  state.value.payment = '';
+  submitted.value = false;
+};
+
+const countries = ref<ICountry[]>([]);
 
 const shippingCost = 5;
-const payment = ref('');
-const firstName = ref('');
-const lastName = ref('');
-const country = ref('');
-const city = ref('');
-const address = ref('');
-const email = ref('');
-const phone = ref('');
 const productsTotal = ref(0);
 const paymentItems = ref<IPaymentItem[]>([]);
 const cartItems = ref<ICartItem[]>([]);
@@ -95,24 +314,32 @@ const allProductsTotalCounter = () => {
 const placeOrder = () => {
   const newOrder = {
     date: Date.now(),
-    firstName: firstName.value,
-    lastName: lastName.value,
-    country: country.value,
-    city: city.value,
-    address: address.value,
-    email: email.value,
-    phone: phone.value,
-    payment: payment.value,
-    cart: cartItems,
+    firstName: state.value.firstName,
+    lastName: state.value.lastName,
+    country: state.value.country,
+    city: state.value.city,
+    address: state.value.address,
+    email: state.value.email,
+    phone: state.value.phone,
+    payment: state.value.payment,
+    cart: cartItems.value,
     totalCost: productsTotal.value + shippingCost,
     status: 'pending',
   };
+  addOrder(newOrder);
+  cleanCart();
+};
+
+const cleanCart = () => {
+  cartItems.value = [];
+  localStorage.setItem('cart', JSON.stringify(cartItems.value));
 };
 
 onMounted(async () => {
   paymentItems.value = await fetchPaymentItems();
   initCart();
   allProductsTotalCounter();
+  countries.value = await fetchCountries();
 });
 </script>
 
@@ -120,14 +347,45 @@ onMounted(async () => {
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
 
+::v-deep(.p-dropdown),
+::v-deep(.p-inputtext),
+::v-deep(.p-float-label) {
+  width: 100%;
+}
+
+::v-deep(.p-dialog-header) {
+  justify-content: end;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-start;
+}
+
+.name {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
 .checkout {
   display: flex;
+  flex-direction: column;
   gap: 50px;
   padding: 20px 0;
 }
 
 .form {
-  width: 50%;
+  display: flex;
+  gap: 50px;
+}
+
+.customer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 }
 
 .order {
@@ -196,6 +454,10 @@ hr {
 .subtotal {
   font-weight: bold;
   color: $secondary-color;
+}
+
+.payment-list {
+  padding: 0 0 20px;
 }
 
 .payment-item {
