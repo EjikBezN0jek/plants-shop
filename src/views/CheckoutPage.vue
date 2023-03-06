@@ -7,7 +7,11 @@
         v-model:visible="showMessage"
         :breakpoints="{ '960px': '80vw' }"
         :style="{ width: '30vw' }"
-        position="top">
+        :modal="true"
+        :dismissable-mask="true">
+        <template #header>
+          <h3>Successful</h3>
+        </template>
         <div class="flex align-items-center flex-column pt-6 px-3">
           <i
             class="pi pi-check-circle"
@@ -24,20 +28,20 @@
             <span class="p-float-label">
               <Dropdown
                 id="dropdown"
-                v-model="v$.country.name.$model"
+                v-model="v$.country.$model"
                 :options="countries"
                 option-label="name"
-                :class="{ 'p-invalid': v$.country.name.$invalid && submitted }" />
+                :class="{ 'p-invalid': v$.country.$invalid && submitted }" />
               <label
                 for="dropdown"
-                :class="{ 'p-error': v$.country.name.$invalid && submitted }"
+                :class="{ 'p-error': v$.country.$invalid && submitted }"
                 >Country*</label
               >
             </span>
             <small
-              v-if="v$.country.name.$invalid && submitted"
+              v-if="v$.country.$invalid && submitted"
               class="p-error"
-              >{{ v$.country.name.required.$message.replace('Value', 'Country') }}</small
+              >{{ v$.country.required.$message.replace('Value', 'Country') }}</small
             >
           </div>
 
@@ -86,20 +90,20 @@
             <span class="p-float-label">
               <Dropdown
                 id="dropdown"
-                v-model="v$.city.name.$model"
+                v-model="v$.city.$model"
                 :options="state.country?.cities"
                 option-label="name"
-                :class="{ 'p-invalid': v$.city.name.$invalid && submitted }" />
+                :class="{ 'p-invalid': v$.city.$invalid && submitted }" />
               <label
                 for="dropdown"
-                :class="{ 'p-error': v$.city.name.$invalid && submitted }"
+                :class="{ 'p-error': v$.city.$invalid && submitted }"
                 >City*</label
               >
             </span>
             <small
-              v-if="v$.city.name.$invalid && submitted"
+              v-if="v$.city.$invalid && submitted"
               class="p-error"
-              >{{ v$.city.name.required.$message.replace('Value', 'City') }}</small
+              >{{ v$.city.required.$message.replace('Value', 'City') }}</small
             >
           </div>
 
@@ -162,57 +166,63 @@
               placeholder="(999) 999-9999" />
             <label for="phone">Phone</label>
           </span>
+
+          <div class="input-wrapper">
+            <span>Payment:</span>
+            <div class="payment-list">
+              <div
+                v-for="item in paymentItems"
+                :key="item.id">
+                <label class="payment-item">
+                  <RadioButton
+                    name="payment"
+                    :value="item.name"
+                    v-model="v$.payment.$model" />
+                  {{ item.label }}</label
+                >
+              </div>
+
+              <small
+                v-if="v$.payment.$invalid && submitted"
+                class="p-error"
+                >{{ v$.payment.required.$message.replace('Value', 'Payment') }}</small
+              >
+            </div>
+          </div>
         </div>
 
         <div class="order">
           <h2>Your order</h2>
-          <hr />
-          <div
-            v-for="product in cartItems"
-            :key="product.id">
-            <div class="products-list">
-              <p class="name">{{ product.name }}</p>
-              <div
-                class="color"
-                :class="product.color"></div>
-              <p class="quantity">x {{ product.quantity }}</p>
-              <p class="price">${{ product.price }}</p>
-            </div>
-          </div>
-          <hr />
-          <div class="row">
-            <h4>Subtotal</h4>
-            <p class="subtotal">${{ productsTotal }}</p>
-          </div>
-          <hr />
-          <div class="row">
-            <h4>Shipping</h4>
-            <p>${{ shippingCost }}</p>
-          </div>
-          <hr />
-          <div class="row">
-            <h4>Total</h4>
-            <p class="total">${{ productsTotal + shippingCost }}</p>
-          </div>
-          <hr />
-          <div class="input-wrapper payment-list">
-            <div
-              v-for="item in paymentItems"
-              :key="item.id">
-              <label class="payment-item">
-                <RadioButton
-                  name="payment"
-                  :value="item.name"
-                  v-model="v$.payment.$model" />
-                {{ item.label }}</label
-              >
-            </div>
 
-            <small
-              v-if="v$.payment.$invalid && submitted"
-              class="p-error"
-              >{{ v$.payment.required.$message.replace('Value', 'Payment') }}</small
-            >
+          <div class="order-list">
+            <hr />
+            <div
+              v-for="product in cartItems"
+              :key="product.id">
+              <div class="products-list">
+                <p class="name">{{ product.name }}</p>
+                <div
+                  class="color"
+                  :class="product.color"></div>
+                <p class="quantity">x {{ product.quantity }}</p>
+                <p class="price">${{ product.price }}</p>
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <h4>Subtotal</h4>
+              <p class="subtotal">${{ productsTotal }}</p>
+            </div>
+            <hr />
+            <div class="row">
+              <h4>Shipping</h4>
+              <p>${{ shippingCost }}</p>
+            </div>
+            <hr />
+            <div class="row">
+              <h4>Total</h4>
+              <p class="total">${{ productsTotal + shippingCost }}</p>
+            </div>
           </div>
 
           <Button
@@ -244,12 +254,13 @@ import { fetchPaymentItems, fetchCountries, addOrder } from '@/api/checkout';
 import type { ICartItem } from '@/types/cartItem';
 import type { IPaymentItem } from '@/types/paymentItem';
 import type { ICountry } from '@/types/country';
+import type { ICity } from '@/types/country';
 
 const state = ref({
   firstName: '',
   lastName: '',
   country: ref<ICountry>(),
-  city: '',
+  city: ref<ICity>(),
   address: '',
   email: '',
   phone: '',
@@ -289,7 +300,7 @@ const resetForm = () => {
   state.value.lastName = '';
   state.value.email = '';
   state.value.country = undefined;
-  state.value.city = '';
+  state.value.city = undefined;
   state.value.address = '';
   state.value.phone = '';
   state.value.payment = '';
@@ -316,8 +327,8 @@ const placeOrder = () => {
     date: Date.now(),
     firstName: state.value.firstName,
     lastName: state.value.lastName,
-    country: state.value.country,
-    city: state.value.city,
+    country: state.value.country?.name,
+    city: state.value.city?.name,
     address: state.value.address,
     email: state.value.email,
     phone: state.value.phone,
@@ -347,16 +358,6 @@ onMounted(async () => {
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
 
-::v-deep(.p-dropdown),
-::v-deep(.p-inputtext),
-::v-deep(.p-float-label) {
-  width: 100%;
-}
-
-::v-deep(.p-dialog-header) {
-  justify-content: end;
-}
-
 .input-wrapper {
   display: flex;
   flex-direction: column;
@@ -379,20 +380,32 @@ onMounted(async () => {
 
 .form {
   display: flex;
-  gap: 50px;
+  flex-direction: column;
+  gap: 20px;
+
+  @include sm {
+    flex-direction: row;
+    gap: 50px;
+  }
 }
 
 .customer-info {
   display: flex;
   flex-direction: column;
   gap: 25px;
+  @include sm {
+    width: 50%;
+  }
 }
 
 .order {
-  width: 50%;
   background: $image-background-color;
   border-radius: 5px;
   padding: 20px 10px;
+
+  @include sm {
+    width: 50%;
+  }
 }
 
 hr {
@@ -457,12 +470,28 @@ hr {
 }
 
 .payment-list {
-  padding: 0 0 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
 }
 
 .payment-item {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.order-list {
+  height: 76%;
+  padding: 0 0 30px;
+}
+
+::v-deep(.p-fluid .p-button) {
+  width: auto;
+}
+::v-deep(.p-dropdown),
+::v-deep(.p-inputtext),
+::v-deep(.p-float-label) {
+  width: 100%;
 }
 </style>

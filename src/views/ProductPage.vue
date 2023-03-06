@@ -7,17 +7,12 @@
       alt="product-image"
       :preview="true">
     </Image>
-    <!-- <img
-      :src="`/images/products/${product.img}`"
-      alt="product-image"
-      class="image" /> -->
-
     <div class="info">
       <Breadcrumb
         :home="home"
         :model="breadcrumbItems" />
       <div class="wrapper">
-        <h1>{{ product.name }}</h1>
+        <h1 class="name">{{ product.name }}</h1>
         <div class="badges info-badges">
           <div
             class="badge"
@@ -357,11 +352,15 @@ onMounted(async () => {
 
   @include sm {
     padding: 70px 0;
-    width: 400px;
+    width: 450px;
   }
 }
 .wrapper {
   position: relative;
+}
+
+.name {
+  text-align: left;
 }
 
 .info-badges {
