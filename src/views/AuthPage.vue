@@ -1,7 +1,14 @@
 <template>
-  <div class="container login">
+  <div class="container">
+    <button
+      class="button-link"
+      @click="goToLogin">
+      Log in
+    </button>
+  </div>
+  <div class="login">
     <Dialog
-      v-model:visible="showMessage"
+      v-model:visible="isSuccessful"
       :breakpoints="{ '960px': '80vw' }"
       :style="{ width: '30vw' }"
       :modal="true"
@@ -14,6 +21,23 @@
           class="pi pi-check-circle"
           :style="{ fontSize: '5rem', color: 'var(--green-500)' }"></i>
         <h5>Registration Successful!</h5>
+      </div>
+    </Dialog>
+
+    <Dialog
+      v-model:visible="isError"
+      :breakpoints="{ '960px': '80vw' }"
+      :style="{ width: '30vw' }"
+      :modal="true"
+      :dismissable-mask="true">
+      <template #header>
+        <h3>Error</h3>
+      </template>
+      <div class="flex align-items-center flex-column pt-6 px-3">
+        <i
+          class="pi pi-times-circle"
+          :style="{ fontSize: '5rem', color: 'var(--red-500)' }"></i>
+        <h5>{{ errorMessage }}</h5>
       </div>
     </Dialog>
 
@@ -31,6 +55,24 @@
       <form
         class="form"
         @submit.prevent="handleSubmit(!v$.$invalid)">
+        <div class="input-wrapper">
+          <label
+            for="name"
+            :class="{ 'p-error': v$.name.$invalid && submitted }"
+            >Name</label
+          >
+          <InputText
+            id="name"
+            type="text"
+            v-model="v$.name.$model"
+            :class="{ 'p-invalid': v$.name.$invalid && submitted }" />
+
+          <small
+            v-if="v$.name.$invalid && submitted"
+            class="p-error"
+            >{{ v$.name.required.$message.replace('Value', 'Name') }}</small
+          >
+        </div>
         <div class="input-wrapper">
           <label
             for="email"
@@ -60,7 +102,7 @@
         </div>
 
         <div class="input-wrapper">
-          <span :class="{ 'p-error': v$.email.$invalid && submitted }">Password</span>
+          <span :class="{ 'p-error': v$.password.$invalid && submitted }">Password</span>
           <Password
             v-if="isLogin"
             v-model="state.password"
@@ -114,6 +156,8 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+
 import Password from 'primevue/password';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
@@ -122,20 +166,28 @@ import Dialog from 'primevue/dialog';
 import { email, required } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 
-import { addUser } from '@/api/login';
+import { registerUser, loginUser } from '@/api/auth';
+
+import { UserKey } from '@/symbols';
+import { useInject } from '@/hooks/useInject';
+
+const user = useInject(UserKey);
+const router = useRouter();
 
 const state = ref({
+  name: '',
   email: '',
   password: '',
 });
 
 const rules = {
+  name: { required },
   email: { required, email },
   password: { required },
 };
 
 const submitted = ref(false);
-const showMessage = ref(false);
+const isSuccessful = ref(false);
 const visible = ref(true);
 const isLogin = ref(true);
 const v$ = useVuelidate(rules, state);
@@ -144,7 +196,6 @@ const handleSubmit = (isFormValid: any) => {
   submitted.value = true;
   if (isFormValid) {
     if (!isLogin.value) {
-      // toggleDialog();
       registration();
     } else {
       login();
@@ -154,37 +205,77 @@ const handleSubmit = (isFormValid: any) => {
 };
 
 const toggleDialog = () => {
-  showMessage.value = !showMessage.value;
+  isSuccessful.value = !isSuccessful.value;
 };
 
 const resetForm = () => {
+  state.value.name = '';
   state.value.email = '';
   state.value.password = '';
   submitted.value = false;
 };
 
-const login = () => {
-  console.log('log in');
-  // const newUser = {
-  //   email: state.value.email,
-  //   password: state.value.password,
-  // };
-  // addUser(newUser);
+const errorMessage = ref('');
+const isError = ref(false);
+
+const registration = async () => {
+  const newUser = {
+    name: state.value.name,
+    email: state.value.email,
+    password: state.value.password,
+    orders: [],
+  };
+
+  try {
+    const { data } = await registerUser(newUser);
+    user.value = data.user;
+    toggleDialog();
+    sessionStorage.setItem('user', JSON.stringify(user.value));
+  } catch (error) {
+    if (error.response) {
+      isError.value = true;
+      errorMessage.value = error.response.data;
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log('Error', error.message);
+    }
+  }
 };
 
-const registration = () => {
-  const newUser = {
+const login = async () => {
+  const oldUser = {
+    name: state.value.name,
     email: state.value.email,
     password: state.value.password,
   };
-  addUser(newUser);
+
+  try {
+    const { data } = await loginUser(oldUser);
+    user.value = data.user;
+    sessionStorage.setItem('user', JSON.stringify(user.value));
+    router.push('user');
+  } catch (error) {
+    if (error.response) {
+      isError.value = true;
+      errorMessage.value = error.response.data;
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log('Error', error.message);
+    }
+  }
 };
 
 const goToRegistration = () => {
+  visible.value = true;
   isLogin.value = false;
+  resetForm();
 };
 const goToLogin = () => {
+  visible.value = true;
   isLogin.value = true;
+  resetForm();
 };
 
 onMounted(async () => {
@@ -195,6 +286,10 @@ onMounted(async () => {
 <style lang="scss" scoped>
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
+
+.container {
+  flex-grow: 1;
+}
 
 .button-link {
   text-decoration: underline;

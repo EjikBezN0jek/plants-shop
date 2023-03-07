@@ -9,13 +9,17 @@
         class="pi pi-bars"
         style="font-size: 2.5rem"
         @click="toggleSidemenu" />
-      <img
-        alt="Vue logo"
-        src="/images/logo.png"
-        class="logo" />
+
+      <router-link to="/"
+        ><img
+          alt="Vue logo"
+          src="/images/logo.png"
+          class="logo"
+      /></router-link>
+
       <router-link
         to="/cart"
-        class="cart-link">
+        class="cart">
         <div class="notice">{{ cartItemsQuantity }}</div>
         <i
           class="pi pi-shopping-cart"
@@ -25,21 +29,50 @@
 
     <MegaMenu
       :model="menuItems"
-      class="big-menu" />
+      class="big-menu">
+      <template #end>
+        <p
+          v-if="user"
+          @click="router.push('user')">
+          {{ user.name }}
+        </p>
+        <p
+          v-else
+          @click="toggleAuthModal">
+          Log in
+        </p>
+      </template>
+    </MegaMenu>
+
+    <AuthModal
+      v-if="isShowAuth"
+      @hide="toggleAuthModal" />
   </div>
 </template>
 
 <script lang="ts" setup>
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import SideMenu from '@/components/SideMenu.vue';
 import MegaMenu from 'primevue/megamenu';
-import { ref, onMounted } from 'vue';
+import AuthModal from '@/components/AuthModal.vue';
+
+import { UserKey } from '@/symbols';
+import { useInject } from '@/hooks/useInject';
+const router = useRouter();
+const user = useInject(UserKey);
+
+const isShowAuth = ref(false);
+const toggleAuthModal = () => (isShowAuth.value = !isShowAuth.value);
+
+////////////////
 
 const menuItems = ref([
   { label: 'Home', icon: 'pi pi-fw pi-home', to: '/' },
   { label: 'Catalog', icon: 'pi pi-fw pi-shopping-bag', to: '/catalog' },
   { label: 'Cart', icon: 'pi pi-fw pi-shopping-cart', to: '/cart' },
   { label: 'Wishlist', icon: 'pi pi-fw pi-heart', to: '/wishlist' },
-  { label: 'Log in', icon: 'pi pi-fw pi-user', to: '/login' },
+  { label: 'Log in', icon: 'pi pi-fw pi-user', to: '/auth' },
 ]);
 
 const isOpenSidemenu = ref(false);
@@ -75,8 +108,7 @@ onMounted(async () => {
   @include sm {
     display: block;
     padding: 10px;
-    .pi-bars,
-    .pi-shopping-cart {
+    .pi-bars {
       display: none;
     }
   }
@@ -100,7 +132,7 @@ onMounted(async () => {
   }
 }
 
-.cart-link {
+.cart {
   color: $secondary-color;
   position: relative;
   @include sm {

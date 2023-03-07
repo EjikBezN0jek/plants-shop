@@ -4,7 +4,8 @@
     <div class="checkout">
       <h2>Billing detail</h2>
       <Dialog
-        v-model:visible="showMessage"
+        v-model:visible="isSuccessful"
+        @hide="redirect()"
         :breakpoints="{ '960px': '80vw' }"
         :style="{ width: '30vw' }"
         :modal="true"
@@ -238,6 +239,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
 import RadioButton from 'primevue/radiobutton';
 import Button from 'primevue/button';
@@ -278,21 +280,28 @@ const rules = {
 };
 
 const submitted = ref(false);
-const showMessage = ref(false);
+const isSuccessful = ref(false);
 
 const v$ = useVuelidate(rules, state);
+
+const router = useRouter();
 
 const handleSubmit = (isFormValid: any) => {
   submitted.value = true;
   if (isFormValid) {
-    toggleDialog();
     placeOrder();
+    toggleDialog();
+
     resetForm();
   }
 };
 
 const toggleDialog = () => {
-  showMessage.value = !showMessage.value;
+  isSuccessful.value = !isSuccessful.value;
+};
+
+const redirect = () => {
+  router.push('user');
 };
 
 const resetForm = () => {
