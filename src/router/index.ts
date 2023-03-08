@@ -28,11 +28,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/WishlistPage.vue'),
   },
   {
-    path: '/auth',
-    name: 'auth',
-    component: () => import('@/views/AuthPage.vue'),
-  },
-  {
     path: '/user',
     name: 'user',
     component: () => import('@/views/UserPage.vue'),

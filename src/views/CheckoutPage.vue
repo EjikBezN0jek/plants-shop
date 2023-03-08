@@ -258,6 +258,11 @@ import type { IPaymentItem } from '@/types/paymentItem';
 import type { ICountry } from '@/types/country';
 import type { ICity } from '@/types/country';
 
+interface IEmits {
+  (e: 'changeCartItemsQuantity', value: number): void;
+}
+const emit = defineEmits<IEmits>();
+
 const state = ref({
   firstName: '',
   lastName: '',
@@ -291,7 +296,6 @@ const handleSubmit = (isFormValid: any) => {
   if (isFormValid) {
     placeOrder();
     toggleDialog();
-
     resetForm();
   }
 };
@@ -353,6 +357,7 @@ const placeOrder = () => {
 const cleanCart = () => {
   cartItems.value = [];
   localStorage.setItem('cart', JSON.stringify(cartItems.value));
+  emit('changeCartItemsQuantity', cartItems.value.length);
 };
 
 onMounted(async () => {

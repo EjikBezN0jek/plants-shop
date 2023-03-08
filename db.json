@@ -1117,6 +1117,78 @@
       "totalCost": 30,
       "status": "pending",
       "id": 18
+    },
+    {
+      "date": 1678297788796,
+      "firstName": "sdsadasd",
+      "lastName": "dsdsdsd",
+      "country": "Botswana",
+      "city": "Oslo",
+      "address": "dsdsdsds",
+      "email": "qqqq@qqq.com",
+      "phone": "",
+      "payment": "master card",
+      "cart": [
+        {
+          "cartId": "1black",
+          "quantity": 1,
+          "id": 1,
+          "name": "Cactus",
+          "color": "black",
+          "price": 25,
+          "img": "product-01.jpg",
+          "totalCost": 25
+        },
+        {
+          "cartId": "9red",
+          "quantity": 1,
+          "id": 9,
+          "name": "Qwerty",
+          "color": "red",
+          "price": 50,
+          "img": "product-09.jpg",
+          "totalCost": 50
+        }
+      ],
+      "totalCost": 80,
+      "status": "pending",
+      "id": 19
+    },
+    {
+      "date": 1678298278831,
+      "firstName": "sdsadasd",
+      "lastName": "dsdsdsd",
+      "country": "Botswana",
+      "city": "Oslo",
+      "address": "dsdsdsds",
+      "email": "qqqq@qqq.com",
+      "phone": "",
+      "payment": "paypal",
+      "cart": [
+        {
+          "cartId": "9red",
+          "quantity": 1,
+          "id": 9,
+          "name": "Qwerty",
+          "color": "red",
+          "price": 50,
+          "img": "product-09.jpg",
+          "totalCost": 50
+        },
+        {
+          "cartId": "1red",
+          "quantity": 1,
+          "id": 1,
+          "name": "Cactus",
+          "color": "red",
+          "price": 25,
+          "img": "product-01.jpg",
+          "totalCost": 25
+        }
+      ],
+      "totalCost": 80,
+      "status": "pending",
+      "id": 20
     }
   ],
   "order-status": [
@@ -1216,6 +1288,20 @@
       "name": "Qwerty",
       "orders": [],
       "id": 4
+    },
+    {
+      "email": "qwe@qwe.qwe",
+      "password": "$2a$10$DWH1xaTHnHmNbIwPqifCRe1BDlLbahHqcOU9Co8sEcENz8MjvLUim",
+      "name": "qwe",
+      "orders": [],
+      "id": 5
+    },
+    {
+      "email": "qwe2@qwe.qwe",
+      "password": "$2a$10$4F./na6dTkaq9oNlG66DJOqK.REp84Hy7zi.AYu9oXHjYZ8SKH2bO",
+      "name": "qwe2",
+      "orders": [],
+      "id": 6
     }
   ]
 }

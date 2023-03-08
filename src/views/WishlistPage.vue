@@ -119,7 +119,6 @@
       </div>
     </div>
   </div>
-  <CartWidget :cart-items-quantity="cartItemsQuantity"></CartWidget>
 </template>
 
 <script setup lang="ts">
@@ -129,10 +128,13 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Button from 'primevue/button';
 
-import CartWidget from '@/components/CartWidget.vue';
-
 import type { ICartItem } from '@/types/cartItem';
 import type { IWishlistItem } from '@/types/wishlistItem';
+
+import { CartItemsQuantityKey } from '@/symbols';
+import { useInject } from '@/hooks/useInject';
+
+const cartItemsQuantity = useInject(CartItemsQuantityKey);
 
 const wishlistItems = ref<IWishlistItem[]>([]);
 const cartItems = ref<ICartItem[]>([]);
@@ -150,7 +152,6 @@ const addToCart = (product: IWishlistItem) => {
   };
   cartItems.value.push(formatProduct);
   saveCart();
-  getCartItemsQuantity();
 };
 
 const isProductExistInCart = (id: string) => {
@@ -175,10 +176,6 @@ const initCart = () => {
 
 const saveCart = () => {
   localStorage.setItem('cart', JSON.stringify(cartItems.value));
-};
-
-const cartItemsQuantity = ref(0);
-const getCartItemsQuantity = () => {
   cartItemsQuantity.value = (JSON.parse(localStorage.getItem('cart') ?? '') ?? []).length;
 };
 
@@ -187,7 +184,6 @@ watch(wishlistItems, saveWishlist, { deep: true });
 onMounted(async () => {
   initWishlist();
   initCart();
-  getCartItemsQuantity();
 });
 </script>
 

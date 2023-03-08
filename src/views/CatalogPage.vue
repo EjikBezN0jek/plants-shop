@@ -59,7 +59,6 @@
       </div>
     </div>
   </div>
-  <CartWidget :cart-items-quantity="cartItemsQuantity" />
 </template>
 
 <script lang="ts" setup>
@@ -69,7 +68,6 @@ import { useRouter, useRoute } from 'vue-router';
 import { fetchAllProducts, fetchAllCategories, fetchAllColors, fetchAllPrices, fetchAllBadges } from '@/api/catalog';
 
 // import CatalogPagination from '@/components/CatalogPagination.vue';
-import CartWidget from '@/components/CartWidget.vue';
 import CatalogSearch from '@/components/CatalogSearch.vue';
 import CatalogSorting from '@/components/CatalogSorting.vue';
 import CatalogFilters from '@/components/CatalogFilters.vue';
@@ -192,11 +190,6 @@ const initObserver = () => {
   observer.observe(observerItem.value);
 };
 
-const cartItemsQuantity = ref(0);
-const getCartItemsQuantity = () => {
-  cartItemsQuantity.value = (JSON.parse(localStorage.getItem('cart') ?? '') ?? []).length;
-};
-
 onMounted(async () => {
   if (categoryFromUrl) categorySelected.value = categoryFromUrl;
   prices.value = await fetchAllPrices();
@@ -206,7 +199,6 @@ onMounted(async () => {
   categoriesList.value = await fetchAllCategories();
   colorsList.value = await fetchAllColors();
   badgesList.value = await fetchAllBadges();
-  getCartItemsQuantity();
 });
 </script>
 

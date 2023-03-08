@@ -93,8 +93,6 @@
     <h2 v-if="relatedProducts?.length">Related Products</h2>
     <ProductCarousel :products="relatedProducts"></ProductCarousel>
   </div>
-
-  <CartWidget :cart-items-quantity="cartItemsQuantity" />
 </template>
 
 <script lang="ts" setup>
@@ -106,7 +104,6 @@ import Breadcrumb from 'primevue/breadcrumb';
 import Image from 'primevue/image';
 
 import ProductCarousel from '@/components/ProductCarousel.vue';
-import CartWidget from '@/components/CartWidget.vue';
 
 import Swiper, { Navigation, Pagination } from 'swiper';
 
@@ -116,7 +113,12 @@ import type { IWishlistItem } from '@/types/wishlistItem';
 
 import { fetchProductById, fetchRelatedProducts } from '@/api/catalog';
 
+import { CartItemsQuantityKey } from '@/symbols';
+import { useInject } from '@/hooks/useInject';
+
 Swiper.use([Navigation, Pagination]);
+
+const cartItemsQuantity = useInject(CartItemsQuantityKey);
 
 const createSwiper = () => {
   const swiper = new Swiper('.swiper', {
@@ -187,7 +189,6 @@ const getProductFromCart = () => {
 
 const initCart = () => {
   cartItems.value = JSON.parse(localStorage.getItem('cart') ?? '') ?? [];
-  getCartItemsQuantity();
 };
 
 const incrementProductQuantity = () => {
@@ -213,7 +214,7 @@ const removeProductFromCart = () => {
 
 const saveCart = () => {
   localStorage.setItem('cart', JSON.stringify(cartItems.value));
-  getCartItemsQuantity();
+  cartItemsQuantity.value = (JSON.parse(localStorage.getItem('cart') ?? '') ?? []).length;
 };
 
 watch(colorSelected, newColor => {
@@ -266,11 +267,6 @@ const removeProductFromWishlist = () => {
 
 const saveWishlist = () => {
   localStorage.setItem('wishlist', JSON.stringify(wishlistItems.value));
-};
-
-const cartItemsQuantity = ref(0);
-const getCartItemsQuantity = () => {
-  cartItemsQuantity.value = (JSON.parse(localStorage.getItem('cart') ?? '') ?? []).length;
 };
 
 watch(colorSelected, newColor => {
@@ -485,16 +481,4 @@ onMounted(async () => {
 ::v-deep(.pi-heart-fill) {
   color: $primary-color;
 }
-
-// ::v-deep(.swiper-pagination-bullet-active) {
-//   background-color: $primary-color;
-// }
-
-// ::v-deep(.swiper-pagination) {
-//   position: relative;
-// }
-
-// ::v-deep(.swiper-button-disabled) {
-//   display: none;
-// }
 </style>

@@ -4,35 +4,43 @@
     :class="{ open: isOpenSidemenu }">
     <div
       class="sidemenu-overlay"
-      @click="$emit('toggleMenu')" />
+      @click="emit('toggleMenu')" />
     <div class="sidemenu-content">
       <i
         class="pi pi-times"
         style="font-size: 1.5rem"
-        @click="$emit('toggleMenu')" />
-      <MegaMenu
-        :model="menuItems"
-        orientation="vertical"
-        class="my-megamenu"
-        @click="$emit('toggleMenu')" />
+        @click="emit('toggleMenu')" />
+
+      <MenuList
+        :menu-item-selected="menuItemSelected"
+        :menu-items="menuItems"
+        @toggle-auth-modal="openAuthModal"
+        @toggle-menu="emit('toggleMenu')" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import MegaMenu from 'primevue/megamenu';
+import MenuList from '@/components/MenuList.vue';
+
 import type { IMenuItem } from '@/types/menuItem';
 
 interface IProps {
   menuItems: IMenuItem[];
+  menuItemSelected: string;
   isOpenSidemenu: boolean;
 }
 const props = defineProps<IProps>();
 
 interface IEmits {
   (e: 'toggleMenu'): void;
+  (e: 'toggleAuthModal'): void;
 }
 const emit = defineEmits<IEmits>();
+
+const openAuthModal = () => {
+  emit('toggleMenu'), emit('toggleAuthModal');
+};
 </script>
 
 <style lang="scss" scoped>
@@ -49,6 +57,7 @@ const emit = defineEmits<IEmits>();
   visibility: hidden;
   opacity: 1;
   overflow: hidden;
+
   &.open {
     visibility: visible;
 
@@ -73,11 +82,12 @@ const emit = defineEmits<IEmits>();
 .sidemenu-content {
   position: absolute;
   top: 0;
-  right: 101%;
+  right: 100%;
   width: 75%;
   height: 100%;
   display: flex;
   transition: all 0.5s;
+  background: white;
 }
 
 .pi-times {
@@ -86,11 +96,14 @@ const emit = defineEmits<IEmits>();
   right: 10px;
 }
 
-.my-megamenu {
-  font-size: 24px !important;
-  padding: 2rem 0 !important;
-  border-radius: 0 !important;
-  width: 100% !important;
-  border: none !important;
+.menu {
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 15px;
+  border-bottom: 1px solid $complementary-color;
+  width: 100%;
 }
 </style>

@@ -111,10 +111,10 @@
             <p>
               CART TOTAL: <span class="total cart-total">$ {{ allProductsTotalCounter(cartItems) }}</span>
             </p>
-            <router-link
-              :to="{ name: 'checkout' }"
+            <Button
               class="btn-link"
-              >Proceed to checkout</router-link
+              @click="proceedToCheckout"
+              >Proceed to checkout</Button
             >
           </template>
         </DataTable>
@@ -142,6 +142,12 @@ import Column from 'primevue/column';
 import Button from 'primevue/button';
 
 import type { ICartItem } from '@/types/cartItem';
+
+import { UserKey, CartItemsQuantityKey } from '@/symbols';
+import { useInject } from '@/hooks/useInject';
+import router from '@/router';
+
+const cartItemsQuantity = useInject(CartItemsQuantityKey);
 
 const cartItems = ref<ICartItem[]>([]);
 
@@ -174,6 +180,15 @@ const initCart = () => {
 
 const saveCart = () => {
   localStorage.setItem('cart', JSON.stringify(cartItems.value));
+  cartItemsQuantity.value = (JSON.parse(localStorage.getItem('cart') ?? '') ?? []).length;
+};
+
+const user = useInject(UserKey);
+
+const proceedToCheckout = () => {
+  if (user.value?.name) {
+    router.push('checkout');
+  }
 };
 
 watch(cartItems, saveCart, { deep: true });
