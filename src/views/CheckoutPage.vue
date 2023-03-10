@@ -258,10 +258,8 @@ import type { IPaymentItem } from '@/types/paymentItem';
 import type { ICountry } from '@/types/country';
 import type { ICity } from '@/types/country';
 
-import { UserKey } from '@/symbols';
+import { UserKey, CartItemsQuantityKey } from '@/symbols';
 import { useInject } from '@/hooks/useInject';
-
-const user = useInject(UserKey);
 
 interface IEmits {
   (e: 'changeCartItemsQuantity', value: number): void;
@@ -340,6 +338,8 @@ const allProductsTotalCounter = () => {
   productsTotal.value = cartItems.value.reduce((acc, item) => acc + item.totalCost, 0);
 };
 
+const user = useInject(UserKey);
+
 const placeOrder = () => {
   const newOrder = {
     date: Date.now(),
@@ -355,15 +355,20 @@ const placeOrder = () => {
     totalCost: productsTotal.value + shippingCost,
     status: 'pending',
   };
+  // console.log(user.value?.orders);
+  // if (user.value) user.value.orders = [...(user.value.orders ?? []), ...newOrder];
+  // user.value?.orders.push([...user.value.orders, ...newOrder]);
   user.value?.orders.push(newOrder);
   addOrder(newOrder, user.value);
   cleanCart();
 };
 
+const cartItemsQuantity = useInject(CartItemsQuantityKey);
+
 const cleanCart = () => {
   cartItems.value = [];
   localStorage.setItem('cart', JSON.stringify(cartItems.value));
-  emit('changeCartItemsQuantity', cartItems.value.length);
+  cartItemsQuantity.value = (JSON.parse(localStorage.getItem('cart') ?? '') ?? []).length;
 };
 
 onMounted(async () => {

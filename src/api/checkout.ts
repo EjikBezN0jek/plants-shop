@@ -10,5 +10,5 @@ export const fetchCountries = async (): Promise<ICountry[]> => (await api.get('c
 
 export const addOrder = async (order: IOrder, user: IUser) => {
   await api.post('orders', order);
-  await api.patch(`users/${user.id}`, user);
+  api.patch(`users/${user.id}`, user);
 };
