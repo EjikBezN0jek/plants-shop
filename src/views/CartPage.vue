@@ -131,6 +131,9 @@
         </router-link>
       </div>
     </div>
+    <AuthModal
+      v-if="isShowAuth"
+      @hide="toggleAuthModal" />
   </div>
 </template>
 
@@ -141,6 +144,8 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Button from 'primevue/button';
 
+import AuthModal from '@/components/AuthModal.vue';
+
 import type { ICartItem } from '@/types/cartItem';
 
 import { UserKey, CartItemsQuantityKey } from '@/symbols';
@@ -150,6 +155,9 @@ import router from '@/router';
 const cartItemsQuantity = useInject(CartItemsQuantityKey);
 
 const cartItems = ref<ICartItem[]>([]);
+
+const isShowAuth = ref(false);
+const toggleAuthModal = () => (isShowAuth.value = !isShowAuth.value);
 
 const allProductsTotalCounter = (products: ICartItem[]) => {
   return products.reduce((acc, item) => acc + item.totalCost, 0);
@@ -188,6 +196,8 @@ const user = useInject(UserKey);
 const proceedToCheckout = () => {
   if (user.value?.name) {
     router.push('checkout');
+  } else {
+    isShowAuth.value = true;
   }
 };
 
@@ -210,7 +220,7 @@ onMounted(async () => {
 }
 
 .product-list-mobile {
-  @include sm {
+  @include md {
     display: none;
   }
 }

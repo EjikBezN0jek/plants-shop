@@ -258,6 +258,11 @@ import type { IPaymentItem } from '@/types/paymentItem';
 import type { ICountry } from '@/types/country';
 import type { ICity } from '@/types/country';
 
+import { UserKey } from '@/symbols';
+import { useInject } from '@/hooks/useInject';
+
+const user = useInject(UserKey);
+
 interface IEmits {
   (e: 'changeCartItemsQuantity', value: number): void;
 }
@@ -350,7 +355,8 @@ const placeOrder = () => {
     totalCost: productsTotal.value + shippingCost,
     status: 'pending',
   };
-  addOrder(newOrder);
+  user.value?.orders.push(newOrder);
+  addOrder(newOrder, user.value);
   cleanCart();
 };
 

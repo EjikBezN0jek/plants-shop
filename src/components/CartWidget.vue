@@ -87,7 +87,6 @@ const cartItemsQuantity = useInject(CartItemsQuantityKey);
     background: white;
     border: 2px solid $complementary-color;
     border-radius: 2rem;
-    padding: 1.5rem;
 
     & .pi-shopping-cart {
       font-size: 1.5rem;

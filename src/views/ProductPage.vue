@@ -283,6 +283,12 @@ watch(
   { deep: true }
 );
 
+watch(route, () => {
+  if (product.value) colorSelected.value = product.value.colors[0];
+  getProductFromWishlist();
+  getRelatedProducts();
+});
+
 onBeforeRouteUpdate(async to => {
   product.value = await fetchProductById(+to.params.id);
   document.documentElement.scrollTop = 0;
@@ -343,7 +349,7 @@ onMounted(async () => {
   flex-direction: column;
   align-items: flex-start;
   gap: 15px;
-  padding: 0 20px 20px;
+  padding: 0 0 20px;
   width: 300px;
 
   @include sm {
@@ -379,6 +385,7 @@ onMounted(async () => {
   display: flex;
   gap: 10px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .characteristic-name {
@@ -387,6 +394,7 @@ onMounted(async () => {
 }
 
 .color {
+  flex-shrink: 0;
   border: 4px solid $image-background-color;
 
   &:hover {

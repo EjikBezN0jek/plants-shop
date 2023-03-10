@@ -166,11 +166,6 @@ import { useInject } from '@/hooks/useInject';
 const user = useInject(UserKey);
 const router = useRouter();
 
-interface IEmits {
-  (e: 'hide'): void;
-}
-const emit = defineEmits<IEmits>();
-
 const state = ref({
   name: '',
   email: '',
@@ -258,7 +253,6 @@ const login = async () => {
     user.value = data.user;
     toggleModal();
     sessionStorage.setItem('user', JSON.stringify(user.value));
-    router.push('user');
   } catch (error) {
     if (error.response) {
       isError.value = true;
