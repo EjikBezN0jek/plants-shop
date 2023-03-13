@@ -5,8 +5,15 @@
       "date": 1653928703051,
       "name": "Cactus",
       "price": 25,
-      "colors": ["red", "black", "gray"],
-      "categories": ["potted", "indoor"],
+      "colors": [
+        "red",
+        "black",
+        "gray"
+      ],
+      "categories": [
+        "potted",
+        "indoor"
+      ],
       "rating": 2.7,
       "badges": [],
       "description": "Cras varius eu erat posuere laoreet. Duis eget leo dictum, aliquet nisi et, rutrum justo.",
@@ -17,10 +24,16 @@
       "date": 1642728703051,
       "name": "Oak",
       "price": 1000,
-      "colors": ["red"],
-      "categories": ["outdoor"],
+      "colors": [
+        "red"
+      ],
+      "categories": [
+        "outdoor"
+      ],
       "rating": 0,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Morbi lobortis fringilla turpis vitae luctus. Cras varius eu erat posuere laoreet.",
       "img": "product-02.jpg"
     },
@@ -29,8 +42,12 @@
       "date": 1602721000000,
       "name": "Aenean ultricies",
       "price": 450,
-      "colors": ["black"],
-      "categories": ["indoor"],
+      "colors": [
+        "black"
+      ],
+      "categories": [
+        "indoor"
+      ],
       "rating": 1.5,
       "badges": [],
       "description": "Duis id turpis scelerisque mi suscipit laoreet eu in lacus.",
@@ -41,10 +58,16 @@
       "date": 1682728703051,
       "name": "Oak",
       "price": 1000,
-      "colors": ["red"],
-      "categories": ["outdoor"],
+      "colors": [
+        "red"
+      ],
+      "categories": [
+        "outdoor"
+      ],
       "rating": 0,
-      "badges": ["hot"],
+      "badges": [
+        "hot"
+      ],
       "description": "Sed sodales gravida turpis sit amet vulputate. Etiam id lorem facilisis sem scelerisque vulputate et at velit.",
       "img": "product-04.jpg"
     },
@@ -53,8 +76,13 @@
       "date": 1702728100000,
       "name": "Aenean ultricies",
       "price": 450,
-      "colors": ["black", "white"],
-      "categories": ["indoor"],
+      "colors": [
+        "black",
+        "white"
+      ],
+      "categories": [
+        "indoor"
+      ],
       "rating": 0,
       "badges": [],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -65,10 +93,16 @@
       "date": 1202728701000,
       "name": "Sociis natoque",
       "price": 150,
-      "colors": ["gray"],
-      "categories": ["potted"],
+      "colors": [
+        "gray"
+      ],
+      "categories": [
+        "potted"
+      ],
       "rating": 5,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Sed sodales gravida turpis sit amet vulputate.",
       "img": "product-06.jpg"
     },
@@ -77,10 +111,17 @@
       "date": 1648728703051,
       "name": "New Product",
       "price": 80,
-      "colors": ["black", "white"],
-      "categories": ["outdoor"],
+      "colors": [
+        "black",
+        "white"
+      ],
+      "categories": [
+        "outdoor"
+      ],
       "rating": 0,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": " Nunc felis nisl, facilisis non justo ac, pellentesque sodales dui.",
       "img": "product-07.jpg"
     },
@@ -89,10 +130,19 @@
       "date": 1652804153237,
       "name": "Bonsai",
       "price": 150,
-      "colors": ["red", "black", "white"],
-      "categories": ["potted", "indoor"],
+      "colors": [
+        "red",
+        "black",
+        "white"
+      ],
+      "categories": [
+        "potted",
+        "indoor"
+      ],
       "rating": 0,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "img": "product-08.jpg"
     },
@@ -100,10 +150,16 @@
       "date": 1652905430128,
       "name": "Qwerty",
       "price": 50,
-      "colors": ["red"],
-      "categories": ["ggggg"],
+      "colors": [
+        "red"
+      ],
+      "categories": [
+        "ggggg"
+      ],
       "rating": 0,
-      "badges": ["hot"],
+      "badges": [
+        "hot"
+      ],
       "description": "qwe",
       "reviews": [],
       "img": "product-09.jpg",
@@ -113,10 +169,24 @@
       "date": 1653312426685,
       "name": "test",
       "price": 10000,
-      "colors": ["white", "gray", "black", "red"],
-      "categories": ["ggggg", "outdoor", "indoor", "potted"],
+      "colors": [
+        "white",
+        "gray",
+        "black",
+        "red"
+      ],
+      "categories": [
+        "ggggg",
+        "outdoor",
+        "indoor",
+        "potted"
+      ],
       "rating": 0,
-      "badges": ["new", "hot", "sale"],
+      "badges": [
+        "new",
+        "hot",
+        "sale"
+      ],
       "description": "test",
       "reviews": [],
       "img": "product-10.jpg",
@@ -127,10 +197,18 @@
       "date": 1653928703051,
       "name": "Artemisia",
       "price": 60,
-      "colors": ["red", "black", "gray"],
-      "categories": ["outdoor"],
+      "colors": [
+        "red",
+        "black",
+        "gray"
+      ],
+      "categories": [
+        "outdoor"
+      ],
       "rating": 2.7,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Cras varius eu erat posuere laoreet. Duis eget leo dictum, aliquet nisi et, rutrum justo. Morbi lobortis fringilla turpis vitae luctus. Cras varius eu erat posuere laoreet.",
       "img": "product-11.jpg"
     },
@@ -139,10 +217,16 @@
       "date": 1642728703051,
       "name": "Calamagrostis",
       "price": 150,
-      "colors": ["red"],
-      "categories": ["outdoor"],
+      "colors": [
+        "red"
+      ],
+      "categories": [
+        "outdoor"
+      ],
       "rating": 0,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Morbi lobortis fringilla turpis vitae luctus. Cras varius eu erat posuere laoreet.",
       "img": "product-12.jpg"
     },
@@ -151,10 +235,18 @@
       "date": 1602721000000,
       "name": "Carduus",
       "price": 199,
-      "colors": ["black", "red"],
-      "categories": ["indoor"],
+      "colors": [
+        "black",
+        "red"
+      ],
+      "categories": [
+        "indoor"
+      ],
       "rating": 1.5,
-      "badges": ["new", "sale"],
+      "badges": [
+        "new",
+        "sale"
+      ],
       "description": "Duis id turpis scelerisque mi suscipit laoreet eu in lacus.",
       "img": "product-13.jpg"
     },
@@ -163,10 +255,18 @@
       "date": 1682728703051,
       "name": "Dianthus",
       "price": 990,
-      "colors": ["red"],
-      "categories": ["indoor"],
+      "colors": [
+        "red"
+      ],
+      "categories": [
+        "indoor"
+      ],
       "rating": 0,
-      "badges": ["new", "hot", "sale"],
+      "badges": [
+        "new",
+        "hot",
+        "sale"
+      ],
       "description": "Sed sodales gravida turpis sit amet vulputate. Etiam id lorem facilisis sem scelerisque vulputate et at velit.",
       "img": "product-14.jpg"
     },
@@ -175,10 +275,18 @@
       "date": 1702728100000,
       "name": "Geranium",
       "price": 560,
-      "colors": ["black", "white"],
-      "categories": ["indoor", "ggggg"],
+      "colors": [
+        "black",
+        "white"
+      ],
+      "categories": [
+        "indoor",
+        "ggggg"
+      ],
       "rating": 0,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "img": "product-15.jpg"
     },
@@ -187,10 +295,17 @@
       "date": 1202728701000,
       "name": "Iris",
       "price": 770,
-      "colors": ["gray"],
-      "categories": ["potted", "ggggg"],
+      "colors": [
+        "gray"
+      ],
+      "categories": [
+        "potted",
+        "ggggg"
+      ],
       "rating": 5,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Sed sodales gravida turpis sit amet vulputate.",
       "img": "product-16.jpg"
     },
@@ -199,10 +314,17 @@
       "date": 1648728703051,
       "name": "Matricaria",
       "price": 630,
-      "colors": ["black", "white"],
-      "categories": ["outdoor"],
+      "colors": [
+        "black",
+        "white"
+      ],
+      "categories": [
+        "outdoor"
+      ],
       "rating": 0,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Nunc felis nisl, facilisis non justo ac, pellentesque sodales dui. Sed sodales gravida turpis sit amet vulputate.",
       "img": "product-17.jpg"
     },
@@ -211,10 +333,19 @@
       "date": 1652804153237,
       "name": "Rosa",
       "price": 890,
-      "colors": ["red", "black", "white"],
-      "categories": ["potted", "indoor"],
+      "colors": [
+        "red",
+        "black",
+        "white"
+      ],
+      "categories": [
+        "potted",
+        "indoor"
+      ],
       "rating": 0,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "img": "product-18.jpg"
     },
@@ -222,10 +353,17 @@
       "date": 1652905430128,
       "name": "Viola",
       "price": 245,
-      "colors": ["red"],
-      "categories": ["ggggg"],
+      "colors": [
+        "red"
+      ],
+      "categories": [
+        "ggggg"
+      ],
       "rating": 0,
-      "badges": ["hot", "sale"],
+      "badges": [
+        "hot",
+        "sale"
+      ],
       "description": "Sed sodales gravida turpis sit amet vulputate. Sed sodales gravida turpis sit amet vulputate. Sed sodales gravida turpis sit amet vulputate.",
       "reviews": [],
       "img": "product-19.jpg",
@@ -235,10 +373,24 @@
       "date": 1653312426685,
       "name": "Trifolium",
       "price": 765,
-      "colors": ["white", "gray", "black", "red"],
-      "categories": ["ggggg", "outdoor", "indoor", "potted"],
+      "colors": [
+        "white",
+        "gray",
+        "black",
+        "red"
+      ],
+      "categories": [
+        "ggggg",
+        "outdoor",
+        "indoor",
+        "potted"
+      ],
       "rating": 0,
-      "badges": ["new", "hot", "sale"],
+      "badges": [
+        "new",
+        "hot",
+        "sale"
+      ],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "reviews": [],
       "img": "product-20.jpg",
@@ -249,10 +401,17 @@
       "date": 1702728100000,
       "name": "Geranium",
       "price": 560,
-      "colors": ["white"],
-      "categories": ["indoor", "ggggg"],
+      "colors": [
+        "white"
+      ],
+      "categories": [
+        "indoor",
+        "ggggg"
+      ],
       "rating": 0,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "img": "product-21.jpg"
     },
@@ -261,10 +420,17 @@
       "date": 1202728701000,
       "name": "Iris",
       "price": 770,
-      "colors": ["gray"],
-      "categories": ["potted", "ggggg"],
+      "colors": [
+        "gray"
+      ],
+      "categories": [
+        "potted",
+        "ggggg"
+      ],
       "rating": 5,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Sed sodales gravida turpis sit amet vulputate.",
       "img": "product-22.jpg"
     },
@@ -273,10 +439,16 @@
       "date": 1648728703051,
       "name": "Matricaria",
       "price": 630,
-      "colors": ["black"],
-      "categories": ["outdoor"],
+      "colors": [
+        "black"
+      ],
+      "categories": [
+        "outdoor"
+      ],
       "rating": 0,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Nunc felis nisl, facilisis non justo ac, pellentesque sodales dui. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "img": "product-23.jpg"
     },
@@ -285,10 +457,17 @@
       "date": 1652804153237,
       "name": "Rosa",
       "price": 890,
-      "colors": ["red"],
-      "categories": ["potted", "indoor"],
+      "colors": [
+        "red"
+      ],
+      "categories": [
+        "potted",
+        "indoor"
+      ],
       "rating": 0,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "img": "product-24.jpg"
     },
@@ -296,10 +475,17 @@
       "date": 1652905430128,
       "name": "Viola",
       "price": 245,
-      "colors": ["red"],
-      "categories": ["ggggg"],
+      "colors": [
+        "red"
+      ],
+      "categories": [
+        "ggggg"
+      ],
       "rating": 0,
-      "badges": ["hot", "sale"],
+      "badges": [
+        "hot",
+        "sale"
+      ],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "reviews": [],
       "img": "product-25.jpg",
@@ -309,10 +495,20 @@
       "date": 1653312426685,
       "name": "Trifolium",
       "price": 765,
-      "colors": ["white", "red"],
-      "categories": ["ggggg", "indoor", "potted"],
+      "colors": [
+        "white",
+        "red"
+      ],
+      "categories": [
+        "ggggg",
+        "indoor",
+        "potted"
+      ],
       "rating": 0,
-      "badges": ["new", "sale"],
+      "badges": [
+        "new",
+        "sale"
+      ],
       "description": "test",
       "reviews": [],
       "img": "product-26.jpg",
@@ -492,67 +688,19 @@
   ],
   "orders": [
     {
-      "date": 1678457261008,
+      "date": 1678703487176,
       "firstName": "Qwerty",
       "lastName": "Qwert",
       "country": "Russian Federation",
       "city": "Moscow",
       "address": "dsdsdsds",
       "email": "123@123.ru",
-      "phone": "",
-      "payment": "paypal",
-      "cart": [
-        {
-          "cartId": "1red",
-          "quantity": 1,
-          "id": 14,
-          "name": "Dianthus",
-          "color": "red",
-          "price": 990,
-          "img": "product-14.jpg",
-          "totalCost": 990
-        }
-      ],
-      "totalCost": 995,
-      "status": "pending",
-      "id": 1
-    },
-    {
-      "date": 1678474209034,
-      "firstName": "Qwerty",
-      "lastName": "Qwert",
-      "country": "Uruguay",
-      "city": "Abidjan",
-      "address": "dsdsdsds",
-      "email": "123@123.ru",
-      "phone": "",
-      "payment": "visa",
-      "cart": [
-        {
-          "cartId": "11red",
-          "quantity": 1,
-          "id": 11,
-          "name": "Artemisia",
-          "color": "red",
-          "price": 60,
-          "img": "product-11.jpg",
-          "totalCost": 60
-        }
-      ],
-      "totalCost": 65,
-      "status": "pending",
-      "id": 2
-    },
-    {
-      "date": 1678476274696,
-      "firstName": "sdsadasd",
-      "lastName": "dsdsdsd",
-      "country": "United Arab Emirates",
-      "city": "Tashkent",
-      "address": "dsdsdsds",
-      "email": "123@123.ru",
-      "phone": "",
-      "payment": "paypal",
+      "phone": "(222) 123-2322",
+      "payment": {
+        "id": 1,
+        "name": "visa",
+        "label": "Visa"
+      },
       "cart": [
         {
           "cartId": "9red",
@@ -566,19 +714,28 @@
         }
       ],
       "totalCost": 55,
-      "status": "pending",
-      "id": 3
+      "status": {
+        "id": 3,
+        "name": "on-the-way",
+        "label": "ON THE WAY"
+      },
+      "userId": 1,
+      "id": 1
     },
     {
-      "date": 1678476397104,
-      "firstName": "sdsadasd",
+      "date": 1678654750892,
+      "firstName": "Qwerty",
       "lastName": "dsdsdsd",
-      "country": "Uruguay",
-      "city": "Karachi",
+      "country": "Russian Federation",
+      "city": "Philadelphia",
       "address": "dsdsdsds",
       "email": "123@123.ru",
       "phone": "",
-      "payment": "paypal",
+      "payment": {
+        "id": 2,
+        "name": "paypal",
+        "label": "Paypal"
+      },
       "cart": [
         {
           "cartId": "6gray",
@@ -592,216 +749,140 @@
         }
       ],
       "totalCost": 755,
-      "status": "pending",
+      "status": {
+        "id": 4,
+        "name": "delivered",
+        "label": "DELIVERED"
+      },
+      "userId": 1,
+      "id": 2
+    },
+    {
+      "date": 1678703815155,
+      "firstName": "sdsadasd",
+      "lastName": "dsdsdsd",
+      "country": "United Arab Emirates",
+      "city": "Dubai",
+      "address": "dsdsdsds",
+      "email": "123@123.ru",
+      "phone": "",
+      "payment": {
+        "id": 3,
+        "name": "master card",
+        "label": "Master card"
+      },
+      "cart": [
+        {
+          "cartId": "1red",
+          "quantity": 1,
+          "id": 1,
+          "name": "Cactus",
+          "color": "red",
+          "price": 25,
+          "img": "product-01.jpg",
+          "totalCost": 25
+        }
+      ],
+      "totalCost": 30,
+      "status": {
+        "id": 2,
+        "name": "ready-to-ship",
+        "label": "READY TO SHIP"
+      },
+      "userId": 1,
+      "id": 3
+    },
+    {
+      "date": 1678712727709,
+      "firstName": "Qwerty",
+      "lastName": "Qwert",
+      "country": "Botswana",
+      "city": "Paris",
+      "address": "dsdsdsds",
+      "email": "123@123.ru",
+      "phone": "",
+      "payment": {
+        "id": 2,
+        "name": "paypal",
+        "label": "Paypal"
+      },
+      "cart": [
+        {
+          "cartId": "11red",
+          "quantity": 1,
+          "id": 11,
+          "name": "Artemisia",
+          "color": "red",
+          "price": 60,
+          "img": "product-11.jpg",
+          "totalCost": 60
+        },
+        {
+          "cartId": "7black",
+          "quantity": 1,
+          "id": 7,
+          "name": "New Product",
+          "color": "black",
+          "price": 80,
+          "img": "product-07.jpg",
+          "totalCost": 80
+        }
+      ],
+      "totalCost": 145,
+      "status": {
+        "id": 1,
+        "name": "pending",
+        "label": "PENDING"
+      },
+      "userId": 1,
       "id": 4
     },
     {
-      "date": 1678476522340,
+      "date": 1678716363236,
       "firstName": "Qwerty",
       "lastName": "Qwert",
-      "country": "Botswana",
-      "city": "Oslo",
-      "address": "dsdsdsds",
-      "email": "qqqq@qqq.com",
-      "phone": "",
-      "payment": "paypal",
-      "cart": [
-        {
-          "cartId": "1red",
-          "quantity": 1,
-          "id": 1,
-          "name": "Cactus",
-          "color": "red",
-          "price": 25,
-          "img": "product-01.jpg",
-          "totalCost": 25
-        }
-      ],
-      "totalCost": 30,
-      "status": "pending",
-      "id": 5
-    },
-    {
-      "date": 1678476817676,
-      "firstName": "sdsadasd",
-      "lastName": "dsdsdsd",
-      "country": "United Arab Emirates",
-      "city": "Dubai",
+      "country": "Russian Federation",
+      "city": "Moscow",
       "address": "dsdsdsds",
       "email": "123@123.ru",
       "phone": "",
-      "payment": "paypal",
+      "payment": {
+        "id": 3,
+        "name": "master card",
+        "label": "Master card"
+      },
       "cart": [
         {
-          "cartId": "8red",
-          "quantity": 1,
-          "id": 8,
-          "name": "Bonsai",
+          "cartId": "9red",
+          "quantity": 3,
+          "id": 9,
+          "name": "Qwerty",
           "color": "red",
-          "price": 150,
-          "img": "product-08.jpg",
+          "price": 50,
+          "img": "product-09.jpg",
           "totalCost": 150
-        }
-      ],
-      "totalCost": 155,
-      "status": "pending",
-      "id": 6
-    },
-    {
-      "date": 1678476854994,
-      "firstName": "sdsadasd",
-      "lastName": "Qwert",
-      "country": "United Arab Emirates",
-      "city": "Dubai",
-      "address": "dsdsdsds",
-      "email": "123@123.ru",
-      "phone": "",
-      "payment": "paypal",
-      "cart": [
+        },
         {
-          "cartId": "9red",
+          "cartId": "5black",
           "quantity": 1,
-          "id": 9,
-          "name": "Qwerty",
-          "color": "red",
-          "price": 50,
-          "img": "product-09.jpg",
-          "totalCost": 50
-        }
-      ],
-      "totalCost": 55,
-      "status": "pending",
-      "id": 7
-    },
-    {
-      "date": 1678476946416,
-      "firstName": "Qwerty",
-      "lastName": "dsdsdsd",
-      "country": "Russian Federation",
-      "city": "Philadelphia",
-      "address": "dsdsdsds",
-      "email": "qqqq@qqq.com",
-      "phone": "",
-      "payment": "visa",
-      "cart": [
-        {
-          "cartId": "9red",
-          "quantity": 5,
-          "id": 9,
-          "name": "Qwerty",
-          "color": "red",
-          "price": 50,
-          "img": "product-09.jpg",
-          "totalCost": 250
-        }
-      ],
-      "totalCost": 255,
-      "status": "pending",
-      "id": 8
-    },
-    {
-      "date": 1678477041729,
-      "firstName": "sdsadasd",
-      "lastName": "dsdsdsd",
-      "country": "Uruguay",
-      "city": "Abidjan",
-      "address": "dsdsdsds",
-      "email": "3467356@sds.cod",
-      "phone": "",
-      "payment": "master card",
-      "cart": [
-        {
-          "cartId": "1red",
-          "quantity": 1,
-          "id": 1,
-          "name": "Cactus",
-          "color": "red",
-          "price": 25,
-          "img": "product-01.jpg",
-          "totalCost": 25
-        }
-      ],
-      "totalCost": 30,
-      "status": "pending",
-      "id": 9
-    },
-    {
-      "date": 1678477119061,
-      "firstName": "sdsadasd",
-      "lastName": "Qwert",
-      "country": "Botswana",
-      "city": "Oslo",
-      "address": "dsdsdsds",
-      "email": "6666@sdfsdg.ru",
-      "phone": "",
-      "payment": "paypal",
-      "cart": [
-        {
-          "cartId": "9red",
-          "quantity": 1,
-          "id": 9,
-          "name": "Qwerty",
-          "color": "red",
-          "price": 50,
-          "img": "product-09.jpg",
-          "totalCost": 50
-        }
-      ],
-      "totalCost": 55,
-      "status": "pending",
-      "id": 10
-    },
-    {
-      "date": 1678477183828,
-      "firstName": "Qwerty",
-      "lastName": "dsdsdsd",
-      "country": "United Arab Emirates",
-      "city": "Tashkent",
-      "address": "dsdsdsds",
-      "email": "qqqq@qqq.com",
-      "phone": "",
-      "payment": "paypal",
-      "cart": [
-        {
-          "cartId": "1black",
-          "quantity": 2,
-          "id": 1,
-          "name": "Cactus",
+          "id": 5,
+          "name": "Aenean ultricies",
           "color": "black",
-          "price": 25,
-          "img": "product-01.jpg",
-          "totalCost": 50
+          "price": 450,
+          "img": "product-05.jpg",
+          "totalCost": 450
         }
       ],
-      "totalCost": 55,
-      "status": "pending",
-      "id": 11
-    },
-    {
-      "date": 1678477263029,
-      "firstName": "Qwerty",
-      "lastName": "Qwert",
-      "country": "Russian Federation",
-      "city": "Bucharest",
-      "address": "dsdsdsds",
-      "email": "123@123.ru",
-      "phone": "",
-      "payment": "visa",
-      "cart": [
-        {
-          "cartId": "1red",
-          "quantity": 1,
-          "id": 1,
-          "name": "Cactus",
-          "color": "red",
-          "price": 25,
-          "img": "product-01.jpg",
-          "totalCost": 25
-        }
-      ],
-      "totalCost": 30,
-      "status": "pending",
-      "id": 12
+      "totalCost": 605,
+      "status": {
+        "id": 1,
+        "name": "pending",
+        "label": "PENDING"
+      },
+      "productsTotal": 600,
+      "shippingCost": 5,
+      "userId": 1,
+      "id": 5
     }
   ],
   "order-status": [
@@ -812,12 +893,12 @@
     },
     {
       "id": 2,
-      "name": "ready to ship",
+      "name": "ready-to-ship",
       "label": "READY TO SHIP"
     },
     {
       "id": 3,
-      "name": "on the way",
+      "name": "on-the-way",
       "label": "ON THE WAY"
     },
     {
@@ -878,69 +959,36 @@
       "name": "Qwerty",
       "email": "123@123.ru",
       "password": "$2a$10$Dl2Pa5z0uZXrdu8u2ZIbhOKHS56NjkKIlLIg.7PAdRT29sPftanTi",
-      "id": 1,
-      "orders": [
-        {
-          "date": 1678477263029,
-          "firstName": "Qwerty",
-          "lastName": "Qwert",
-          "country": "Russian Federation",
-          "city": "Bucharest",
-          "address": "dsdsdsds",
-          "email": "123@123.ru",
-          "phone": "",
-          "payment": "visa",
-          "cart": [
-            {
-              "cartId": "1red",
-              "quantity": 1,
-              "id": 1,
-              "name": "Cactus",
-              "color": "red",
-              "price": 25,
-              "img": "product-01.jpg",
-              "totalCost": 25
-            }
-          ],
-          "totalCost": 30,
-          "status": "pending",
-          "id": 12
-        }
-      ]
+      "id": 1
     },
     {
       "email": "qqqq@qqq.com",
       "password": "$2a$10$HD89TXEmt/aU8WuL0HtmHegjHDh0bvTKnMGvtpT2ANuX5XBq2Qfgq",
       "name": "Asd",
-      "orders": [],
       "id": 2
     },
     {
       "email": "6666@sdfsdg.ru",
       "password": "$2a$10$XUtQWgBfnxC6.qfFOhLahu8XjM22ZowQv8Tjyo.GN.B3oKNAB5GEu",
       "name": "Qwerty",
-      "orders": [],
       "id": 3
     },
     {
       "email": "tytyty@tytyty.ty",
       "password": "$2a$10$XI.tzwsRexjboII9oGcgT.5RLs8LYB5KKDArl5VSQ89tVB3a3VRLq",
       "name": "Qwerty",
-      "orders": [],
       "id": 4
     },
     {
       "email": "qwe@qwe.qwe",
       "password": "$2a$10$DWH1xaTHnHmNbIwPqifCRe1BDlLbahHqcOU9Co8sEcENz8MjvLUim",
       "name": "qwe",
-      "orders": [],
       "id": 5
     },
     {
       "email": "qwe2@qwe.qwe",
       "password": "$2a$10$4F./na6dTkaq9oNlG66DJOqK.REp84Hy7zi.AYu9oXHjYZ8SKH2bO",
       "name": "qwe2",
-      "orders": [],
       "id": 6
     }
   ]

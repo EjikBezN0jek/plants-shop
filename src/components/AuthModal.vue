@@ -158,7 +158,7 @@ import InputText from 'primevue/inputtext';
 import { email, required } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 
-import { registerUser, loginUser } from '@/api/auth';
+import { registerUser, loginUser } from '@/api/user';
 
 import { UserKey } from '@/symbols';
 import { useInject } from '@/hooks/useInject';

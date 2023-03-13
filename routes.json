@@ -1,3 +1,0 @@
-{
-  "/users\\?id=:id/orders": "/users/:id/orders"
-}

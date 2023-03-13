@@ -1,5 +1,6 @@
+import { IOrderStatus } from '@/types/orderStatus';
 import type { ICartItem } from '@/types/cartItem';
-
+import type { IPaymentItem } from '@/types/paymentItem';
 export interface IOrder {
   id: number;
   date: number;
@@ -10,8 +11,11 @@ export interface IOrder {
   address: string;
   email: string;
   phone: string;
-  payment: string;
+  payment: IPaymentItem;
   totalCost: number;
-  status: string;
+  status: IOrderStatus;
   cart: ICartItem[];
+  userId: number;
+  shippingCost: number;
+  productsTotal: number;
 }

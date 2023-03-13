@@ -177,7 +177,7 @@
                 <label class="payment-item">
                   <RadioButton
                     name="payment"
-                    :value="item.name"
+                    :value="item"
                     v-model="v$.payment.$model" />
                   {{ item.label }}</label
                 >
@@ -274,7 +274,7 @@ const state = ref({
   address: '',
   email: '',
   phone: '',
-  payment: '',
+  payment: ref<IPaymentItem>(),
 });
 
 const rules = {
@@ -319,7 +319,7 @@ const resetForm = () => {
   state.value.city = undefined;
   state.value.address = '';
   state.value.phone = '';
-  state.value.payment = '';
+  state.value.payment = undefined;
   submitted.value = false;
 };
 
@@ -353,13 +353,16 @@ const placeOrder = () => {
     payment: state.value.payment,
     cart: cartItems.value,
     totalCost: productsTotal.value + shippingCost,
-    status: 'pending',
+    status: {
+      id: 1,
+      name: 'pending',
+      label: 'PENDING',
+    },
+    productsTotal: productsTotal.value,
+    shippingCost: shippingCost,
+    userId: user.value?.id,
   };
-  // console.log(user.value?.orders);
-  // if (user.value) user.value.orders = [...(user.value.orders ?? []), ...newOrder];
-  // user.value?.orders.push([...user.value.orders, ...newOrder]);
-  user.value?.orders.push(newOrder);
-  addOrder(newOrder, user.value);
+  addOrder(newOrder);
   cleanCart();
 };
 

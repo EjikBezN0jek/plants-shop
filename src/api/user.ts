@@ -7,4 +7,6 @@ export const registerUser = async (user = {}) => await api.post('register', user
 export const loginUser = async (user = {}) => await api.post('login', user);
 
 export const fetchUserOrders = async (user: IUser): Promise<IOrder[]> =>
-  (await api.get(`users/${user.id}/orders`)).data;
+  (await api.get(`orders?userId=${user.id}`)).data;
+
+export const fetchOrderById = async (id: number): Promise<IOrder> => (await api.get(`orders/${id}`)).data;

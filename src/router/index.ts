@@ -37,6 +37,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'checkout',
     component: () => import('@/views/CheckoutPage.vue'),
   },
+  {
+    path: '/order/:id?',
+    name: 'order',
+    component: () => import('@/views/OrderPage.vue'),
+  },
 ];
 
 const router = createRouter({
