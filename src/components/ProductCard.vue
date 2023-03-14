@@ -14,7 +14,7 @@
     </div>
     <img
       :src="`/images/products/${product.img}`"
-      alt="product-image"
+      :alt="`product-image-${product.img}`"
       class="image" />
     <h3 class="name">{{ product.name }}</h3>
     <p class="price">$ {{ product.price }}</p>

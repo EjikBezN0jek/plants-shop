@@ -205,19 +205,3 @@ h4 {
     background: orange;
   }
 }
-
-.status {
-  flex-shrink: 0;
-  &.pending {
-    color: rgb(94, 148, 211);
-  }
-  &.ready-to-ship {
-    color: rgb(211, 211, 94);
-  }
-  &.on-the-way {
-    color: rgb(211, 150, 94);
-  }
-  &.delivered {
-    color: $primary-color;
-  }
-}

@@ -4,7 +4,7 @@
     class="product-container container">
     <Image
       :src="`/images/products/${product.img}`"
-      alt="product-image"
+      :alt="`product-image-${product.img}`"
       :preview="true">
     </Image>
     <div class="info">
@@ -87,6 +87,10 @@
           @click="toggleWishlist"></i>
       </div>
     </div>
+  </div>
+
+  <div>
+    <h3>Add your review</h3>
   </div>
 
   <div class="related container">

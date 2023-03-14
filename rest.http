@@ -1,6 +1,6 @@
 
 
-GET http://localhost:3000/orders/1
+GET http://localhost:3000/order-status
 
 
 

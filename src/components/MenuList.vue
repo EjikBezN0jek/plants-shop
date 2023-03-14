@@ -18,7 +18,7 @@
 
     <router-link
       v-if="user?.name"
-      to="user"
+      :to="{ name: 'user' }"
       class="menu-item"
       :class="{ active: isActiveItem('user') }"
       @click="emit('toggleMenu')">
