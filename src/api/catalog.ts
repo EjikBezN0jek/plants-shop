@@ -4,6 +4,7 @@ import type { ICategory } from '@/types/category';
 import type { IColor } from '@/types/color';
 import type { IPrices } from '@/types/prices';
 import type { IBadge } from '@/types/badge';
+import type { IReview } from '@/types/review';
 import type { IResponseList } from '@/types/';
 
 import { getResponsePagination } from '@/api/helpers';
@@ -26,3 +27,8 @@ export const fetchProductById = async (id: number): Promise<IProduct> => (await 
 
 export const fetchRelatedProducts = async (params = {}): Promise<IProduct[]> =>
   (await api.get('products', { params: params })).data;
+
+export const fetchReviewsById = async (productId: number): Promise<IReview[]> =>
+  (await api.get(`reviews?productId=${productId}`)).data;
+
+export const addReview = async (review: IReview) => await api.post('reviews', review);

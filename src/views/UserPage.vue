@@ -9,6 +9,8 @@
         style="font-size: 0.75rem"></i>
     </Button>
 
+    <Menu :model="items"></Menu>
+
     <Accordion :multiple="true">
       <AccordionTab
         v-for="order in ordersSort()"
@@ -101,6 +103,7 @@ import router from '@/router';
 import Button from 'primevue/button';
 import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
+import Menu from 'primevue/menu';
 
 import StepsWidget from '@/components/StepsWidget.vue';
 
@@ -118,6 +121,13 @@ const orders = ref<IOrder[]>();
 const orderStatusItems = ref<IOrderStatus[]>();
 
 const user = useInject(UserKey);
+
+const items = [
+  { label: 'My orders', icon: 'pi pi-fw pi-shopping-bag', to: '/user/orders' },
+  { label: 'My reviews', icon: 'pi pi-fw pi-star-fill', to: '/user/reviews' },
+  { label: 'Quit', icon: 'pi pi-fw pi-sign-out' },
+  // { label: 'Wishlist', icon: 'pi pi-fw pi-heart', to: '/wishlist' },
+];
 
 const ordersSort = () => {
   return orders.value?.sort((a, b) => b.date - a.date);

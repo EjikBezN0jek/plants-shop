@@ -715,26 +715,92 @@
     {
       "id": 1,
       "date": 1651774308700,
-      "name": "Totoska",
-      "comment": "",
+      "userName": "Totoska",
+      "comment": "Qweewewewewe",
       "rating": 5,
-      "productId": 1
+      "productId": 1,
+      "isModerate": true
     },
     {
       "id": 2,
       "date": 1652884264812,
-      "name": "Заварной крем",
-      "comment": "",
+      "userName": "Заварной крем",
+      "comment": "Adsdsdsd",
       "rating": 1,
-      "productId": 1
+      "productId": 1,
+      "isModerate": true
     },
     {
       "date": 1653061719052,
-      "name": "Заварной крем",
-      "comment": "",
+      "userName": "Заварной крем",
+      "comment": "Zzzzzzzzzzzz",
       "rating": 2,
       "productId": 1,
-      "id": 3
+      "id": 3,
+      "isModerate": true
+    },
+    {
+      "productId": 1,
+      "userName": "Qwerty",
+      "date": 1678970048914,
+      "rating": 3,
+      "comment": "qwqwewe",
+      "id": 4,
+      "isModerate": true
+    },
+    {
+      "productId": 1,
+      "userName": "Qwerty",
+      "date": 1678970370968,
+      "rating": 4,
+      "comment": "reewrwerwerwe",
+      "id": 5,
+      "isModerate": false
+    },
+    {
+      "productId": 1,
+      "userName": "Qwerty",
+      "date": 1678970412910,
+      "rating": 3,
+      "comment": "dfsdfdfds",
+      "id": 6,
+      "isModerate": false
+    },
+    {
+      "productId": 1,
+      "userName": "Qwerty",
+      "date": 1678970825198,
+      "rating": 2,
+      "comment": "",
+      "id": 7,
+      "isModerate": false
+    },
+    {
+      "productId": 1,
+      "userName": "Qwerty",
+      "date": 1678970876049,
+      "rating": 4,
+      "comment": "",
+      "id": 8,
+      "isModerate": false
+    },
+    {
+      "productId": 1,
+      "userName": "Qwerty",
+      "date": 1678971698678,
+      "rating": 3,
+      "comment": "",
+      "id": 9,
+      "isModerate": false
+    },
+    {
+      "productId": 1,
+      "userName": "Qwerty",
+      "date": 1678971973631,
+      "rating": 3,
+      "comment": "",
+      "isModerate": false,
+      "id": 10
     }
   ],
   "prices": {

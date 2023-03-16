@@ -220,7 +220,7 @@ onMounted(async () => {
 }
 
 .product-list-mobile {
-  @include md {
+  @include sm {
     display: none;
   }
 }

@@ -1,6 +1,6 @@
 
 
-GET http://localhost:3000/order-status
+GET http://localhost:3000/reviews?name=Totoska
 
 
 

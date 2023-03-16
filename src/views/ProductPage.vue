@@ -75,7 +75,7 @@
         v-else
         class="cart-buttons">
         <Button
-          class="p-button-lg"
+          class="p-button-lg product-btn"
           @click="addToCart"
           >ADD TO CART</Button
         >
@@ -89,14 +89,85 @@
     </div>
   </div>
 
-  <div>
+  <Dialog
+    v-model:visible="isSuccessful"
+    :breakpoints="{ '960px': '80vw' }"
+    :style="{ width: '30vw' }"
+    :modal="true"
+    :dismissable-mask="true">
+    <template #header>
+      <h3>Successful</h3>
+    </template>
+    <div class="flex align-items-center flex-column pt-6 px-3">
+      <i
+        class="pi pi-check-circle"
+        :style="{ fontSize: '5rem', color: 'var(--green-500)' }"></i>
+      <h5>Review Successful!</h5>
+    </div>
+  </Dialog>
+
+  <div class="container reviews">
+    <h3>Reviews ({{ moderatedReviews().length }})</h3>
+    <div class="reviews-list">
+      <div
+        v-for="review in moderatedReviews()"
+        :key="review.id"
+        class="review">
+        <div class="avatar">
+          <p>{{ review.userName[0] }}</p>
+        </div>
+        <div class="review-info">
+          <div class="review-header">
+            <p class="review-name">
+              <strong>{{ review.userName }}</strong> <small>{{ dateFormatter(review.date) }}</small>
+            </p>
+
+            <Rating
+              :readonly="true"
+              :cancel="false"
+              :model-value="review.rating" />
+          </div>
+
+          <p class="review-comment">{{ review.comment }}</p>
+        </div>
+      </div>
+    </div>
+
     <h3>Add your review</h3>
+    <form
+      @submit.prevent="handleSubmit()"
+      class="review-form">
+      <div class="form-rating">
+        <strong :class="{ error: newRating === 0 && submitted }">Your rating</strong>
+        <Rating
+          :cancel="false"
+          v-model="newRating" />
+      </div>
+
+      <span class="p-float-label form-comment">
+        <Textarea
+          v-model="newComment"
+          auto-resize
+          rows="2"
+          cols="30" />
+        <label>Comment review</label>
+      </span>
+      <Button
+        class="p-button-lg"
+        type="submit"
+        >PLACE REVIEW</Button
+      >
+    </form>
   </div>
 
   <div class="related container">
     <h2 v-if="relatedProducts?.length">Related Products</h2>
     <ProductCarousel :products="relatedProducts"></ProductCarousel>
   </div>
+
+  <AuthModal
+    v-if="isShowAuth"
+    @hide="toggleAuthModal" />
 </template>
 
 <script lang="ts" setup>
@@ -105,8 +176,11 @@ import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 import Rating from 'primevue/rating';
 import Button from 'primevue/button';
 import Breadcrumb from 'primevue/breadcrumb';
+import Textarea from 'primevue/textarea';
 import Image from 'primevue/image';
+import Dialog from 'primevue/dialog';
 
+import AuthModal from '@/components/AuthModal.vue';
 import ProductCarousel from '@/components/ProductCarousel.vue';
 
 import Swiper, { Navigation, Pagination } from 'swiper';
@@ -114,15 +188,21 @@ import Swiper, { Navigation, Pagination } from 'swiper';
 import type { IProduct } from '@/types/product';
 import type { ICartItem } from '@/types/cartItem';
 import type { IWishlistItem } from '@/types/wishlistItem';
+import type { IReview } from '@/types/review';
 
-import { fetchProductById, fetchRelatedProducts } from '@/api/catalog';
+import { dateFormatter } from '@/helpers/dateFormatter';
 
-import { CartItemsQuantityKey } from '@/symbols';
+import { fetchProductById, fetchRelatedProducts, fetchReviewsById, addReview } from '@/api/catalog';
+
+import { UserKey, CartItemsQuantityKey } from '@/symbols';
 import { useInject } from '@/hooks/useInject';
 
 Swiper.use([Navigation, Pagination]);
 
 const cartItemsQuantity = useInject(CartItemsQuantityKey);
+
+const isShowAuth = ref(false);
+const toggleAuthModal = () => (isShowAuth.value = !isShowAuth.value);
 
 const createSwiper = () => {
   const swiper = new Swiper('.swiper', {
@@ -293,6 +373,55 @@ watch(route, () => {
   getRelatedProducts();
 });
 
+const reviews = ref<IReview[]>([]);
+const newRating = ref(0);
+const newComment = ref('');
+
+const user = useInject(UserKey);
+
+const submitted = ref(false);
+const isSuccessful = ref(false);
+
+const handleSubmit = () => {
+  submitted.value = true;
+  if (user.value?.name) {
+    if (newRating.value > 0) {
+      placeReview();
+      toggleDialog();
+      resetForm();
+      submitted.value = false;
+    }
+  } else {
+    isShowAuth.value = true;
+  }
+};
+
+const toggleDialog = () => {
+  isSuccessful.value = !isSuccessful.value;
+};
+
+const resetForm = () => {
+  newRating.value = 0;
+  newComment.value = '';
+};
+const placeReview = () => {
+  if (product.value && user.value) {
+    const newReview = {
+      productId: product.value.id,
+      userName: user.value.name,
+      date: Date.now(),
+      rating: newRating.value,
+      comment: newComment.value,
+      isModerate: false,
+    };
+    addReview(newReview);
+  }
+};
+
+const moderatedReviews = () => {
+  return reviews.value.filter(item => item.isModerate);
+};
+
 onBeforeRouteUpdate(async to => {
   product.value = await fetchProductById(+to.params.id);
   document.documentElement.scrollTop = 0;
@@ -300,6 +429,7 @@ onBeforeRouteUpdate(async to => {
 
 onMounted(async () => {
   product.value = await fetchProductById(+route.params.id);
+  reviews.value = await fetchReviewsById(product.value.id);
   colorSelected.value = product.value.colors[0];
   initCart();
   initWishlist();
@@ -311,6 +441,130 @@ onMounted(async () => {
 <style lang="scss" scoped>
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
+
+.error {
+  color: red;
+}
+
+.review-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+}
+
+.form-rating {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.form-comment {
+  width: 100%;
+}
+
+::v-deep(.p-inputtextarea .p-inputtext .p-component .p-inputtextarea-resizable) {
+  width: 100%;
+}
+
+::v-deep(.p-inputtextarea-resizable) {
+  border-bottom: 2px solid $complementary-color;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+  width: 100%;
+
+  &:focus {
+    border-bottom: 2px solid $primary-color;
+  }
+}
+
+::v-deep(.p-inputtext:enabled:focus) {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: none;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  background: $image-background-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $primary-color;
+  font-weight: bold;
+  font-size: 24px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 30px 10px;
+
+  @include sm {
+    padding: 30px 20px;
+  }
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.review {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid $image-background-color;
+}
+
+.review-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  @include sm {
+    flex-wrap: nowrap;
+    gap: 20px;
+  }
+}
+
+.review-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  width: 100%;
+  & small {
+    font-size: 12px;
+    font-style: italic;
+  }
+
+  @include sm {
+    gap: 20px;
+    width: auto;
+  }
+}
+
+.review-comment {
+  text-align: left;
+}
 
 .product-container {
   background: $image-background-color;
@@ -450,7 +704,7 @@ onMounted(async () => {
   }
 }
 
-.p-button-lg {
+.product-btn {
   width: 200px;
   height: 40px;
   padding: 10px;
