@@ -106,58 +106,17 @@
     </div>
   </Dialog>
 
-  <div class="container reviews">
-    <h3>Reviews ({{ moderatedReviews().length }})</h3>
-    <div class="reviews-list">
-      <div
-        v-for="review in moderatedReviews()"
-        :key="review.id"
-        class="review">
-        <div class="avatar">
-          <p>{{ review.userName[0] }}</p>
-        </div>
-        <div class="review-info">
-          <div class="review-header">
-            <p class="review-name">
-              <strong>{{ review.userName }}</strong> <small>{{ dateFormatter(review.date) }}</small>
-            </p>
+  <div class="container">
+    <ReviewsList :moderated-reviews="moderatedReviews()" />
 
-            <Rating
-              :readonly="true"
-              :cancel="false"
-              :model-value="review.rating" />
-          </div>
-
-          <p class="review-comment">{{ review.comment }}</p>
-        </div>
-      </div>
+    <div class="wrapper">
+      <h3>Add your review</h3>
+      <ReviewForm
+        v-model:newRating="newRating"
+        v-model:newComment="newComment"
+        :submitted="submitted"
+        @handle-submit="handleSubmit" />
     </div>
-
-    <h3>Add your review</h3>
-    <form
-      @submit.prevent="handleSubmit()"
-      class="review-form">
-      <div class="form-rating">
-        <strong :class="{ error: newRating === 0 && submitted }">Your rating</strong>
-        <Rating
-          :cancel="false"
-          v-model="newRating" />
-      </div>
-
-      <span class="p-float-label form-comment">
-        <Textarea
-          v-model="newComment"
-          auto-resize
-          rows="2"
-          cols="30" />
-        <label>Comment review</label>
-      </span>
-      <Button
-        class="p-button-lg"
-        type="submit"
-        >PLACE REVIEW</Button
-      >
-    </form>
   </div>
 
   <div class="related container">
@@ -176,12 +135,13 @@ import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 import Rating from 'primevue/rating';
 import Button from 'primevue/button';
 import Breadcrumb from 'primevue/breadcrumb';
-import Textarea from 'primevue/textarea';
 import Image from 'primevue/image';
 import Dialog from 'primevue/dialog';
 
 import AuthModal from '@/components/AuthModal.vue';
 import ProductCarousel from '@/components/ProductCarousel.vue';
+import ReviewForm from '@/components/ReviewForm.vue';
+import ReviewsList from '@/components/ReviewsList.vue';
 
 import Swiper, { Navigation, Pagination } from 'swiper';
 
@@ -189,8 +149,6 @@ import type { IProduct } from '@/types/product';
 import type { ICartItem } from '@/types/cartItem';
 import type { IWishlistItem } from '@/types/wishlistItem';
 import type { IReview } from '@/types/review';
-
-import { dateFormatter } from '@/helpers/dateFormatter';
 
 import { fetchProductById, fetchRelatedProducts, fetchReviewsById, addReview } from '@/api/catalog';
 
@@ -404,6 +362,7 @@ const resetForm = () => {
   newRating.value = 0;
   newComment.value = '';
 };
+
 const placeReview = () => {
   if (product.value && user.value) {
     const newReview = {
@@ -413,6 +372,8 @@ const placeReview = () => {
       rating: newRating.value,
       comment: newComment.value,
       isModerate: false,
+      productName: product.value.name,
+      productImage: product.value.img,
     };
     addReview(newReview);
   }
@@ -441,130 +402,6 @@ onMounted(async () => {
 <style lang="scss" scoped>
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
-
-.error {
-  color: red;
-}
-
-.review-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 25px;
-}
-
-.form-rating {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.form-comment {
-  width: 100%;
-}
-
-::v-deep(.p-inputtextarea .p-inputtext .p-component .p-inputtextarea-resizable) {
-  width: 100%;
-}
-
-::v-deep(.p-inputtextarea-resizable) {
-  border-bottom: 2px solid $complementary-color;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-radius: 0;
-  width: 100%;
-
-  &:focus {
-    border-bottom: 2px solid $primary-color;
-  }
-}
-
-::v-deep(.p-inputtext:enabled:focus) {
-  outline: 0 none;
-  outline-offset: 0;
-  box-shadow: none;
-}
-
-.avatar {
-  width: 50px;
-  height: 50px;
-  background: $image-background-color;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: $primary-color;
-  font-weight: bold;
-  font-size: 24px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.reviews {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  padding: 30px 10px;
-
-  @include sm {
-    padding: 30px 20px;
-  }
-}
-
-.reviews-list {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-.review {
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid $image-background-color;
-}
-
-.review-info {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-}
-
-.review-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  justify-content: space-between;
-  flex-wrap: wrap;
-
-  @include sm {
-    flex-wrap: nowrap;
-    gap: 20px;
-  }
-}
-
-.review-name {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-  width: 100%;
-  & small {
-    font-size: 12px;
-    font-style: italic;
-  }
-
-  @include sm {
-    gap: 20px;
-    width: auto;
-  }
-}
-
-.review-comment {
-  text-align: left;
-}
 
 .product-container {
   background: $image-background-color;
@@ -617,6 +454,9 @@ onMounted(async () => {
 }
 .wrapper {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .name {
@@ -703,19 +543,6 @@ onMounted(async () => {
     text-align: center;
   }
 }
-
-.product-btn {
-  width: 200px;
-  height: 40px;
-  padding: 10px;
-  font-size: 18px;
-  display: block;
-  align-self: center;
-  @include sm {
-    align-self: flex-start;
-  }
-}
-
 ::v-deep(.p-image.p-component.p-image-preview-container img) {
   max-width: 300px;
   height: 100%;

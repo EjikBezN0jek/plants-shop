@@ -1,17 +1,34 @@
 <template>
   <div class="container user">
-    <Button
-      class="p-button-sm quit-btn"
-      @click="quitFromAccount">
-      Quit
-      <i
-        class="pi pi-sign-out"
-        style="font-size: 0.75rem"></i>
-    </Button>
+    <div class="sidemenu">
+      <div
+        v-for="item in items"
+        :key="item.label"
+        class="item-wrapper">
+        <div
+          class="menu-item"
+          :class="{ active: isActiveItem(item.label) }"
+          @click="changeContent(item.label)">
+          <i
+            :class="item.icon"
+            style="font-size: 1rem"></i>
+          <p>{{ item.label }}</p>
+        </div>
+      </div>
+      <Button
+        class="menu-item"
+        @click="quitFromAccount">
+        <i
+          class="pi pi-sign-out"
+          style="font-size: 1rem"></i>
+        Quit
+      </Button>
+    </div>
 
-    <Menu :model="items"></Menu>
-
-    <Accordion :multiple="true">
+    <Accordion
+      :multiple="true"
+      v-if="isShowOrders"
+      class="content">
       <AccordionTab
         v-for="order in ordersSort()"
         :key="order.id">
@@ -93,6 +110,44 @@
         </div>
       </AccordionTab>
     </Accordion>
+
+    <div
+      v-if="isShowReviews"
+      class="content">
+      <div class="reviews-list">
+        <div
+          v-for="review in reviews"
+          :key="review.id"
+          class="review">
+          <router-link :to="{ name: 'product', params: { id: review.productId, name: review.productName } }">
+            <img
+              :src="`/images/products/${review.productImage}`"
+              alt="product-img"
+              class="product-image" />
+          </router-link>
+
+          <div class="review-info">
+            <small
+              v-if="review.isModerate"
+              class="review-status"
+              >Published <i class="pi pi-check"></i
+            ></small>
+            <div class="review-header">
+              <p class="review-name">
+                <strong>{{ review.productName }}</strong> <small>{{ dateFormatter(review.date) }}</small>
+              </p>
+
+              <Rating
+                :readonly="true"
+                :cancel="false"
+                :model-value="review.rating" />
+            </div>
+
+            <p class="review-comment">{{ review.comment }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -103,7 +158,7 @@ import router from '@/router';
 import Button from 'primevue/button';
 import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
-import Menu from 'primevue/menu';
+import Rating from 'primevue/rating';
 
 import StepsWidget from '@/components/StepsWidget.vue';
 
@@ -114,19 +169,20 @@ import { dateFormatter } from '@/helpers/dateFormatter';
 
 import type { IOrder } from '@/types/order';
 import type { IOrderStatus } from '@/types/orderStatus';
+import type { IReview } from '@/types/review';
 
-import { fetchUserOrders, fetchAllOrderStatus } from '@/api/user';
+import { fetchUserOrders, fetchAllOrderStatus, fetchUserReviews } from '@/api/user';
 
 const orders = ref<IOrder[]>();
 const orderStatusItems = ref<IOrderStatus[]>();
 
+const reviews = ref<IReview[]>();
+
 const user = useInject(UserKey);
 
 const items = [
-  { label: 'My orders', icon: 'pi pi-fw pi-shopping-bag', to: '/user/orders' },
-  { label: 'My reviews', icon: 'pi pi-fw pi-star-fill', to: '/user/reviews' },
-  { label: 'Quit', icon: 'pi pi-fw pi-sign-out' },
-  // { label: 'Wishlist', icon: 'pi pi-fw pi-heart', to: '/wishlist' },
+  { label: 'My orders', icon: 'pi pi-fw pi-shopping-bag' },
+  { label: 'My reviews', icon: 'pi pi-fw pi-star-fill' },
 ];
 
 const ordersSort = () => {
@@ -138,9 +194,31 @@ const quitFromAccount = () => {
   user.value = JSON.parse(sessionStorage.getItem('user') ?? '{}') ?? {};
   router.push('/');
 };
+const isShowOrders = ref(true);
+const isShowReviews = ref(false);
+const menuItemSelected = ref('My orders');
+
+const isActiveItem = (item = '') => {
+  return item === menuItemSelected.value;
+};
+
+const changeContent = (content: string) => {
+  menuItemSelected.value = content;
+  if (content === 'My orders') {
+    isShowOrders.value = true;
+    isShowReviews.value = false;
+  }
+  if (content === 'My reviews') {
+    isShowOrders.value = false;
+    isShowReviews.value = true;
+  }
+};
 
 onMounted(async () => {
-  if (user.value) orders.value = await fetchUserOrders(user.value);
+  if (user.value) {
+    orders.value = await fetchUserOrders(user.value);
+    reviews.value = await fetchUserReviews(user.value);
+  }
   orderStatusItems.value = await fetchAllOrderStatus();
 });
 </script>
@@ -148,6 +226,137 @@ onMounted(async () => {
 <style scoped lang="scss">
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
+
+.review-status {
+  text-align: left;
+  & .pi-check {
+    color: $primary-color;
+  }
+}
+
+.reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 30px 0;
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.review {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid $image-background-color;
+}
+
+.review-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  @include sm {
+    flex-wrap: nowrap;
+    gap: 20px;
+  }
+}
+
+.review-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  width: 100%;
+  & small {
+    font-size: 12px;
+    font-style: italic;
+  }
+
+  @include sm {
+    gap: 20px;
+    width: auto;
+  }
+}
+
+.review-comment {
+  text-align: left;
+}
+
+.user {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 10px;
+  gap: 50px;
+
+  @include sm {
+    flex-direction: row;
+    padding: 20px;
+    gap: 20px;
+    justify-content: space-between;
+  }
+}
+
+.sidemenu {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  @include sm {
+    width: 33.3%;
+  }
+  @include md {
+    width: 25%;
+  }
+}
+
+.menu-item {
+  color: $secondary-color;
+  text-decoration: none;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  padding: 10px 20px;
+  border: none;
+  background: none;
+  font-size: 18px;
+  border-bottom: 2px solid $complementary-color;
+  cursor: pointer;
+
+  & p {
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    background: $image-background-color;
+    border-radius: 3px;
+    color: $secondary-color;
+    border-bottom: 2px solid $complementary-color;
+  }
+
+  &.active {
+    background: none;
+    border-radius: 0;
+    border-bottom: 2px solid $primary-color;
+  }
+}
+
+.content {
+  width: 100%;
+}
 
 .wrapper {
   display: flex;
@@ -240,16 +449,6 @@ onMounted(async () => {
   flex-direction: column;
   gap: 10px;
   align-items: flex-start;
-}
-
-.user {
-  display: flex;
-  flex-direction: column;
-  padding: 20px 10px;
-  gap: 20px;
-  @include sm {
-    padding: 20px;
-  }
 }
 
 .orders {
