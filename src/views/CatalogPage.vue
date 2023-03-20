@@ -23,9 +23,10 @@
 
         <div class="content">
           <div class="row">
-            <CatalogSorting
-              v-model="sorting"
-              @update:model-value="refetchProducts" />
+            <DropdownSorting
+              v-model:sorting="sorting"
+              @update:sorting="refetchProducts"
+              :sort-options="sortOptions?.catalog" />
             <CatalogSearch
               v-model="searchQuery"
               @update:model-value="searchProducts" />
@@ -40,11 +41,6 @@
               :product="product" />
           </div>
           <h2 v-else>No products!</h2>
-
-          <!-- <CatalogPagination
-            v-if="pagination.last > 1"
-            :pagination="pagination"
-            @change-page="changePage" /> -->
 
           <div
             ref="observerItem"
@@ -65,11 +61,17 @@
 import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
-import { fetchAllProducts, fetchAllCategories, fetchAllColors, fetchAllPrices, fetchAllBadges } from '@/api/catalog';
+import {
+  fetchAllProducts,
+  fetchAllCategories,
+  fetchAllColors,
+  fetchAllPrices,
+  fetchAllBadges,
+  fetchSortOptions,
+} from '@/api/catalog';
 
-// import CatalogPagination from '@/components/CatalogPagination.vue';
 import CatalogSearch from '@/components/CatalogSearch.vue';
-import CatalogSorting from '@/components/CatalogSorting.vue';
+import DropdownSorting from '@/components/DropdownSorting.vue';
 import CatalogFilters from '@/components/CatalogFilters.vue';
 import ProductCard from '@/components/ProductCard.vue';
 
@@ -83,6 +85,7 @@ import type { IColor } from '@/types/color';
 import type { ISorting } from '@/types/sorting';
 import type { IPrices } from '@/types/prices';
 import type { IBadge } from '@/types/badge';
+import type { ISortOptions } from '@/types/sortOptions';
 
 const products = ref<IProduct[]>();
 const isLoadMore = ref(false);
@@ -137,7 +140,7 @@ const searchProducts = debounce(() => {
 }, 300);
 
 //Sorting
-const sorting = ref<ISorting>({ target: 'price', order: 'asc' });
+const sorting = ref<ISorting>({ target: 'price', order: 'asc', label: 'Price: low to high' });
 
 //Filters
 //Colors
@@ -190,6 +193,8 @@ const initObserver = () => {
   observer.observe(observerItem.value);
 };
 
+const sortOptions = ref<ISortOptions>();
+
 onMounted(async () => {
   if (categoryFromUrl) categorySelected.value = categoryFromUrl;
   prices.value = await fetchAllPrices();
@@ -199,6 +204,7 @@ onMounted(async () => {
   categoriesList.value = await fetchAllCategories();
   colorsList.value = await fetchAllColors();
   badgesList.value = await fetchAllBadges();
+  sortOptions.value = await fetchSortOptions();
 });
 </script>
 

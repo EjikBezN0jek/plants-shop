@@ -1,9 +1,15 @@
 <template>
   <div class="reviews">
-    <h3>Reviews ({{ moderatedReviews.length }})</h3>
+    <h3>Reviews ({{ reviewsAllCount }})</h3>
+
+    <DropdownSorting
+      :sort-options="sortOptions?.reviews"
+      :model-value="sorting"
+      :sorting="sorting" />
+
     <div class="reviews-list">
       <div
-        v-for="review in moderatedReviews"
+        v-for="review in reviews"
         :key="review.id"
         class="review">
         <div class="avatar">
@@ -25,20 +31,44 @@
         </div>
       </div>
     </div>
+
+    <ClassicPagination
+      v-if="pagination.last"
+      :pagination="pagination" />
   </div>
 </template>
 
 <script setup lang="ts">
 import Rating from 'primevue/rating';
 
+// import { useVModelWrapper } from '@/hooks/useVModelWrapper';
+
+import DropdownSorting from '@/components/DropdownSorting.vue';
+import ClassicPagination from '@/components/ClassicPagination.vue';
+
 import type { IReview } from '@/types/review';
+import type { IPagination } from '@/types/';
+import type { ISorting } from '@/types/sorting';
+import type { ISortOptions } from '@/types/sortOptions';
 
 import { dateFormatter } from '@/helpers/dateFormatter';
 
 interface IProps {
-  moderatedReviews: IReview[];
+  reviews: IReview[];
+  reviewsAllCount: number;
+  pagination: IPagination;
+  sorting: ISorting;
+  sortOptions?: ISortOptions;
 }
 const props = defineProps<IProps>();
+
+interface IEmits {
+  (e: 'update:sorting', sorting: ISorting): void;
+  // (e: 'changePage', page: number): void;
+}
+const emit = defineEmits<IEmits>();
+
+// const sorting = useVModelWrapper(props, emit, 'sorting');
 </script>
 
 <style scoped lang="scss">

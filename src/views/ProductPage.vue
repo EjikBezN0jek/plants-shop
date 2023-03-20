@@ -107,7 +107,14 @@
   </Dialog>
 
   <div class="container">
-    <ReviewsList :moderated-reviews="moderatedReviews()" />
+    <ReviewsList
+      :reviews="reviews"
+      :reviews-all-count="reviewsAllCount"
+      :pagination="pagination"
+      :sort-options="sortOptions"
+      v-model:sorting="sorting"
+      @change-page="changePage"
+      @update:sorting="refetchReviews" />
 
     <div class="wrapper">
       <h3>Add your review</h3>
@@ -143,14 +150,18 @@ import ProductCarousel from '@/components/ProductCarousel.vue';
 import ReviewForm from '@/components/ReviewForm.vue';
 import ReviewsList from '@/components/ReviewsList.vue';
 
+import { usePagination } from '@/hooks/usePagination';
+
 import Swiper, { Navigation, Pagination } from 'swiper';
 
 import type { IProduct } from '@/types/product';
 import type { ICartItem } from '@/types/cartItem';
 import type { IWishlistItem } from '@/types/wishlistItem';
 import type { IReview } from '@/types/review';
+import type { ISortOptions } from '@/types/sortOptions';
+import type { ISorting } from '@/types/sorting';
 
-import { fetchProductById, fetchRelatedProducts, fetchReviewsById, addReview } from '@/api/catalog';
+import { fetchProductById, fetchRelatedProducts, fetchReviews, addReview, fetchSortOptions } from '@/api/catalog';
 
 import { UserKey, CartItemsQuantityKey } from '@/symbols';
 import { useInject } from '@/hooks/useInject';
@@ -379,18 +390,50 @@ const placeReview = () => {
   }
 };
 
-const moderatedReviews = () => {
-  return reviews.value.filter(item => item.isModerate);
+//Sorting
+const sorting = ref<ISorting>({ target: 'date', order: 'desc', label: 'Date: new to old' });
+const sortOptions = ref<ISortOptions>();
+
+const reviewsAllCount = ref(0);
+
+const getReviews = async () => {
+  const params = {
+    productId: product.value?.id,
+    isModerate: true,
+    _sort: sorting.value.target,
+    _order: sorting.value.order,
+    _page: pagination.value.current,
+    _limit: 2,
+  };
+  const { data, pagination: p } = await fetchReviews(params);
+  reviews.value = data;
+  reviewsAllCount.value = p.items;
+  setPagination(p);
+};
+
+const refetchReviews = () => {
+  resetCurrentPage();
+  getReviews();
+};
+
+//Pagination
+const { pagination, setPagination, resetCurrentPage, setCurrentPage } = usePagination();
+
+const changePage = (page: number) => {
+  setCurrentPage(page);
+  getReviews();
 };
 
 onBeforeRouteUpdate(async to => {
   product.value = await fetchProductById(+to.params.id);
+  refetchReviews();
   document.documentElement.scrollTop = 0;
 });
 
 onMounted(async () => {
   product.value = await fetchProductById(+route.params.id);
-  reviews.value = await fetchReviewsById(product.value.id);
+  sortOptions.value = await fetchSortOptions();
+  getReviews();
   colorSelected.value = product.value.colors[0];
   initCart();
   initWishlist();
@@ -523,8 +566,8 @@ onMounted(async () => {
   gap: 15px;
 
   & button {
-    height: 40px;
-    width: 40px;
+    height: 45px;
+    width: 45px;
     border-radius: 3px;
     color: $secondary-color;
     font-size: 24px;

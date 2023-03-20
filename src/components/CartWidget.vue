@@ -107,8 +107,8 @@ const cartItemsQuantity = useInject(CartItemsQuantityKey);
   }
 }
 
-::v-deep(.p-button:enabled:hover) {
-  background: none;
-  border: none;
-}
+// ::v-deep(.p-button:enabled:hover) {
+//   background: none;
+//   border: none;
+// }
 </style>

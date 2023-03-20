@@ -16,7 +16,8 @@ import Dropdown from 'primevue/dropdown';
 import type { ISorting } from '@/types/sorting';
 
 interface IProps {
-  modelValue: ISorting;
+  sorting: ISorting;
+  sortOptions?: ISorting[];
 }
 
 const props = defineProps<IProps>();
@@ -27,29 +28,6 @@ interface IEmits {
 const emit = defineEmits<IEmits>();
 
 const sorting = useVModelWrapper(props, emit);
-
-const sortOptions = [
-  {
-    label: 'Price: low to high',
-    target: 'price',
-    order: 'asc',
-  },
-  {
-    label: 'Price: high to low',
-    target: 'price',
-    order: 'desc',
-  },
-  {
-    label: 'Rating: low to high',
-    target: 'rating',
-    order: 'asc',
-  },
-  {
-    label: 'Rating: high to low',
-    target: 'rating',
-    order: 'desc',
-  },
-];
 </script>
 
 <style lang="scss" scoped>

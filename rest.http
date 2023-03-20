@@ -1,6 +1,9 @@
 
 
-GET http://localhost:3000/reviews?name=Totoska
+GET http://localhost:3000/sort-options
+
+
+
 
 
 
