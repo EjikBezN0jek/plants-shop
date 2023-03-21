@@ -3,9 +3,8 @@
     <h3>Reviews ({{ reviewsAllCount }})</h3>
 
     <DropdownSorting
-      :sort-options="sortOptions?.reviews"
-      :model-value="sorting"
-      :sorting="sorting" />
+      :sort-options="sortOptions"
+      v-model:sorting="sorting" />
 
     <div class="reviews-list">
       <div
@@ -33,15 +32,15 @@
     </div>
 
     <ClassicPagination
-      v-if="pagination.last"
-      :pagination="pagination" />
+      :pagination="pagination"
+      @change-page="emit('changePage', $event)" />
   </div>
 </template>
 
 <script setup lang="ts">
 import Rating from 'primevue/rating';
 
-// import { useVModelWrapper } from '@/hooks/useVModelWrapper';
+import { useVModelWrapper } from '@/hooks/useVModelWrapper';
 
 import DropdownSorting from '@/components/DropdownSorting.vue';
 import ClassicPagination from '@/components/ClassicPagination.vue';
@@ -49,7 +48,6 @@ import ClassicPagination from '@/components/ClassicPagination.vue';
 import type { IReview } from '@/types/review';
 import type { IPagination } from '@/types/';
 import type { ISorting } from '@/types/sorting';
-import type { ISortOptions } from '@/types/sortOptions';
 
 import { dateFormatter } from '@/helpers/dateFormatter';
 
@@ -58,17 +56,17 @@ interface IProps {
   reviewsAllCount: number;
   pagination: IPagination;
   sorting: ISorting;
-  sortOptions?: ISortOptions;
+  sortOptions?: ISorting[];
 }
 const props = defineProps<IProps>();
 
 interface IEmits {
+  (e: 'changePage', page: number): void;
   (e: 'update:sorting', sorting: ISorting): void;
-  // (e: 'changePage', page: number): void;
 }
 const emit = defineEmits<IEmits>();
 
-// const sorting = useVModelWrapper(props, emit, 'sorting');
+const sorting = useVModelWrapper(props, emit, 'sorting');
 </script>
 
 <style scoped lang="scss">

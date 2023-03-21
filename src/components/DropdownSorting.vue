@@ -23,11 +23,11 @@ interface IProps {
 const props = defineProps<IProps>();
 
 interface IEmits {
-  (e: 'update:modelValue', sorting: ISorting): void;
+  (e: 'update:sorting', query: ISorting): void;
 }
 const emit = defineEmits<IEmits>();
 
-const sorting = useVModelWrapper(props, emit);
+const sorting = useVModelWrapper(props, emit, 'sorting');
 </script>
 
 <style lang="scss" scoped>

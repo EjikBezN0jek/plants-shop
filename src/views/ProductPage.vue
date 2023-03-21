@@ -111,7 +111,7 @@
       :reviews="reviews"
       :reviews-all-count="reviewsAllCount"
       :pagination="pagination"
-      :sort-options="sortOptions"
+      :sort-options="sortOptions?.reviews"
       v-model:sorting="sorting"
       @change-page="changePage"
       @update:sorting="refetchReviews" />
