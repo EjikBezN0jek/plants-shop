@@ -220,7 +220,6 @@ const registration = async () => {
     name: state.value.name,
     email: state.value.email,
     password: state.value.password,
-    orders: [],
   };
 
   try {
@@ -253,6 +252,7 @@ const login = async () => {
     user.value = data.user;
     toggleModal();
     sessionStorage.setItem('user', JSON.stringify(user.value));
+    if (user.value?.email === 'admin@111.com') router.push('admin');
   } catch (error) {
     if (error.response) {
       isError.value = true;

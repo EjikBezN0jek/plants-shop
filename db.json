@@ -946,6 +946,12 @@
       "password": "$2a$10$4F./na6dTkaq9oNlG66DJOqK.REp84Hy7zi.AYu9oXHjYZ8SKH2bO",
       "name": "qwe2",
       "id": 6
+    },
+    {
+      "email": "admin@111.com",
+      "password": "$2a$10$FiITW63uf33zDWVLMG9n6OFRyV4IHcuKpgch7TB/tqYReEYmF.iMC",
+      "name": "Admin",
+      "id": 7
     }
   ],
   "sort-options": {
