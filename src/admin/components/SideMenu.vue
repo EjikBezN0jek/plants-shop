@@ -1,11 +1,9 @@
 <template>
   <div class="sidemenu">
-    <router-link to="/"
-      ><img
-        alt="Vue logo"
-        src="/images/logo.png"
-        class="logo"
-    /></router-link>
+    <img
+      alt="Vue logo"
+      src="/images/logo.png"
+      class="logo" />
     <div
       v-for="item in menuItems"
       :key="item.label">
