@@ -42,14 +42,14 @@ const menuItems = [
   display: flex;
   flex-direction: column;
   gap: 15px;
-  width: 25%;
-  min-width: 200px;
-  max-width: 300px;
+  width: 100%;
+  max-width: 250px;
   border: 2px solid $image-background-color;
   padding: 20px;
   height: 100%;
   position: fixed;
   align-items: flex-start;
+  z-index: 11111;
 }
 
 .menu-item {

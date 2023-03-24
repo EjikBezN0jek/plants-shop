@@ -4,7 +4,7 @@
       <button
         ref="admin"
         class="admin-btn"
-        @click="isOpenModal = true">
+        @click.capture="isOpenModal = !isOpenModal">
         <div class="avatar">
           <p>A</p>
         </div>
@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import router from '@/router';
 
 import Button from 'primevue/button';
@@ -40,22 +40,24 @@ const user = useInject(UserKey);
 const isOpenModal = ref(false);
 const admin = ref(null);
 
-const clickOutside = () => {
-  window.addEventListener('click', function (e) {
-    if (e.target !== admin.value) {
-      isOpenModal.value = false;
-    }
-  });
+const clickOutside = (e: Event) => {
+  const el = admin.value;
+  if (!el || el === e.target || e.composedPath().includes(el)) return;
+  isOpenModal.value = false;
 };
 
 const quitFromAccount = () => {
   sessionStorage.removeItem('user');
   user.value = JSON.parse(sessionStorage.getItem('user') ?? '{}') ?? {};
-  router.push('/');
+  router.push({ name: 'home' });
 };
 
 onMounted(() => {
-  clickOutside();
+  window.addEventListener('click', clickOutside);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('click', clickOutside);
 });
 </script>
 

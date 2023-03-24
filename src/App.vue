@@ -17,7 +17,7 @@ provide(CartItemsQuantityKey, cartItemsQuantity);
 
 onMounted(() => {
   user.value = JSON.parse(sessionStorage.getItem('user') ?? '{}') ?? {};
-  if (user.value?.email === 'admin@111.com') router.push('admin');
+  // if (user.value?.email === 'admin@111.com') router.push('admin');
   cartItemsQuantity.value = (JSON.parse(localStorage.getItem('cart') ?? '') ?? []).length;
 });
 </script>

@@ -52,15 +52,16 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/admin/views/AdminPage.vue'),
       },
       {
-        path: 'categories',
-        name: 'adminCategories',
-        component: () => import(/* webpackChunkName: "adminCategories" */ '@/admin/views/AdminCategories.vue'),
-      },
-      {
         path: 'products',
         name: 'adminProducts',
-        component: () => import(/* webpackChunkName: "adminProducts" */ '@/admin/views/AdminProducts.vue'),
+        component: () => import('@/admin/views/AdminProducts.vue'),
       },
+      {
+        path: 'categories',
+        name: 'adminCategories',
+        component: () => import('@/admin/views/AdminCategories.vue'),
+      },
+
       // {
       //   path: 'products/add',
       //   name: 'adminProductsAdd',
