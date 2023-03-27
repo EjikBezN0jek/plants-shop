@@ -17,7 +17,7 @@
     </div>
 
     <router-link
-      v-if="user?.name"
+      v-if="user?.name && !isAdmin(user.email)"
       :to="{ name: 'user' }"
       class="menu-item"
       :class="{ active: isActiveItem('user') }"
@@ -27,6 +27,15 @@
         style="font-size: 1rem"></i
       >{{ user.name }}</router-link
     >
+    <router-link
+      v-else-if="isAdmin(user?.email)"
+      :to="{ name: 'admin' }"
+      class="menu-item btn">
+      <i
+        class="pi pi-fw pi-wrench"
+        style="font-size: 1rem"></i>
+      Go to admin
+    </router-link>
     <button
       v-else
       @click="emit('toggleAuthModal')"
@@ -61,6 +70,10 @@ const emit = defineEmits<IEmits>();
 
 const isActiveItem = (item = '') => {
   return item.toLowerCase() === props.menuItemSelected;
+};
+
+const isAdmin = (email = '') => {
+  return email === 'admin@111.com';
 };
 </script>
 

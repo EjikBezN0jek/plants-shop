@@ -6,7 +6,8 @@
       <keep-alive>
         <component
           :is="Component"
-          :key="route.name">
+          :key="route.name"
+          class="content">
         </component>
       </keep-alive>
     </router-view>
@@ -17,4 +18,14 @@
 import SideMenu from '@/admin/components/SideMenu.vue';
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.content {
+  padding: 20px;
+  margin-left: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  overflow-y: scroll;
+}
+</style>

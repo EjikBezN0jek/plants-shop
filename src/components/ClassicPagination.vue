@@ -30,6 +30,13 @@ const isActivePage = (page: number) => page === props.pagination.current;
 
 <style lang="scss" scoped>
 @import '@/assets/css/variables.scss';
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
 .button {
   padding: 0 10px;
   font-size: 16px;
@@ -37,14 +44,9 @@ const isActivePage = (page: number) => page === props.pagination.current;
   color: $complementary-color;
   font-weight: 600;
   border: none;
+  cursor: pointer;
 }
 .active {
   color: $primary-color;
-}
-
-.pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 </style>

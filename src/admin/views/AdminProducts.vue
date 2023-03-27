@@ -1,6 +1,5 @@
 <template>
-  <div class="content">
-    <TheHeader />
+  <div>
     <h1>This is products</h1>
     <DataTable
       :value="products"
@@ -74,6 +73,15 @@
           <p>{{ dateFormatter(slotProps.data.date) }}</p>
         </template>
       </Column>
+      <Column header="BADGES">
+        <template #body="slotProps">
+          <div
+            v-for="badge in slotProps.data.badges"
+            :key="badge">
+            {{ badge }}
+          </div>
+        </template>
+      </Column>
       <Column header="ACTION">
         <template #body="slotProps">
           <div class="action-buttons">
@@ -82,11 +90,18 @@
               @click="editProduct(slotProps.data)" />
             <Button
               icon="pi pi-times"
-              @click="removeProduct(slotProps.data)" />
+              @click="removeHandler(slotProps.data.id)" />
           </div>
         </template>
       </Column>
+      <Toast />
+      <ConfirmDialog></ConfirmDialog>
     </DataTable>
+
+    <ClassicPagination
+      :pagination="pagination"
+      @change-page="changePage"
+      class="pagination" />
   </div>
 </template>
 
@@ -98,35 +113,97 @@ import Column from 'primevue/column';
 import Rating from 'primevue/rating';
 import Button from 'primevue/button';
 
-import TheHeader from '@/admin/components/TheHeader.vue';
+import ConfirmDialog from 'primevue/confirmdialog';
+import Toast from 'primevue/toast';
+
+import { useConfirm } from 'primevue/useconfirm';
+import { useToast } from 'primevue/usetoast';
 
 import type { IProduct } from '@/types/product';
 
-import { fetchAllProducts } from '../api/admin';
+import ClassicPagination from '@/components/ClassicPagination.vue';
+
+import { fetchAllProducts } from '@/api/catalog';
+
+import { removeProduct } from '../api/admin';
+
 import { usePagination } from '@/hooks/usePagination';
 
 import { dateFormatter } from '@/helpers/dateFormatter';
 
+const confirm = useConfirm();
+const toast = useToast();
+
 const products = ref<IProduct[]>();
 
-const { pagination, setPagination, resetCurrentPage, setCurrentPage } = usePagination();
+const { pagination, setPagination, setCurrentPage, resetCurrentPage } = usePagination();
 
 const sortHandler = e => {
   console.log(e);
 };
 
-onMounted(async () => {
-  const { data, pagination: p } = await fetchAllProducts();
+const getProducts = async () => {
+  const params = {
+    // colors_like: colorsSelected.value,
+    // categories_like: categorySelected.value,
+    // badges_like: badgesSelected.value,
+    // name_like: searchQuery.value,
+    // _sort: sorting.value.target,
+    // _order: sorting.value.order,
+    _page: pagination.value.current,
+    _limit: 8,
+    // price_gte: pricesSelected.value?.min,
+    // price_lte: pricesSelected.value?.max,
+  };
+
+  const { data, pagination: p } = await fetchAllProducts(params);
   products.value = data;
   setPagination(p);
+};
+
+const changePage = (page: number) => {
+  setCurrentPage(page);
+  getProducts();
+};
+
+const refetchProducts = () => {
+  resetCurrentPage();
+  getProducts();
+};
+
+const removeHandler = (id: number) => {
+  confirm.require({
+    message: 'Do you want to delete this product?',
+    header: 'Delete Confirmation',
+    icon: 'pi pi-info-circle',
+    acceptClass: 'p-button-danger',
+    accept: () => {
+      removeProduct(id);
+      toast.add({ severity: 'info', summary: 'Confirmed', detail: 'Product deleted', life: 3000 });
+      refetchProducts();
+    },
+  });
+};
+
+onMounted(async () => {
+  getProducts();
 });
 </script>
 
 <style scoped lang="scss">
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
-.content {
-  margin-left: 250px;
+
+.table {
+  flex-grow: 1;
+}
+
+::v-deep(.p-datatable .p-datatable-tbody > tr > td) {
+  height: 130px;
+}
+
+h1 {
+  padding: 0 0 10px;
 }
 
 .product {
@@ -134,12 +211,11 @@ onMounted(async () => {
   align-items: center;
   gap: 20px;
   text-decoration: none;
-  cursor: pointer;
   color: $table-text-color;
+  cursor: pointer;
 }
 .product-image {
   width: 50px;
-  height: 100%;
 }
 
 .colors {
