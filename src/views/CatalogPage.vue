@@ -128,7 +128,7 @@ const { pagination, setPagination, resetCurrentPage, setCurrentPage } = usePagin
 //ScrollUp
 const isShowScroll = ref(false);
 const scrollUp = () => {
-  document.documentElement.scrollTop = 0;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
   isShowScroll.value = false;
 };
 

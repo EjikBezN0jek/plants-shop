@@ -1,12 +1,31 @@
 <template>
   <div>
-    <h1>This is products</h1>
+    <h1>Products {{ state.name }}</h1>
+
+    <div class="row">
+      <CatalogSearch
+        v-model="searchQuery"
+        @update:model-value="searchProducts" />
+
+      <Button @click="openModal">ADD NEW PRODUCT</Button>
+      <ProductModal
+        v-if="isModalOpen"
+        @close-modal="closeModal"
+        :colors="colors"
+        v-model:state="state"
+        :badges="badges"
+        :categories="categories"
+        :submitted="submitted"
+        @handle-submit="handleSubmit" />
+    </div>
+
     <DataTable
       :value="products"
       responsive-layout="scroll"
       removable-sort
       class="table"
-      @sort="sortHandler">
+      @sort="sortHandler"
+      v-if="products?.length">
       <Column header="PRODUCT">
         <template #body="slotProps">
           <img
@@ -97,11 +116,13 @@
       <Toast />
       <ConfirmDialog></ConfirmDialog>
     </DataTable>
+    <h2 v-else>No products!</h2>
 
     <ClassicPagination
       :pagination="pagination"
       @change-page="changePage"
-      class="pagination" />
+      class="pagination"
+      v-if="products?.length" />
   </div>
 </template>
 
@@ -122,48 +143,127 @@ import { useToast } from 'primevue/usetoast';
 import type { IProduct } from '@/types/product';
 
 import ClassicPagination from '@/components/ClassicPagination.vue';
+import CatalogSearch from '@/components/CatalogSearch.vue';
+import ProductModal from '@/admin/components/ProductModal.vue';
 
-import { fetchAllProducts } from '@/api/catalog';
+import { fetchAllProducts, fetchAllColors, fetchAllCategories, fetchAllBadges } from '@/api/catalog';
 
-import { removeProduct } from '../api/admin';
+import { removeProduct, addProduct } from '../api/admin';
 
 import { usePagination } from '@/hooks/usePagination';
 
 import { dateFormatter } from '@/helpers/dateFormatter';
+import { debounce } from '@/helpers/debounce';
+
+import { IColor } from '@/types/color';
+import { IBadge } from '@/types/badge';
+import { ICategory } from '@/types/category';
 
 const confirm = useConfirm();
 const toast = useToast();
 
 const products = ref<IProduct[]>();
+const colors = ref<IColor[]>();
+// const colorsSelected = ref<string[]>([]);
+const badges = ref<IBadge[]>();
+// const badgesSelected = ref<string[]>([]);
+const categories = ref<ICategory[]>();
+// const categoriesSelected = ref<string[]>([]);
+// const name = ref('');
+// const price = ref(0);
+// const description = ref('');
+
+const state = ref({
+  name: '',
+  categories: [''],
+  colors: [''],
+  badges: [''],
+  description: '',
+  price: null,
+});
 
 const { pagination, setPagination, setCurrentPage, resetCurrentPage } = usePagination();
 
-const sortHandler = e => {
-  console.log(e);
+const isModalOpen = ref(false);
+const body = document.querySelector('body');
+
+const openModal = () => {
+  isModalOpen.value = true;
+  body.style.overflow = 'hidden';
 };
+
+// const cleanForm = () => {
+//   colorsSelected.value = [];
+//   badgesSelected.value = [];
+//   categoriesSelected.value = [];
+//   name.value = '';
+//   price.value = 0;
+//   description.value = '';
+// };
+
+const closeModal = () => {
+  isModalOpen.value = false;
+  // cleanForm();
+};
+
+const placeProduct = () => {
+  const newProduct = {
+    date: Date.now(),
+    // firstName: state.value.firstName,
+  };
+  // addProduct(newProduct);
+  // closeModal();
+};
+const submitted = ref(false);
+const isSuccessful = ref(false);
+
+const handleSubmit = (isFormValid: any) => {
+  submitted.value = true;
+  // if (isFormValid) {
+  //   placeOrder();
+  //   toggleDialog();
+  //   resetForm();
+  // }
+};
+
+const sortHandler = e => {
+  sorting.value.target = e.sortField;
+  if (e.sortOrder === 1) sorting.value.order = 'asc';
+  if (e.sortOrder === -1) sorting.value.order = 'desc';
+  getProducts();
+};
+
+const sorting = ref({ target: '', order: '' });
+
+const searchQuery = ref('');
+
+const searchProducts = debounce(() => {
+  refetchProducts();
+}, 300);
 
 const getProducts = async () => {
   const params = {
-    // colors_like: colorsSelected.value,
-    // categories_like: categorySelected.value,
-    // badges_like: badgesSelected.value,
-    // name_like: searchQuery.value,
-    // _sort: sorting.value.target,
-    // _order: sorting.value.order,
+    name_like: searchQuery.value,
+    _sort: sorting.value.target,
+    _order: sorting.value.order,
     _page: pagination.value.current,
     _limit: 8,
-    // price_gte: pricesSelected.value?.min,
-    // price_lte: pricesSelected.value?.max,
   };
 
   const { data, pagination: p } = await fetchAllProducts(params);
   products.value = data;
   setPagination(p);
+  resetCurrentPage();
+};
+
+const scrollUp = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
 const changePage = (page: number) => {
   setCurrentPage(page);
   getProducts();
+  scrollUp();
 };
 
 const refetchProducts = () => {
@@ -187,12 +287,22 @@ const removeHandler = (id: number) => {
 
 onMounted(async () => {
   getProducts();
+  isModalOpen.value = false;
+  colors.value = await fetchAllColors();
+  badges.value = await fetchAllBadges();
+  categories.value = await fetchAllCategories();
 });
 </script>
 
 <style scoped lang="scss">
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+}
 
 .table {
   flex-grow: 1;

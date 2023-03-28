@@ -25,27 +25,6 @@
         @submit.prevent="handleSubmit(!v$.$invalid)"
         class="p-fluid form">
         <div class="customer-info">
-          <div class="input-wrapper">
-            <span class="p-float-label">
-              <Dropdown
-                id="dropdown"
-                v-model="v$.country.$model"
-                :options="countries"
-                option-label="name"
-                :class="{ 'p-invalid': v$.country.$invalid && submitted }" />
-              <label
-                for="dropdown"
-                :class="{ 'p-error': v$.country.$invalid && submitted }"
-                >Country*</label
-              >
-            </span>
-            <small
-              v-if="v$.country.$invalid && submitted"
-              class="p-error"
-              >{{ v$.country.required.$message.replace('Value', 'Country') }}</small
-            >
-          </div>
-
           <div class="name">
             <div class="input-wrapper">
               <span class="p-float-label">
@@ -87,6 +66,27 @@
               >
             </div>
           </div>
+          <div class="input-wrapper">
+            <span class="p-float-label">
+              <Dropdown
+                id="dropdown"
+                v-model="v$.country.$model"
+                :options="countries"
+                option-label="name"
+                :class="{ 'p-invalid': v$.country.$invalid && submitted }" />
+              <label
+                for="dropdown"
+                :class="{ 'p-error': v$.country.$invalid && submitted }"
+                >Country*</label
+              >
+            </span>
+            <small
+              v-if="v$.country.$invalid && submitted"
+              class="p-error"
+              >{{ v$.country.required.$message.replace('Value', 'Country') }}</small
+            >
+          </div>
+
           <div class="input-wrapper">
             <span class="p-float-label">
               <Dropdown

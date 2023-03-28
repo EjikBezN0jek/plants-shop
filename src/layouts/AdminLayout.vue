@@ -25,7 +25,5 @@ import SideMenu from '@/admin/components/SideMenu.vue';
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100vh;
-  overflow-y: scroll;
 }
 </style>

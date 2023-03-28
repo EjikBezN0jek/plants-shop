@@ -4,7 +4,8 @@
 
     <DropdownSorting
       :sort-options="sortOptions"
-      v-model:sorting="sorting" />
+      v-model:sorting="sorting"
+      v-if="reviews.length" />
 
     <div class="reviews-list">
       <div
@@ -33,7 +34,8 @@
 
     <ClassicPagination
       :pagination="pagination"
-      @change-page="emit('changePage', $event)" />
+      @change-page="emit('changePage', $event)"
+      v-if="reviews.length" />
   </div>
 </template>
 
