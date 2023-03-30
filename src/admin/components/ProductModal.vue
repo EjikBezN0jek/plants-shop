@@ -10,7 +10,7 @@
       </div>
 
       <form
-        @submit.prevent="emit('handleSubmit')"
+        @submit.prevent="emit('handleSubmit', !v$.$invalid)"
         class="form">
         <div class="modal-content">
           <div class="fake-image" />
@@ -23,7 +23,7 @@
                   v-model="v$.name.$model"
                   :class="{ 'p-invalid': v$.name.$invalid && submitted }" />
                 <label
-                  for="firstName"
+                  for="name"
                   :class="{ 'p-error': v$.name.$invalid && submitted }">
                   Name*
                 </label>
@@ -79,25 +79,32 @@
             </div>
 
             <div class="characteristic">
-              <p class="characteristic-name">Categories*:</p>
+              <p
+                class="characteristic-name"
+                :class="{ error: state.categories.length === 0 && submitted }">
+                Categories*:
+              </p>
               <div class="categories">
                 <label
                   v-for="category in categories"
                   :key="category.id"
-                  :class="{ 'p-error': v$.categories.$invalid && submitted }">
+                  class="category">
                   <input
                     type="checkbox"
                     name="category"
                     :value="category.name"
-                    v-model="categoriesSelected"
-                    :class="category.name" />
+                    v-model="state.categories" />
                   {{ category.label }}
                 </label>
               </div>
             </div>
 
             <div class="characteristic">
-              <p class="characteristic-name">Potter colors*:</p>
+              <p
+                class="characteristic-name"
+                :class="{ error: state.colors.length === 0 && submitted }">
+                Potter colors*:
+              </p>
               <input
                 v-for="color in colors"
                 :key="color.id"
@@ -105,7 +112,7 @@
                 name="color"
                 class="color"
                 :value="color.name"
-                v-model="colorsSelected"
+                v-model="state.colors"
                 :class="color.name" />
             </div>
           </div>
@@ -122,7 +129,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
 import InputText from 'primevue/inputtext';
 import InputNumber from 'primevue/inputnumber';
 import Textarea from 'primevue/textarea';
@@ -146,37 +152,32 @@ interface IProps {
     categories: string[];
     colors: string[];
     description: string;
-    price: number;
+    price: number | null;
     //
     badges: string[];
   };
   ///
-  badges?: IBadge[];
+  // badges?: IBadge[];
 }
 
 const props = defineProps<IProps>();
 
 interface IEmits {
   (e: 'closeModal'): void;
-  (e: 'handleSubmit'): void;
-  (e: 'update:colorsSelected', query: string[]): void;
-  (e: 'update:categoriesSelected', query: string[]): void;
-  (e: 'update:badgesSelected', query: string[]): void;
+  (e: 'handleSubmit', query: any): void;
+  (e: 'update:state', query: object): void;
 }
 
 const emit = defineEmits<IEmits>();
 
-const colorsSelected = useVModelWrapper(props, emit, 'colorsSelected');
-const categoriesSelected = useVModelWrapper(props, emit, 'categoriesSelected');
+const state = useVModelWrapper(props, emit, 'state');
 
 const rules = {
   name: { required },
-  categories: { required },
-  colors: { required },
   description: { required },
   price: { required },
   //
-  badges: { required },
+  // badges: { required },
 };
 
 const v$ = useVuelidate(rules, props.state);
@@ -186,12 +187,20 @@ const v$ = useVuelidate(rules, props.state);
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
 
+.error {
+  color: red;
+}
+
+.category,
+.pi-times {
+  cursor: pointer;
+}
+
 .form-content {
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  width: 50%;
-  flex-shrink: 0;
+  gap: 20px;
+  width: 100%;
 }
 
 .form-btn {
@@ -202,7 +211,7 @@ const v$ = useVuelidate(rules, props.state);
   display: flex;
   align-items: flex-start;
   width: 100%;
-  justify-content: space-between;
+  gap: 15px;
 }
 
 .form {
@@ -213,7 +222,6 @@ const v$ = useVuelidate(rules, props.state);
 
 .modal-content {
   display: flex;
-  gap: 50px;
 }
 
 .characteristic {
@@ -223,12 +231,15 @@ const v$ = useVuelidate(rules, props.state);
   flex-wrap: wrap;
 }
 .color {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
   &:hover {
-    border: 4px solid $secondary-color;
+    border: 2px solid $secondary-color;
     opacity: 0.7;
   }
   &:checked {
-    border: 4px solid $primary-color;
+    border: 2px solid $primary-color;
     opacity: 1;
   }
 }
@@ -263,7 +274,7 @@ const v$ = useVuelidate(rules, props.state);
   margin: 0 auto;
   padding: 20px;
   border-radius: 10px;
-  width: 60%;
+  width: 50%;
   height: 560px;
   transform: translate(0, 50%);
 }
@@ -277,6 +288,7 @@ const v$ = useVuelidate(rules, props.state);
 .fake-image {
   width: 300px;
   height: 350px;
-  background: url('../../../public/images/products/product-30.jpg') center/contain;
+  background: url('../../../public/images/products/product-30.jpg') center/contain no-repeat;
+  flex-shrink: 0;
 }
 </style>

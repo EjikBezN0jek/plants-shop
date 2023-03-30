@@ -418,6 +418,44 @@
       "reviews": [],
       "img": "product-26.jpg",
       "id": 26
+    },
+    {
+      "date": 1680183133753,
+      "name": "Test",
+      "price": 155,
+      "colors": [
+        "red"
+      ],
+      "categories": [
+        "potted",
+        "ggggg"
+      ],
+      "rating": 0,
+      "badges": [
+        "new"
+      ],
+      "description": "Test test test test",
+      "img": "product-30.jpg",
+      "id": 27
+    },
+    {
+      "date": 1680183331949,
+      "name": "Test2",
+      "price": 460,
+      "colors": [
+        "red"
+      ],
+      "categories": [
+        "indoor",
+        "outdoor"
+      ],
+      "rating": 0,
+      "badges": [
+        "new"
+      ],
+      "description": "qwwqeweqw",
+      "img": "product-30.jpg",
+      "id": 28
     }
   ],
   "categories": [

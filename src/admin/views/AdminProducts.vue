@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Products {{ state.name }}</h1>
+    <h1>Products</h1>
 
     <div class="row">
       <CatalogSearch
@@ -8,6 +8,25 @@
         @update:model-value="searchProducts" />
 
       <Button @click="openModal">ADD NEW PRODUCT</Button>
+
+      <Dialog
+        v-model:visible="isSuccessful"
+        @hide="closeModal()"
+        :breakpoints="{ '960px': '80vw' }"
+        :style="{ width: '30vw' }"
+        :modal="true"
+        :dismissable-mask="true">
+        <template #header>
+          <h3>Successful</h3>
+        </template>
+        <div class="flex align-items-center flex-column pt-6 px-3">
+          <i
+            class="pi pi-check-circle"
+            :style="{ fontSize: '5rem', color: 'var(--green-500)' }"></i>
+          <h5>Product Successful!</h5>
+        </div>
+      </Dialog>
+
       <ProductModal
         v-if="isModalOpen"
         @close-modal="closeModal"
@@ -133,6 +152,7 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Rating from 'primevue/rating';
 import Button from 'primevue/button';
+import Dialog from 'primevue/dialog';
 
 import ConfirmDialog from 'primevue/confirmdialog';
 import Toast from 'primevue/toast';
@@ -164,20 +184,14 @@ const toast = useToast();
 
 const products = ref<IProduct[]>();
 const colors = ref<IColor[]>();
-// const colorsSelected = ref<string[]>([]);
 const badges = ref<IBadge[]>();
-// const badgesSelected = ref<string[]>([]);
 const categories = ref<ICategory[]>();
-// const categoriesSelected = ref<string[]>([]);
-// const name = ref('');
-// const price = ref(0);
-// const description = ref('');
 
 const state = ref({
   name: '',
-  categories: [''],
-  colors: [''],
-  badges: [''],
+  categories: [],
+  colors: [],
+  // badges: [],
   description: '',
   price: null,
 });
@@ -192,38 +206,51 @@ const openModal = () => {
   body.style.overflow = 'hidden';
 };
 
-// const cleanForm = () => {
-//   colorsSelected.value = [];
-//   badgesSelected.value = [];
-//   categoriesSelected.value = [];
-//   name.value = '';
-//   price.value = 0;
-//   description.value = '';
-// };
-
 const closeModal = () => {
   isModalOpen.value = false;
-  // cleanForm();
+  body.style.overflow = 'auto';
+  cleanForm();
+  refetchProducts();
+};
+
+const cleanForm = () => {
+  state.value.name = '';
+  state.value.categories = [];
+  state.value.colors = [];
+  // state.value.badges = [''];
+  state.value.description = '';
+  state.value.price = null;
+  submitted.value = false;
 };
 
 const placeProduct = () => {
   const newProduct = {
     date: Date.now(),
-    // firstName: state.value.firstName,
+    name: state.value.name,
+    price: state.value.price,
+    colors: state.value.colors,
+    categories: state.value.categories,
+    rating: 0,
+    badges: ['new'],
+    description: state.value.description,
+    img: 'product-30.jpg',
   };
-  // addProduct(newProduct);
-  // closeModal();
+  addProduct(newProduct);
 };
 const submitted = ref(false);
 const isSuccessful = ref(false);
 
+const toggleDialog = () => {
+  isSuccessful.value = !isSuccessful.value;
+};
+
 const handleSubmit = (isFormValid: any) => {
   submitted.value = true;
-  // if (isFormValid) {
-  //   placeOrder();
-  //   toggleDialog();
-  //   resetForm();
-  // }
+  if (isFormValid) {
+    placeProduct();
+    closeModal();
+    toggleDialog();
+  }
 };
 
 const sortHandler = e => {
@@ -253,7 +280,6 @@ const getProducts = async () => {
   const { data, pagination: p } = await fetchAllProducts(params);
   products.value = data;
   setPagination(p);
-  resetCurrentPage();
 };
 
 const scrollUp = () => {
