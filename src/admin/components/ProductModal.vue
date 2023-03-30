@@ -2,7 +2,8 @@
   <div class="modal">
     <div class="modal-card">
       <div class="modal-header">
-        <h2>New product</h2>
+        <h2 v-if="isEditProduct">Edit product</h2>
+        <h2 v-else>New product</h2>
         <i
           class="pi pi-times"
           style="font-size: 1.5rem"
@@ -13,7 +14,10 @@
         @submit.prevent="emit('handleSubmit', !v$.$invalid)"
         class="form">
         <div class="modal-content">
-          <div class="fake-image" />
+          <img
+            :src="`/images/products/${state.img}`"
+            :alt="`product-image-${state.img}`"
+            class="image" />
           <div class="form-content">
             <div class="input-wrapper">
               <span class="p-float-label">
@@ -98,6 +102,27 @@
                 </label>
               </div>
             </div>
+            <div
+              class="characteristic"
+              v-if="isEditProduct">
+              <p
+                class="characteristic-name"
+                :class="{ error: state.badges.length === 0 && submitted }">
+                Badges:
+              </p>
+              <div class="product-badges">
+                <label
+                  v-for="badge in badges"
+                  :key="badge.id">
+                  <input
+                    type="checkbox"
+                    name="badge"
+                    :value="badge.name"
+                    v-model="state.badges" />
+                  {{ badge.label }}
+                </label>
+              </div>
+            </div>
 
             <div class="characteristic">
               <p
@@ -117,10 +142,16 @@
             </div>
           </div>
         </div>
-
         <Button
           type="submit"
           class="form-btn"
+          v-if="isEditProduct"
+          >EDIT PRODUCT</Button
+        >
+        <Button
+          type="submit"
+          class="form-btn"
+          v-else
           >ADD NEW PRODUCT</Button
         >
       </form>
@@ -148,16 +179,19 @@ interface IProps {
   categories?: ICategory[];
   submitted: boolean;
   state: {
+    id: number;
     name: string;
     categories: string[];
     colors: string[];
     description: string;
     price: number | null;
+    img: string;
     //
     badges: string[];
   };
   ///
-  // badges?: IBadge[];
+  badges?: IBadge[];
+  isEditProduct: boolean;
 }
 
 const props = defineProps<IProps>();
@@ -176,8 +210,6 @@ const rules = {
   name: { required },
   description: { required },
   price: { required },
-  //
-  // badges: { required },
 };
 
 const v$ = useVuelidate(rules, props.state);
@@ -207,10 +239,10 @@ const v$ = useVuelidate(rules, props.state);
   align-self: center;
 }
 
-.categories {
+.categories,
+.product-badges {
   display: flex;
   align-items: flex-start;
-  width: 100%;
   gap: 15px;
 }
 
@@ -222,6 +254,7 @@ const v$ = useVuelidate(rules, props.state);
 
 .modal-content {
   display: flex;
+  gap: 15px;
 }
 
 .characteristic {
@@ -234,12 +267,13 @@ const v$ = useVuelidate(rules, props.state);
   width: 30px;
   height: 30px;
   cursor: pointer;
+
   &:hover {
-    border: 2px solid $secondary-color;
+    border: 3px solid $secondary-color;
     opacity: 0.7;
   }
   &:checked {
-    border: 2px solid $primary-color;
+    border: 3px solid $primary-color;
     opacity: 1;
   }
 }
@@ -285,10 +319,9 @@ const v$ = useVuelidate(rules, props.state);
   justify-content: space-between;
 }
 
-.fake-image {
+.image {
   width: 300px;
   height: 350px;
-  background: url('../../../public/images/products/product-30.jpg') center/contain no-repeat;
   flex-shrink: 0;
 }
 </style>

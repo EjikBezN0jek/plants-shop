@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Products</h1>
+    <h1>Products ({{ productsAllCount }})</h1>
 
     <div class="row">
       <CatalogSearch
@@ -35,6 +35,7 @@
         :badges="badges"
         :categories="categories"
         :submitted="submitted"
+        :is-edit-product="isEditProduct"
         @handle-submit="handleSubmit" />
     </div>
 
@@ -168,7 +169,7 @@ import ProductModal from '@/admin/components/ProductModal.vue';
 
 import { fetchAllProducts, fetchAllColors, fetchAllCategories, fetchAllBadges } from '@/api/catalog';
 
-import { removeProduct, addProduct } from '../api/admin';
+import { removeProduct, addProduct, addEditingProduct } from '../api/admin';
 
 import { usePagination } from '@/hooks/usePagination';
 
@@ -188,12 +189,14 @@ const badges = ref<IBadge[]>();
 const categories = ref<ICategory[]>();
 
 const state = ref({
+  id: null,
   name: '',
   categories: [],
   colors: [],
-  // badges: [],
+  badges: [],
   description: '',
   price: null,
+  img: 'product-30.jpg',
 });
 
 const { pagination, setPagination, setCurrentPage, resetCurrentPage } = usePagination();
@@ -208,6 +211,7 @@ const openModal = () => {
 
 const closeModal = () => {
   isModalOpen.value = false;
+  isEditProduct.value = false;
   body.style.overflow = 'auto';
   cleanForm();
   refetchProducts();
@@ -217,10 +221,39 @@ const cleanForm = () => {
   state.value.name = '';
   state.value.categories = [];
   state.value.colors = [];
-  // state.value.badges = [''];
+  state.value.badges = [];
   state.value.description = '';
   state.value.price = null;
+  state.value.img = 'product-30.jpg';
   submitted.value = false;
+};
+
+const isEditProduct = ref(false);
+
+const editProduct = (product: IProduct) => {
+  isEditProduct.value = true;
+  openModal();
+  state.value.id = product.id;
+  state.value.name = product.name;
+  state.value.categories = product.categories;
+  state.value.colors = product.colors;
+  state.value.badges = product.badges;
+  state.value.description = product.description;
+  state.value.price = product.price;
+  state.value.img = product.img;
+};
+
+const placeEditingProduct = () => {
+  const editingProduct = {
+    id: state.value.id,
+    name: state.value.name,
+    price: state.value.price,
+    colors: state.value.colors,
+    categories: state.value.categories,
+    badges: state.value.badges,
+    description: state.value.description,
+  };
+  addEditingProduct(editingProduct);
 };
 
 const placeProduct = () => {
@@ -247,12 +280,17 @@ const toggleDialog = () => {
 const handleSubmit = (isFormValid: any) => {
   submitted.value = true;
   if (isFormValid) {
-    placeProduct();
+    if (isEditProduct.value) {
+      placeEditingProduct();
+    } else {
+      placeProduct();
+    }
     closeModal();
     toggleDialog();
   }
 };
 
+//Sorting
 const sortHandler = e => {
   sorting.value.target = e.sortField;
   if (e.sortOrder === 1) sorting.value.order = 'asc';
@@ -268,6 +306,8 @@ const searchProducts = debounce(() => {
   refetchProducts();
 }, 300);
 
+const productsAllCount = ref(0);
+
 const getProducts = async () => {
   const params = {
     name_like: searchQuery.value,
@@ -279,6 +319,7 @@ const getProducts = async () => {
 
   const { data, pagination: p } = await fetchAllProducts(params);
   products.value = data;
+  productsAllCount.value = p.items;
   setPagination(p);
 };
 

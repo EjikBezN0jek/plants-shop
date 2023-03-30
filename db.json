@@ -456,6 +456,26 @@
       "description": "qwwqeweqw",
       "img": "product-30.jpg",
       "id": 28
+    },
+    {
+      "date": 1680187093649,
+      "name": "Admin Test",
+      "price": 350,
+      "colors": [
+        "red",
+        "black",
+        "gray"
+      ],
+      "categories": [
+        "indoor"
+      ],
+      "rating": 0,
+      "badges": [
+        "new"
+      ],
+      "description": "weqweqwe",
+      "img": "product-30.jpg",
+      "id": 29
     }
   ],
   "categories": [
