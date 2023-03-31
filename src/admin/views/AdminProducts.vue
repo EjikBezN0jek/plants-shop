@@ -61,7 +61,8 @@
         <template #body="slotProps">
           <router-link
             :to="{ name: 'product', params: { id: slotProps.data.id, name: slotProps.data.name } }"
-            class="product">
+            class="product"
+            target="_blank">
             <p>{{ slotProps.data.name }}</p>
           </router-link>
         </template>
@@ -387,7 +388,6 @@ h1 {
   display: flex;
   align-items: center;
   gap: 20px;
-  text-decoration: none;
   color: $table-text-color;
   cursor: pointer;
 }

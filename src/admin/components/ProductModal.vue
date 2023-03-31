@@ -186,10 +186,8 @@ interface IProps {
     description: string;
     price: number | null;
     img: string;
-    //
     badges: string[];
   };
-  ///
   badges?: IBadge[];
   isEditProduct: boolean;
 }
@@ -219,9 +217,6 @@ const v$ = useVuelidate(rules, props.state);
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
 
-.error {
-  color: red;
-}
 
 .category,
 .pi-times {

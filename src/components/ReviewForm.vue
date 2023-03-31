@@ -54,10 +54,6 @@ const commentSelected = useVModelWrapper(props, emit, 'newComment');
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
 
-.error {
-  color: red;
-}
-
 .review-form {
   display: flex;
   flex-direction: column;

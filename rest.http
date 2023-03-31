@@ -1,6 +1,7 @@
 
 
-GET http://localhost:3000/products/20
+GET http://localhost:3000/products/7?name
+
 
 
 

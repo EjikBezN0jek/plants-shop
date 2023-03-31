@@ -3,7 +3,7 @@
     {
       "id": 3,
       "date": 1602721000000,
-      "name": "Aenean ultricies",
+      "name": "Aenean ultricies ",
       "price": 450,
       "colors": [
         "black"
@@ -81,7 +81,7 @@
       "categories": [
         "outdoor"
       ],
-      "rating": 0,
+      "rating": 4,
       "badges": [
         "new"
       ],
@@ -119,7 +119,7 @@
       "categories": [
         "ggggg"
       ],
-      "rating": 0,
+      "rating": null,
       "badges": [
         "hot"
       ],
@@ -907,7 +907,42 @@
       "label": "Delivered"
     }
   ],
-  "reviews": [],
+  "reviews": [
+    {
+      "productId": 6,
+      "userName": "Qwerty",
+      "date": 1680264904605,
+      "rating": 3,
+      "comment": "Qwerty wqeqweqweqweqw",
+      "isModerate": true,
+      "productName": "Sociis natoque",
+      "productImage": "product-06.jpg",
+      "id": 1,
+      "isModerated": true
+    },
+    {
+      "productId": 7,
+      "userName": "Qwerty",
+      "date": 1680269209829,
+      "rating": 5,
+      "comment": "sdasdasdas",
+      "isModerate": true,
+      "productName": "New Product",
+      "productImage": "product-07.jpg",
+      "id": 5
+    },
+    {
+      "productId": 7,
+      "userName": "Qwerty",
+      "date": 1680272507607,
+      "rating": 3,
+      "comment": "asdasdasdas",
+      "isModerate": true,
+      "productName": "New Product",
+      "productImage": "product-07.jpg",
+      "id": 6
+    }
+  ],
   "prices": {
     "min": 25,
     "max": 10000
