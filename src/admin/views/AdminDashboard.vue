@@ -1,7 +1,6 @@
 <template>
   <div>
-    <h1>Reviews</h1>
-
+    <h1>Dashboard</h1>
     <Dialog
       v-model:visible="isSuccessful"
       @hide="closeModal()"
@@ -21,12 +20,21 @@
     </Dialog>
 
     <DataTable
-      :value="reviews"
       responsive-layout="scroll"
       removable-sort
       class="table"
-      @sort="sortHandler"
-      v-if="reviews?.length">
+      v-if="newReviews?.length"
+      :value="newReviews">
+      <template #header>
+        <div class="header">
+          <span class="text-xl text-900 font-bold">New Reviews</span>
+          <Button
+            icon="pi pi-refresh"
+            class="refresh-btn"
+            @click="getNewReviews" />
+        </div>
+      </template>
+
       <Column header="PRODUCT">
         <template #body="slotProps">
           <img
@@ -108,93 +116,57 @@
       <Toast />
       <ConfirmDialog></ConfirmDialog>
     </DataTable>
-
-    <h2 v-else>No reviews!</h2>
-
-    <ClassicPagination
-      :pagination="pagination"
-      @change-page="changePage"
-      class="pagination"
-      v-if="reviews?.length" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { fetchAllReviews, addModeratingReview, changeRating, removeReview } from '../api/admin';
 
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Rating from 'primevue/rating';
 import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
+
 import ConfirmDialog from 'primevue/confirmdialog';
 import Toast from 'primevue/toast';
-
-import ClassicPagination from '@/components/ClassicPagination.vue';
 
 import { useConfirm } from 'primevue/useconfirm';
 import { useToast } from 'primevue/usetoast';
 
 import type { IReview } from '@/types/review';
 
-import { fetchAllReviews, addModeratingReview, changeRating, removeReview } from '../api/admin';
-
-import { usePagination } from '@/hooks/usePagination';
-
 import { dateFormatter } from '@/helpers/dateFormatter';
-
-const { pagination, setPagination, setCurrentPage, resetCurrentPage } = usePagination();
 
 const confirm = useConfirm();
 const toast = useToast();
 
-const reviews = ref<IReview[]>();
-
-const reviewsAllCount = ref(0);
-
-const sortHandler = e => {
-  sorting.value.target = e.sortField;
-  if (e.sortOrder === 1) sorting.value.order = 'asc';
-  if (e.sortOrder === -1) sorting.value.order = 'desc';
-  getReviews();
-};
-
-const sorting = ref({ target: '', order: '' });
-
-const getReviews = async () => {
-  const params = {
-    _sort: sorting.value.target,
-    _order: sorting.value.order,
-    _page: pagination.value.current,
-    _limit: 3,
-  };
-
-  const { data, pagination: p } = await fetchAllReviews(params);
-  reviews.value = data;
-  reviewsAllCount.value = p.items;
-  setPagination(p);
-};
-
-const scrollUp = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
-
-const changePage = (page: number) => {
-  setCurrentPage(page);
-  getReviews();
-  scrollUp();
-};
-
-const refetchReviews = () => {
-  resetCurrentPage();
-  getReviews();
-};
+const newReviews = ref<IReview[]>();
 
 const isSuccessful = ref(false);
 
+const toggleDialog = () => {
+  isSuccessful.value = !isSuccessful.value;
+};
+
+const closeModal = () => {
+  getNewReviews();
+};
+
+const getNewReviews = async () => {
+  const params = {
+    _sort: 'date',
+    _order: 'desc',
+    _limit: 2,
+  };
+
+  const { data } = await fetchAllReviews(params);
+  newReviews.value = data;
+};
 const recalculationRating = async (id: number) => {
-  await getReviews();
-  const allReviews = reviews.value?.filter(item => item.productId === id && item.isModerate);
+  await getNewReviews();
+  const allReviews = newReviews.value?.filter(item => item.productId === id && item.isModerate);
   const newRating = ref(0);
   if (allReviews) {
     newRating.value = +(allReviews.reduce((acc, cur) => acc + cur.rating, 0) / allReviews.length).toFixed(1);
@@ -225,21 +197,13 @@ const removeHandler = (review: IReview) => {
       removeReview(review.id);
       recalculationRating(review.productId);
       toast.add({ severity: 'info', summary: 'Confirmed', detail: 'Review deleted', life: 3000 });
-      refetchReviews();
+      getNewReviews();
     },
   });
 };
 
-const toggleDialog = () => {
-  isSuccessful.value = !isSuccessful.value;
-};
-
-const closeModal = () => {
-  refetchReviews();
-};
-
 onMounted(async () => {
-  getReviews();
+  getNewReviews();
 });
 </script>
 
@@ -247,17 +211,27 @@ onMounted(async () => {
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
 
-.table {
-  flex-grow: 1;
+.refresh-btn {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.moderated {
+  color: $primary-color;
 }
 
 .action-buttons {
   display: flex;
   justify-content: center;
   gap: 10px;
-}
-.moderated {
-  color: $primary-color;
 }
 
 .product {

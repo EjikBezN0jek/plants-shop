@@ -47,9 +47,9 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "admin" */ '../layouts/AdminLayout.vue'),
     children: [
       {
-        path: '',
-        name: 'admin',
-        component: () => import('@/admin/views/AdminPage.vue'),
+        path: '/admin',
+        name: 'dashboard',
+        component: () => import('@/admin/views/AdminDashboard.vue'),
       },
       {
         path: 'products',
@@ -61,21 +61,15 @@ const routes: Array<RouteRecordRaw> = [
         name: 'adminCategories',
         component: () => import('@/admin/views/AdminCategories.vue'),
       },
-
-      // {
-      //   path: 'products/add',
-      //   name: 'adminProductsAdd',
-      //   component: () => import(/* webpackChunkName: "adminProductsAdd" */ '../views/AdminProductsAdd.vue'),
-      // },
-      // {
-      //   path: 'products/:id',
-      //   name: 'adminProductsEdit',
-      //   component: () => import(/* webpackChunkName: "adminProductsEdit" */ '../views/AdminProductsEdit.vue'),
-      // },
       {
         path: 'orders',
         name: 'adminOrders',
         component: () => import(/* webpackChunkName: "adminOrders" */ '@/admin/views/AdminOrders.vue'),
+      },
+      {
+        path: 'order/:id?',
+        name: 'order',
+        component: () => import(/* webpackChunkName: "order" */ '@/admin/views/AdminOrderInfo.vue'),
       },
       {
         path: 'reviews',

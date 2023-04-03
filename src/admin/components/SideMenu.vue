@@ -49,12 +49,12 @@ import { useInject } from '@/hooks/useInject';
 const user = useInject(UserKey);
 
 const menuItems = [
-  { label: 'Home', icon: 'pi pi-fw pi-home', name: 'admin' },
+  { label: 'Dashboard', icon: 'pi pi-fw pi-th-large', name: 'dashboard' },
   { label: 'Categories', icon: 'pi pi-fw pi-tag', name: 'adminCategories' },
   { label: 'Products', icon: 'pi pi-fw pi-shopping-bag', name: 'adminProducts' },
   { label: 'Orders', icon: 'pi pi-fw pi-shopping-cart', name: 'adminOrders' },
   { label: 'Reviews', icon: 'pi pi-fw pi-star', name: 'adminReviews' },
-  { label: 'Go to shop', icon: 'pi pi-fw pi-th-large', name: 'home' },
+  { label: 'Go to shop', icon: 'pi pi-fw pi-home', name: 'home' },
 ];
 
 const quitFromAccount = () => {

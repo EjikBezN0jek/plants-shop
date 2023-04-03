@@ -142,7 +142,6 @@
     <ClassicPagination
       :pagination="pagination"
       @change-page="changePage"
-      class="pagination"
       v-if="products?.length" />
   </div>
 </template>

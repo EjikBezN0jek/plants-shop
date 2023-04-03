@@ -192,7 +192,7 @@ const ordersSort = () => {
 const quitFromAccount = () => {
   sessionStorage.removeItem('user');
   user.value = JSON.parse(sessionStorage.getItem('user') ?? '{}') ?? {};
-  router.push('/');
+  router.push({ name: 'home' });
 };
 const isShowOrders = ref(true);
 const isShowReviews = ref(false);

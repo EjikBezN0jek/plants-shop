@@ -1,6 +1,8 @@
 import api from '@/api';
 import type { IProduct } from '@/types/product';
 import type { IReview } from '@/types/review';
+import type { IOrder } from '@/types/order';
+
 import type { IResponseList } from '@/types/';
 
 import { getResponsePagination } from '@/api/helpers';
@@ -21,5 +23,11 @@ export const addModeratingReview = async (review: IReview) => await api.patch(`r
 
 export const changeRating = async (id: number, product: IProduct) => await api.patch(`products/${id}`, product);
 
-// export const cancelModerating = async (review: IReview) => await api.patch(`reviews/${review.id}`, review);
 export const removeReview = async (id: number) => await api.delete(`reviews/${id}`);
+
+export const fetchAllOrders = async (params = {}): Promise<IResponseList<IOrder>> => {
+  const { data, headers } = await api.get('orders', { params: clearObjectEmptyFields(params) });
+  return { data, pagination: getResponsePagination(headers) };
+};
+
+export const fetchOrderById = async (id: number): Promise<IOrder> => (await api.get(`orders/${id}`)).data;

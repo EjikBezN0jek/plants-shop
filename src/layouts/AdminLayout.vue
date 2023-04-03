@@ -3,13 +3,11 @@
     <SideMenu />
 
     <router-view v-slot="{ Component, route }">
-      <keep-alive>
-        <component
-          :is="Component"
-          :key="route.name"
-          class="content">
-        </component>
-      </keep-alive>
+      <component
+        :is="Component"
+        :key="route.name"
+        class="content">
+      </component>
     </router-view>
   </div>
 </template>
