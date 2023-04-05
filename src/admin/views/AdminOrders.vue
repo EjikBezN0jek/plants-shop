@@ -55,25 +55,14 @@
       </Column>
       <Column
         header="STATUS"
-        field="status"
+        field="status.label"
         sortable>
         <template #body="slotProps">
-          <p class="status">
+          <p
+            class="order-status"
+            :class="slotProps.data.status.name">
             {{ slotProps.data.status.label }}
           </p>
-        </template>
-      </Column>
-      <Column header="ACTION">
-        <template #body="slotProps">
-          <div class="action-buttons">
-            <Button
-              icon="pi pi-check"
-              @click="moderateReview(slotProps.data)"
-              v-if="!slotProps.data.isModerate" />
-            <Button
-              icon="pi pi-ban"
-              @click="removeHandler(slotProps.data)" />
-          </div>
         </template>
       </Column>
       <Toast />
@@ -151,8 +140,6 @@ const scrollUp = () => {
 };
 
 const onRowSelect = e => {
-  // console.log(e.data.id);
-
   router.push({ name: 'order', params: { id: e.data.id } });
 };
 

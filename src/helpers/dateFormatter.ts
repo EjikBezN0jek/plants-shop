@@ -4,8 +4,12 @@
 export const dateFormatter = (date: number) => {
   const options = {
     year: 'numeric',
-    month: 'long',
+    month: 'numeric',
     day: 'numeric',
   };
-  return new Date(date).toLocaleString('en-US', options);
+  return new Date(date).toLocaleString('ru', options);
+};
+
+export const dateFormatterFull = (date: number) => {
+  return new Date(date).toLocaleString('ru');
 };

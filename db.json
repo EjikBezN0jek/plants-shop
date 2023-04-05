@@ -505,6 +505,8 @@
           "totalCost": 50
         }
       ],
+      "productsTotal": 50,
+      "shippingCost": 5,
       "totalCost": 55,
       "status": {
         "id": 3,
@@ -540,6 +542,8 @@
           "totalCost": 750
         }
       ],
+      "productsTotal": 750,
+      "shippingCost": 5,
       "totalCost": 755,
       "status": {
         "id": 4,
@@ -576,6 +580,8 @@
         }
       ],
       "totalCost": 30,
+      "productsTotal": 25,
+      "shippingCost": 5,
       "status": {
         "id": 2,
         "name": "ready-to-ship",
@@ -620,6 +626,8 @@
           "totalCost": 80
         }
       ],
+      "productsTotal": 140,
+      "shippingCost": 5,
       "totalCost": 145,
       "status": {
         "id": 1,
@@ -696,7 +704,7 @@
           "quantity": 5,
           "id": 1,
           "name": "Cactus",
-          "color": "",
+          "color": "red",
           "price": 25,
           "img": "product-01.jpg",
           "totalCost": 125

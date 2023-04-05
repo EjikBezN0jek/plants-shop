@@ -462,22 +462,22 @@ onMounted(async () => {
   border: 1px solid $complementary-color;
 }
 
-.order-status {
-  flex-shrink: 0;
+// .order-status {
+//   flex-shrink: 0;
 
-  &.pending {
-    color: rgb(94, 148, 211);
-  }
-  &.ready-to-ship {
-    color: rgb(211, 211, 94);
-  }
-  &.on-the-way {
-    color: rgb(211, 150, 94);
-  }
-  &.delivered {
-    color: $primary-color;
-  }
-}
+//   &.pending {
+//     color: rgb(94, 148, 211);
+//   }
+//   &.ready-to-ship {
+//     color: rgb(211, 211, 94);
+//   }
+//   &.on-the-way {
+//     color: rgb(211, 150, 94);
+//   }
+//   &.delivered {
+//     color: $primary-color;
+//   }
+// }
 .order-header {
   background: $image-background-color;
   padding: 10px;
