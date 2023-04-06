@@ -13,7 +13,7 @@
         :to="{ name: item.name }">
         <i
           :class="item.icon"
-          style="font-size: 1rem">
+          style="font-size: 1.5rem">
         </i>
         {{ item.label }}
       </router-link>
@@ -31,7 +31,7 @@
         @click="quitFromAccount">
         <i
           class="pi pi-sign-out"
-          style="font-size: 1rem"></i>
+          style="font-size: 1.5rem"></i>
         QUIT
       </button>
     </div>
@@ -50,7 +50,9 @@ const user = useInject(UserKey);
 
 const menuItems = [
   { label: 'Dashboard', icon: 'pi pi-fw pi-th-large', name: 'dashboard' },
-  { label: 'Categories', icon: 'pi pi-fw pi-tag', name: 'adminCategories' },
+  { label: 'Categories', icon: 'pi pi-fw pi-tags', name: 'adminCategories' },
+  { label: 'Badges', icon: 'pi pi-fw pi-verified', name: 'adminBadges' },
+  { label: 'Colors', icon: 'pi pi-fw pi-palette', name: 'adminColors' },
   { label: 'Products', icon: 'pi pi-fw pi-shopping-bag', name: 'adminProducts' },
   { label: 'Orders', icon: 'pi pi-fw pi-shopping-cart', name: 'adminOrders' },
   { label: 'Reviews', icon: 'pi pi-fw pi-star', name: 'adminReviews' },
@@ -172,6 +174,7 @@ onMounted(() => {
   color: white;
   text-decoration: none;
   text-transform: uppercase;
+  text-align: left;
 
   &:hover {
     background: $primary-color-accent;

@@ -29,7 +29,8 @@
               <div class="row">
                 <div
                   class="color"
-                  :class="product.color"></div>
+                  :class="product.color.name"
+                  :style="{ background: product.color.code }" />
               </div>
 
               <div class="row">
@@ -73,7 +74,8 @@
             <template #body="slotProps">
               <div
                 class="color"
-                :class="slotProps.data.color"></div>
+                :class="slotProps.data.color.name"
+                :style="{ background: slotProps.data.color.code }"></div>
             </template>
           </Column>
           <Column header="PRICE">

@@ -5,7 +5,13 @@
       "date": 1602721000000,
       "name": "Aenean ultricies ",
       "price": 450,
-      "colors": ["black"],
+      "colors": [
+        {
+          "id": 2,
+          "name": "black",
+          "code": "#000000"
+        }
+      ],
       "categories": ["indoor"],
       "rating": 1.5,
       "badges": [],
@@ -17,7 +23,13 @@
       "date": 1682728703051,
       "name": "Oak",
       "price": 1000,
-      "colors": ["red"],
+      "colors": [
+        {
+          "id": 1,
+          "name": "red",
+          "code": "#FF0000"
+        }
+      ],
       "categories": ["outdoor"],
       "rating": 0,
       "badges": ["hot"],
@@ -29,7 +41,18 @@
       "date": 1702728100000,
       "name": "Aenean ultricies",
       "price": 450,
-      "colors": ["black", "white"],
+      "colors": [
+        {
+          "id": 2,
+          "name": "black",
+          "code": "#000000"
+        },
+        {
+          "id": 4,
+          "name": "white",
+          "code": "#FFFFFF"
+        }
+      ],
       "categories": ["indoor"],
       "rating": 0,
       "badges": [],
@@ -41,7 +64,13 @@
       "date": 1202728701000,
       "name": "Sociis natoque",
       "price": 150,
-      "colors": ["gray"],
+      "colors": [
+        {
+          "id": 3,
+          "name": "gray",
+          "code": "#808080"
+        }
+      ],
       "categories": ["potted"],
       "rating": 5,
       "badges": ["new"],
@@ -53,7 +82,18 @@
       "date": 1648728703051,
       "name": "New Product",
       "price": 80,
-      "colors": ["black", "white"],
+      "colors": [
+        {
+          "id": 2,
+          "name": "black",
+          "code": "#000000"
+        },
+        {
+          "id": 4,
+          "name": "white",
+          "code": "#FFFFFF"
+        }
+      ],
       "categories": ["outdoor"],
       "rating": 4,
       "badges": ["new"],
@@ -65,7 +105,23 @@
       "date": 1652804153237,
       "name": "Bonsai",
       "price": 150,
-      "colors": ["red", "black", "white"],
+      "colors": [
+        {
+          "id": 1,
+          "name": "red",
+          "code": "#FF0000"
+        },
+        {
+          "id": 2,
+          "name": "black",
+          "code": "#000000"
+        },
+        {
+          "id": 3,
+          "name": "gray",
+          "code": "#808080"
+        }
+      ],
       "categories": ["potted", "indoor"],
       "rating": null,
       "badges": ["new"],
@@ -76,7 +132,13 @@
       "date": 1652905430128,
       "name": "Qwerty",
       "price": 50,
-      "colors": ["red"],
+      "colors": [
+        {
+          "id": 1,
+          "name": "red",
+          "code": "#FF0000"
+        }
+      ],
       "categories": ["ggggg"],
       "rating": 3,
       "badges": ["hot"],
@@ -89,7 +151,28 @@
       "date": 1653312426685,
       "name": "test",
       "price": 10000,
-      "colors": ["white", "gray", "black", "red"],
+      "colors": [
+        {
+          "id": 4,
+          "name": "white",
+          "code": "#FFFFFF"
+        },
+        {
+          "id": 3,
+          "name": "gray",
+          "code": "#808080"
+        },
+        {
+          "id": 2,
+          "name": "black",
+          "code": "#000000"
+        },
+        {
+          "id": 1,
+          "name": "red",
+          "code": "#FF0000"
+        }
+      ],
       "categories": ["ggggg", "outdoor", "indoor", "potted"],
       "rating": 0,
       "badges": ["new", "hot", "sale"],
@@ -103,7 +186,13 @@
       "date": 1642728703051,
       "name": "Calamagrostis",
       "price": 150,
-      "colors": ["red"],
+      "colors": [
+        {
+          "id": 1,
+          "name": "red",
+          "code": "#FF0000"
+        }
+      ],
       "categories": ["outdoor"],
       "rating": 0,
       "badges": ["new"],
@@ -115,7 +204,18 @@
       "date": 1602721000000,
       "name": "Carduus",
       "price": 199,
-      "colors": ["black", "red"],
+      "colors": [
+        {
+          "id": 2,
+          "name": "black",
+          "code": "#000000"
+        },
+        {
+          "id": 1,
+          "name": "red",
+          "code": "#FF0000"
+        }
+      ],
       "categories": ["indoor"],
       "rating": 1.5,
       "badges": ["new", "sale"],
@@ -127,7 +227,13 @@
       "date": 1682728703051,
       "name": "Dianthus",
       "price": 990,
-      "colors": ["red"],
+      "colors": [
+        {
+          "id": 1,
+          "name": "red",
+          "code": "#FF0000"
+        }
+      ],
       "categories": ["indoor"],
       "rating": 0,
       "badges": ["new", "hot", "sale"],
@@ -139,7 +245,18 @@
       "date": 1702728100000,
       "name": "Geranium",
       "price": 560,
-      "colors": ["black", "white"],
+      "colors": [
+        {
+          "id": 2,
+          "name": "black",
+          "code": "#000000"
+        },
+        {
+          "id": 4,
+          "name": "white",
+          "code": "#FFFFFF"
+        }
+      ],
       "categories": ["indoor", "ggggg"],
       "rating": 0,
       "badges": ["new"],
@@ -151,7 +268,13 @@
       "date": 1202728701000,
       "name": "Iris",
       "price": 770,
-      "colors": ["gray"],
+      "colors": [
+        {
+          "id": 3,
+          "name": "gray",
+          "code": "#808080"
+        }
+      ],
       "categories": ["potted", "ggggg"],
       "rating": 5,
       "badges": ["new"],
@@ -163,7 +286,18 @@
       "date": 1648728703051,
       "name": "Matricaria",
       "price": 630,
-      "colors": ["black", "white"],
+      "colors": [
+        {
+          "id": 2,
+          "name": "black",
+          "code": "#000000"
+        },
+        {
+          "id": 4,
+          "name": "white",
+          "code": "#FFFFFF"
+        }
+      ],
       "categories": ["outdoor"],
       "rating": 0,
       "badges": ["new"],
@@ -175,7 +309,23 @@
       "date": 1652804153237,
       "name": "Rosa",
       "price": 890,
-      "colors": ["red", "black", "white"],
+      "colors": [
+        {
+          "id": 1,
+          "name": "red",
+          "code": "#FF0000"
+        },
+        {
+          "id": 2,
+          "name": "black",
+          "code": "#000000"
+        },
+        {
+          "id": 4,
+          "name": "white",
+          "code": "#FFFFFF"
+        }
+      ],
       "categories": ["potted", "indoor"],
       "rating": 0,
       "badges": ["new"],
@@ -186,7 +336,13 @@
       "date": 1652905430128,
       "name": "Viola",
       "price": 245,
-      "colors": ["red"],
+      "colors": [
+        {
+          "id": 1,
+          "name": "red",
+          "code": "#FF0000"
+        }
+      ],
       "categories": ["ggggg"],
       "rating": 0,
       "badges": ["hot", "sale"],
@@ -199,7 +355,28 @@
       "date": 1653312426685,
       "name": "Trifolium",
       "price": 765,
-      "colors": ["white", "gray", "black", "red"],
+      "colors": [
+        {
+          "id": 4,
+          "name": "white",
+          "code": "#FFFFFF"
+        },
+        {
+          "id": 3,
+          "name": "gray",
+          "code": "#808080"
+        },
+        {
+          "id": 2,
+          "name": "black",
+          "code": "#000000"
+        },
+        {
+          "id": 1,
+          "name": "red",
+          "code": "#FF0000"
+        }
+      ],
       "categories": ["ggggg", "outdoor", "indoor", "potted"],
       "rating": 0,
       "badges": ["new", "hot", "sale"],
@@ -213,7 +390,13 @@
       "date": 1202728701000,
       "name": "Iris",
       "price": 770,
-      "colors": ["gray"],
+      "colors": [
+        {
+          "id": 3,
+          "name": "gray",
+          "code": "#808080"
+        }
+      ],
       "categories": ["potted", "ggggg"],
       "rating": 5,
       "badges": ["new"],
@@ -225,7 +408,13 @@
       "date": 1648728703051,
       "name": "Matricaria",
       "price": 630,
-      "colors": ["black"],
+      "colors": [
+        {
+          "id": 2,
+          "name": "black",
+          "code": "#000000"
+        }
+      ],
       "categories": ["outdoor"],
       "rating": 0,
       "badges": ["new"],
@@ -236,7 +425,13 @@
       "date": 1652905430128,
       "name": "Viola",
       "price": 245,
-      "colors": ["red"],
+      "colors": [
+        {
+          "id": 1,
+          "name": "red",
+          "code": "#FF0000"
+        }
+      ],
       "categories": ["ggggg"],
       "rating": 0,
       "badges": ["hot", "sale"],
@@ -249,7 +444,18 @@
       "date": 1653312426685,
       "name": "Trifolium",
       "price": 765,
-      "colors": ["white", "red"],
+      "colors": [
+        {
+          "id": 4,
+          "name": "white",
+          "code": "#FFFFFF"
+        },
+        {
+          "id": 1,
+          "name": "red",
+          "code": "#FF0000"
+        }
+      ],
       "categories": ["ggggg", "indoor", "potted"],
       "rating": 0,
       "badges": ["new", "sale"],
@@ -262,7 +468,13 @@
       "date": 1680183133753,
       "name": "Test",
       "price": 155,
-      "colors": ["red"],
+      "colors": [
+        {
+          "id": 1,
+          "name": "red",
+          "code": "#FF0000"
+        }
+      ],
       "categories": ["potted", "ggggg"],
       "rating": 0,
       "badges": ["new"],
@@ -274,7 +486,13 @@
       "date": 1680183331949,
       "name": "Test2",
       "price": 460,
-      "colors": ["red"],
+      "colors": [
+        {
+          "id": 1,
+          "name": "red",
+          "code": "#FF0000"
+        }
+      ],
       "categories": ["indoor", "outdoor"],
       "rating": 0,
       "badges": ["new"],
@@ -286,7 +504,23 @@
       "date": 1680187093649,
       "name": "Admin Test",
       "price": 350,
-      "colors": ["red", "black", "gray"],
+      "colors": [
+        {
+          "id": 1,
+          "name": "red",
+          "code": "#FF0000"
+        },
+        {
+          "id": 2,
+          "name": "black",
+          "code": "#000000"
+        },
+        {
+          "id": 3,
+          "name": "gray",
+          "code": "#808080"
+        }
+      ],
       "categories": ["indoor"],
       "rating": 0,
       "badges": ["new"],
@@ -298,7 +532,13 @@
       "date": 1680530274862,
       "name": "erwerwer",
       "price": 2312,
-      "colors": ["red"],
+      "colors": [
+        {
+          "id": 1,
+          "name": "red",
+          "code": "#FF0000"
+        }
+      ],
       "categories": ["potted"],
       "rating": 0,
       "badges": ["new"],
@@ -333,22 +573,22 @@
     {
       "id": 1,
       "name": "red",
-      "label": "Red"
+      "code": "#FF0000"
     },
     {
       "id": 2,
       "name": "black",
-      "label": "Black"
+      "code": "#000000"
     },
     {
       "id": 3,
       "name": "gray",
-      "label": "Gray"
+      "code": "#808080"
     },
     {
       "id": 4,
       "name": "white",
-      "label": "White"
+      "code": "#FFFFFF"
     }
   ],
   "badges": [
@@ -499,7 +739,11 @@
           "quantity": 1,
           "id": 9,
           "name": "Qwerty",
-          "color": "red",
+          "color": {
+            "id": 1,
+            "name": "red",
+            "code": "#FF0000"
+          },
           "price": 50,
           "img": "product-09.jpg",
           "totalCost": 50
@@ -536,7 +780,11 @@
           "quantity": 5,
           "id": 6,
           "name": "Sociis natoque",
-          "color": "gray",
+          "color": {
+            "id": 3,
+            "name": "gray",
+            "code": "#808080"
+          },
           "price": 150,
           "img": "product-06.jpg",
           "totalCost": 750
@@ -546,9 +794,9 @@
       "shippingCost": 5,
       "totalCost": 755,
       "status": {
-        "id": 4,
-        "name": "delivered",
-        "label": "Delivered"
+        "id": 2,
+        "name": "ready-to-ship",
+        "label": "Ready to ship"
       },
       "userId": 1,
       "id": 2
@@ -573,7 +821,11 @@
           "quantity": 1,
           "id": 1,
           "name": "Cactus",
-          "color": "red",
+          "color": {
+            "id": 1,
+            "name": "red",
+            "code": "#FF0000"
+          },
           "price": 25,
           "img": "product-01.jpg",
           "totalCost": 25
@@ -583,9 +835,9 @@
       "productsTotal": 25,
       "shippingCost": 5,
       "status": {
-        "id": 2,
-        "name": "ready-to-ship",
-        "label": "Ready to ship"
+        "id": 4,
+        "name": "delivered",
+        "label": "Delivered"
       },
       "userId": 1,
       "id": 3
@@ -610,7 +862,11 @@
           "quantity": 1,
           "id": 11,
           "name": "Artemisia",
-          "color": "red",
+          "color": {
+            "id": 1,
+            "name": "red",
+            "code": "#FF0000"
+          },
           "price": 60,
           "img": "product-11.jpg",
           "totalCost": 60
@@ -620,7 +876,11 @@
           "quantity": 1,
           "id": 7,
           "name": "New Product",
-          "color": "black",
+          "color": {
+            "id": 2,
+            "name": "black",
+            "code": "#000000"
+          },
           "price": 80,
           "img": "product-07.jpg",
           "totalCost": 80
@@ -630,9 +890,9 @@
       "shippingCost": 5,
       "totalCost": 145,
       "status": {
-        "id": 1,
-        "name": "pending",
-        "label": "Pending"
+        "id": 4,
+        "name": "delivered",
+        "label": "Delivered"
       },
       "userId": 1,
       "id": 4
@@ -657,7 +917,11 @@
           "quantity": 3,
           "id": 9,
           "name": "Qwerty",
-          "color": "red",
+          "color": {
+            "id": 1,
+            "name": "red",
+            "code": "#FF0000"
+          },
           "price": 50,
           "img": "product-09.jpg",
           "totalCost": 150
@@ -667,7 +931,11 @@
           "quantity": 1,
           "id": 5,
           "name": "Aenean ultricies",
-          "color": "black",
+          "color": {
+            "id": 2,
+            "name": "black",
+            "code": "#000000"
+          },
           "price": 450,
           "img": "product-05.jpg",
           "totalCost": 450
@@ -704,7 +972,11 @@
           "quantity": 5,
           "id": 1,
           "name": "Cactus",
-          "color": "red",
+          "color": {
+            "id": 1,
+            "name": "red",
+            "code": "#FF0000"
+          },
           "price": 25,
           "img": "product-01.jpg",
           "totalCost": 125
@@ -789,6 +1061,17 @@
       "productName": "Qwerty",
       "productImage": "product-09.jpg",
       "id": 8
+    },
+    {
+      "productId": 13,
+      "userName": "Qwerty",
+      "date": 1680779809585,
+      "rating": 5,
+      "comment": "sd asdasd as dasffd gf",
+      "isModerate": false,
+      "productName": "Carduus",
+      "productImage": "product-13.jpg",
+      "id": 9
     }
   ],
   "prices": {

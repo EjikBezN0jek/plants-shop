@@ -29,7 +29,7 @@
     >
     <router-link
       v-else-if="isAdmin(user?.email)"
-      :to="{ name: 'admin' }"
+      :to="{ name: 'dashboard' }"
       class="menu-item btn">
       <i
         class="pi pi-fw pi-wrench"

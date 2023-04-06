@@ -1,6 +1,6 @@
 
 
-GET http://localhost:3000/products/7?name
+PATCH http://localhost:3000/orders/1
 
 
 

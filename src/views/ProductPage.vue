@@ -39,17 +39,20 @@
           {{ category }}
         </p>
       </div>
-      <div class="characteristic">
+      <div
+        class="characteristic"
+        v-if="colorSelected">
         <p class="characteristic-name">Potter colors:</p>
         <input
           v-for="color in product.colors"
-          :key="color"
+          :key="color.id"
           type="radio"
           name="color"
           class="color"
           :value="color"
           v-model="colorSelected"
-          :class="color" />
+          :class="color.name"
+          :style="{ background: color.code }" />
       </div>
 
       <div
@@ -160,6 +163,7 @@ import type { IWishlistItem } from '@/types/wishlistItem';
 import type { IReview } from '@/types/review';
 import type { ISortOptions } from '@/types/sortOptions';
 import type { ISorting } from '@/types/sorting';
+import type { IColor } from '@/types/color';
 
 import { fetchProductById, fetchRelatedProducts, fetchReviews, addReview, fetchSortOptions } from '@/api/catalog';
 
@@ -218,7 +222,7 @@ const product = ref<IProduct>();
 const cartItems = ref<ICartItem[]>([]);
 const itemInCart = ref();
 const cartId = ref('');
-const colorSelected = ref('');
+const colorSelected = ref<IColor>() || null;
 
 const addToCart = () => {
   if (product.value) {
@@ -270,10 +274,16 @@ const saveCart = () => {
   cartItemsQuantity.value = (JSON.parse(localStorage.getItem('cart') ?? '') ?? []).length;
 };
 
-watch(colorSelected, newColor => {
-  cartId.value = product.value?.id + newColor;
-  getProductFromCart();
-});
+watch(
+  colorSelected,
+  newColor => {
+    if (newColor) {
+      cartId.value = product.value?.id + newColor.name;
+      getProductFromCart();
+    }
+  },
+  { deep: true }
+);
 
 watch(
   cartItems,
@@ -322,10 +332,16 @@ const saveWishlist = () => {
   localStorage.setItem('wishlist', JSON.stringify(wishlistItems.value));
 };
 
-watch(colorSelected, newColor => {
-  wishlistId.value = product.value?.id + newColor;
-  getProductFromWishlist();
-});
+watch(
+  colorSelected,
+  newColor => {
+    if (newColor) {
+      wishlistId.value = product.value?.id + newColor.name;
+      getProductFromWishlist();
+    }
+  },
+  { deep: true }
+);
 
 watch(
   wishlistItems,
@@ -434,7 +450,7 @@ onMounted(async () => {
   product.value = await fetchProductById(+route.params.id);
   sortOptions.value = await fetchSortOptions();
   getReviews();
-  colorSelected.value = product.value.colors[0];
+  if (product.value) colorSelected.value = product.value.colors[0];
   initCart();
   initWishlist();
   getRelatedProducts();

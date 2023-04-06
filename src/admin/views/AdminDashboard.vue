@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="dashboard">
     <h1>Dashboard</h1>
     <Dialog
       v-model:visible="isSuccessful"
@@ -18,6 +18,82 @@
         <h5>Review moderated successful!</h5>
       </div>
     </Dialog>
+
+    <DataTable
+      responsive-layout="scroll"
+      removable-sort
+      class="table"
+      v-if="newOrders?.length"
+      :value="newOrders">
+      <template #header>
+        <div class="header">
+          <span class="text-xl text-900 font-bold">New Orders</span>
+          <Button
+            icon="pi pi-refresh"
+            class="refresh-btn"
+            @click="getNewOrders" />
+        </div>
+      </template>
+      <Column header="ID">
+        <template #body="slotProps">
+          <p>{{ slotProps.data.id }}</p>
+        </template>
+      </Column>
+      <Column header="CUSTOMER">
+        <template #body="slotProps">
+          <router-link
+            :to="{ name: 'order', params: { id: slotProps.data.id } }"
+            target="_blank"
+            class="order">
+            <p>{{ slotProps.data.firstName }} {{ slotProps.data.lastName }}</p>
+          </router-link>
+        </template>
+      </Column>
+      <Column header="EMAIL">
+        <template #body="slotProps">
+          <p>{{ slotProps.data.email }}</p>
+        </template>
+      </Column>
+      <Column header="ITEMS">
+        <template #body="slotProps">
+          <p>{{ slotProps.data.cart.length }}</p>
+        </template>
+      </Column>
+      <Column
+        header="TOTAL COST"
+        field="totalCost"
+        sortable>
+        <template #body="slotProps">
+          <p>${{ slotProps.data.totalCost }}</p>
+        </template>
+      </Column>
+      <Column header="PAYMENT">
+        <template #body="slotProps">
+          <p>{{ slotProps.data.payment.label }}</p>
+        </template>
+      </Column>
+      <Column
+        header="DATE"
+        field="date"
+        sortable>
+        <template #body="slotProps">
+          <p>{{ dateFormatter(slotProps.data.date) }}</p>
+        </template>
+      </Column>
+      <Column
+        header="STATUS"
+        field="status.label"
+        sortable>
+        <template #body="slotProps">
+          <Dropdown
+            v-model="slotProps.data.status"
+            :options="orderStatusItems"
+            option-label="label"
+            :class="slotProps.data.status.name"
+            @change="editOrderStatus(slotProps.data.id, slotProps.data.status)" />
+        </template>
+      </Column>
+    </DataTable>
 
     <DataTable
       responsive-layout="scroll"
@@ -121,13 +197,22 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { fetchAllReviews, addModeratingReview, changeRating, removeReview } from '../api/admin';
+import {
+  fetchAllReviews,
+  addModeratingReview,
+  changeRating,
+  removeReview,
+  fetchAllOrders,
+  changeOrderStatus,
+} from '../api/admin';
+import { fetchAllOrderStatus } from '@/api/user';
 
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Rating from 'primevue/rating';
 import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
+import Dropdown from 'primevue/dropdown';
 
 import ConfirmDialog from 'primevue/confirmdialog';
 import Toast from 'primevue/toast';
@@ -136,6 +221,8 @@ import { useConfirm } from 'primevue/useconfirm';
 import { useToast } from 'primevue/usetoast';
 
 import type { IReview } from '@/types/review';
+import type { IOrder } from '@/types/order';
+import type { IOrderStatus } from '@/types/orderStatus';
 
 import { dateFormatter } from '@/helpers/dateFormatter';
 
@@ -143,8 +230,18 @@ const confirm = useConfirm();
 const toast = useToast();
 
 const newReviews = ref<IReview[]>();
+const newOrders = ref<IOrder[]>();
+
+const orderStatusItems = ref<IOrderStatus[]>();
 
 const isSuccessful = ref(false);
+
+const editOrderStatus = (id: number, status: IOrderStatus) => {
+  const editingOrder = {
+    status: status,
+  };
+  changeOrderStatus(id, editingOrder);
+};
 
 const toggleDialog = () => {
   isSuccessful.value = !isSuccessful.value;
@@ -164,6 +261,18 @@ const getNewReviews = async () => {
   const { data } = await fetchAllReviews(params);
   newReviews.value = data;
 };
+
+const getNewOrders = async () => {
+  const params = {
+    _sort: 'date',
+    _order: 'desc',
+    _limit: 2,
+  };
+
+  const { data } = await fetchAllOrders(params);
+  newOrders.value = data;
+};
+
 const recalculationRating = async (id: number) => {
   await getNewReviews();
   const allReviews = newReviews.value?.filter(item => item.productId === id && item.isModerate);
@@ -204,12 +313,45 @@ const removeHandler = (review: IReview) => {
 
 onMounted(async () => {
   getNewReviews();
+  getNewOrders();
+  orderStatusItems.value = await fetchAllOrderStatus();
 });
 </script>
 
 <style scoped lang="scss">
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+::v-deep(.p-dropdown.p-component.p-inputwrapper.p-inputwrapper-filled) {
+  width: 100%;
+
+  &.pending {
+    & .p-inputtext {
+      color: rgb(94, 148, 211);
+    }
+  }
+  &.ready-to-ship {
+    & .p-inputtext {
+      color: rgb(211, 211, 94);
+    }
+  }
+  &.on-the-way {
+    & .p-inputtext {
+      color: rgb(211, 150, 94);
+    }
+  }
+  &.delivered {
+    & .p-inputtext {
+      color: $primary-color;
+    }
+  }
+}
 
 .refresh-btn {
   border-radius: 50%;
@@ -232,6 +374,11 @@ onMounted(async () => {
   display: flex;
   justify-content: center;
   gap: 10px;
+}
+
+.order {
+  color: $table-text-color;
+  cursor: pointer;
 }
 
 .product {

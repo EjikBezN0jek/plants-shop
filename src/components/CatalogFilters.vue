@@ -32,16 +32,20 @@
 
       <div class="colors">
         <h3>Potter colors</h3>
-        <div
-          v-for="{ id, name, label } in colorsList"
-          :key="id"
-          class="field-checkbox">
-          <Checkbox
-            v-model="colorsSelected"
-            :value="name"
-            :input-id="name"
-            :aria-label="label" />
-          <label :for="name">{{ label }}</label>
+
+        <div class="colors-list">
+          <div
+            v-for="{ id, name, code } in colorsList"
+            :key="id">
+            <Checkbox
+              v-model="colorsSelected"
+              :value="name"
+              :input-id="name"
+              :aria-label="name"
+              class="color"
+              :class="name"
+              :style="{ background: code }" />
+          </div>
         </div>
       </div>
 
@@ -125,6 +129,46 @@ const toggleFilters = () => {
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
 
+::v-deep(.color.p-checkbox .p-checkbox-box) {
+  border: none;
+  background: none;
+  align-self: center;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+::v-deep(.color.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus) {
+  box-shadow: none;
+  border-color: transparent;
+}
+
+::v-deep(.color.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover) {
+  border-color: transparent;
+  background: none;
+}
+
+::v-deep(.color.p-checkbox .p-checkbox-box .p-checkbox-icon) {
+  color: $primary-color;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+::v-deep(.p-checkbox .p-component .color) {
+  & .red {
+    background: red;
+  }
+  &.white {
+    background: white;
+    border: 1px solid $complementary-color;
+  }
+  &.black {
+    background: black;
+  }
+  &.gray {
+    background: gray;
+  }
+}
+
 .filters-toggler {
   position: relative;
   display: flex;
@@ -206,6 +250,11 @@ const toggleFilters = () => {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  gap: 10px;
+}
+
+.colors-list {
+  display: flex;
   gap: 10px;
 }
 

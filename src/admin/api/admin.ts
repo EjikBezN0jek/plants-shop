@@ -31,3 +31,5 @@ export const fetchAllOrders = async (params = {}): Promise<IResponseList<IOrder>
 };
 
 export const fetchOrderById = async (id: number): Promise<IOrder> => (await api.get(`orders/${id}`)).data;
+
+export const changeOrderStatus = async (id: number, order: IOrder) => await api.patch(`orders/${id}`, order);

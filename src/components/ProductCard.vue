@@ -21,9 +21,9 @@
     <div class="colors">
       <div
         v-for="color in product.colors"
-        :key="color"
+        :key="color.id"
         class="color"
-        :class="color"></div>
+        :class="color.name" :style="{background: color.code}"></div>
     </div>
 
     <Rating

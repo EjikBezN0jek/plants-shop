@@ -47,7 +47,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "admin" */ '../layouts/AdminLayout.vue'),
     children: [
       {
-        path: '/admin',
+        path: '',
         name: 'dashboard',
         component: () => import('@/admin/views/AdminDashboard.vue'),
       },
@@ -60,6 +60,16 @@ const routes: Array<RouteRecordRaw> = [
         path: 'categories',
         name: 'adminCategories',
         component: () => import('@/admin/views/AdminCategories.vue'),
+      },
+      {
+        path: 'badges',
+        name: 'adminBadges',
+        component: () => import('@/admin/views/AdminBadges.vue'),
+      },
+      {
+        path: 'colors',
+        name: 'adminColors',
+        component: () => import('@/admin/views/AdminColors.vue'),
       },
       {
         path: 'orders',
