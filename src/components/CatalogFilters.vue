@@ -33,18 +33,20 @@
       <div class="colors">
         <h3>Potter colors</h3>
 
+        {{ colorsSelected }}
+
         <div class="colors-list">
           <div
-            v-for="{ id, name, code } in colorsList"
-            :key="id">
+            v-for="color in colorsList"
+            :key="color.id">
             <Checkbox
               v-model="colorsSelected"
-              :value="name"
-              :input-id="name"
-              :aria-label="name"
+              :value="color.name"
+              :input-id="color.name"
+              :aria-label="color.name"
               class="color"
-              :class="name"
-              :style="{ background: code }" />
+              :class="color.name"
+              :style="{ background: color.code }" />
           </div>
         </div>
       </div>
@@ -92,7 +94,7 @@ import RangeSlider from '@/components/RangeSlider.vue';
 interface IProps {
   categoriesList?: ICategory[];
   colorsList?: IColor[];
-  colors: string[];
+  colorsSelected: string[];
   category: string;
   prices?: IPrices;
   pricesSelected?: IPrices;
@@ -102,14 +104,14 @@ interface IProps {
 const props = defineProps<IProps>();
 
 interface IEmits {
-  (e: 'update:colors', query: IColor[]): void;
+  (e: 'update:colorsSelected', query: string[]): void;
   (e: 'update:category', name: string): void;
   (e: 'update:pricesSelected', query: IPrices): void;
   (e: 'update:badges', query: IBadge[]): void;
 }
 const emit = defineEmits<IEmits>();
 
-const colorsSelected = useVModelWrapper(props, emit, 'colors');
+const colorsSelected = useVModelWrapper(props, emit, 'colorsSelected');
 const categorySelected = useVModelWrapper(props, emit, 'category');
 const pricesSelected = useVModelWrapper(props, emit, 'pricesSelected');
 const badgesSelected = useVModelWrapper(props, emit, 'badges');

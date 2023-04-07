@@ -1,6 +1,6 @@
 
 
-PATCH http://localhost:3000/orders/1
+GET http://localhost:3000/products/colors?name_like=black
 
 
 

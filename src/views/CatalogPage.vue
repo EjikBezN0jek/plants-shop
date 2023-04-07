@@ -8,8 +8,8 @@
 
       <div class="catalog-container">
         <CatalogFilters
-          v-model:colors="colorsSelected"
-          @update:colors="refetchProducts"
+          v-model:colorsSelected="colorsSelected"
+          @update:colors-selected="refetchProducts"
           v-model:category="categorySelected"
           @update:category="goToCategory"
           :colors-list="colorsList"
@@ -104,6 +104,8 @@ const getProducts = async () => {
     price_lte: pricesSelected.value?.max,
   };
 
+  console.log(colorsSelected.value);
+
   const { data, pagination: p } = await fetchAllProducts(params);
   setPagination(p);
 
@@ -118,12 +120,6 @@ const refetchProducts = () => {
 
 //Pagination
 const { pagination, setPagination, resetCurrentPage, setCurrentPage } = usePagination();
-
-// const changePage = (page: number) => {
-//   setCurrentPage(page);
-//   getProducts();
-//   scrollUp()
-// };
 
 //ScrollUp
 const isShowScroll = ref(false);
