@@ -38,7 +38,8 @@
             <ProductCard
               v-for="product in products"
               :key="product.id"
-              :product="product" />
+              :product="product"
+              :colors-list="colorsList" />
           </div>
           <h2 v-else>No products!</h2>
 
@@ -104,8 +105,6 @@ const getProducts = async () => {
     price_lte: pricesSelected.value?.max,
   };
 
-  console.log(colorsSelected.value);
-
   const { data, pagination: p } = await fetchAllProducts(params);
   setPagination(p);
 
@@ -141,7 +140,7 @@ const sorting = ref<ISorting>({ target: 'price', order: 'asc', label: 'Price: lo
 //Filters
 //Colors
 const colorsList = ref<IColor[]>();
-const colorsSelected = ref<string[]>([]);
+const colorsSelected = ref<number[]>([]);
 
 //Category
 const route = useRoute();

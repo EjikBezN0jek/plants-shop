@@ -20,10 +20,11 @@
     <p class="price">$ {{ product.price }}</p>
     <div class="colors">
       <div
-        v-for="color in product.colors"
+        v-for="color in findColor()"
         :key="color.id"
         class="color"
-        :class="color.name" :style="{background: color.code}"></div>
+        :class="color.name"
+        :style="{ background: color.code }"></div>
     </div>
 
     <Rating
@@ -35,14 +36,20 @@
 
 <script setup lang="ts">
 import type { IProduct } from '@/types/product';
+import type { IColor } from '@/types/color';
 
 import Rating from 'primevue/rating';
 
 interface IProps {
   product?: IProduct;
+  colorsList?: IColor[];
 }
 
 const props = defineProps<IProps>();
+
+const findColor = () => {
+  if (props.colorsList) return props.colorsList.filter(color => props.product?.colors.includes(color.id));
+};
 </script>
 
 <style lang="scss" scoped>

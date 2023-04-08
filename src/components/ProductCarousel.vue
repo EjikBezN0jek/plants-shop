@@ -5,6 +5,7 @@
         v-for="product in products"
         :key="product.id"
         :product="product"
+        :colors-list="colorsList"
         class="swiper-slide" />
     </div>
     <div class="swiper-button-prev"></div>
@@ -17,9 +18,11 @@
 import ProductCard from '@/components/ProductCard.vue';
 
 import type { IProduct } from '@/types/product';
+import type { IColor } from '@/types/color';
 
 interface IProps {
   products?: IProduct[];
+  colorsList?: IColor[];
 }
 
 const props = defineProps<IProps>();

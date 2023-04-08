@@ -79,8 +79,8 @@
             <template #body="slotProps">
               <div
                 class="color"
-                :class="slotProps.data.color.name"
-                :style="{ background: slotProps.data.color.code }"></div>
+                :class="findColor(slotProps.data)?.name"
+                :style="{ background: findColor(slotProps.data)?.code }"></div>
             </template>
           </Column>
           <Column header="PRICE">
@@ -148,14 +148,20 @@ import Button from 'primevue/button';
 import AuthModal from '@/components/AuthModal.vue';
 
 import type { ICartItem } from '@/types/cartItem';
+import type { IColor } from '@/types/color';
 
 import { UserKey, CartItemsQuantityKey } from '@/symbols';
 import { useInject } from '@/hooks/useInject';
 import router from '@/router';
+import { fetchAllColors } from '@/api/catalog';
 
 const cartItemsQuantity = useInject(CartItemsQuantityKey);
-
 const cartItems = ref<ICartItem[]>([]);
+const colorsList = ref<IColor[]>([]);
+
+const findColor = (cartItem: ICartItem) => {
+  return colorsList.value.find(color => cartItem.color === color.id);
+};
 
 const isShowAuth = ref(false);
 const toggleAuthModal = () => (isShowAuth.value = !isShowAuth.value);
@@ -206,6 +212,7 @@ watch(cartItems, saveCart, { deep: true });
 
 onMounted(async () => {
   initCart();
+  colorsList.value = await fetchAllColors();
 });
 </script>
 

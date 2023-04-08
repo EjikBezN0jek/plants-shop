@@ -44,12 +44,12 @@
         v-if="colorSelected">
         <p class="characteristic-name">Potter colors:</p>
         <input
-          v-for="color in product.colors"
+          v-for="color in findColor()"
           :key="color.id"
           type="radio"
           name="color"
           class="color"
-          :value="color"
+          :value="color.id"
           v-model="colorSelected"
           :class="color.name"
           :style="{ background: color.code }" />
@@ -69,7 +69,7 @@
           GO TO CART
         </router-link>
         <i
-          class="pi"
+          class="like pi"
           style="font-size: 2rem"
           :class="{ 'pi-heart': !itemInWishlist, 'pi-heart-fill': itemInWishlist }"
           @click="toggleWishlist"></i>
@@ -84,7 +84,7 @@
         >
 
         <i
-          class="pi"
+          class="like pi"
           style="font-size: 2rem"
           :class="{ 'pi-heart': !itemInWishlist, 'pi-heart-fill': itemInWishlist }"
           @click="toggleWishlist"></i>
@@ -131,7 +131,9 @@
 
   <div class="related container">
     <h2 v-if="relatedProducts?.length">Related Products</h2>
-    <ProductCarousel :products="relatedProducts"></ProductCarousel>
+    <ProductCarousel
+      :products="relatedProducts"
+      :colors-list="colorsList"></ProductCarousel>
   </div>
 
   <AuthModal
@@ -165,7 +167,14 @@ import type { ISortOptions } from '@/types/sortOptions';
 import type { ISorting } from '@/types/sorting';
 import type { IColor } from '@/types/color';
 
-import { fetchProductById, fetchRelatedProducts, fetchReviews, addReview, fetchSortOptions } from '@/api/catalog';
+import {
+  fetchProductById,
+  fetchRelatedProducts,
+  fetchReviews,
+  addReview,
+  fetchSortOptions,
+  fetchAllColors,
+} from '@/api/catalog';
 
 import { UserKey, CartItemsQuantityKey } from '@/symbols';
 import { useInject } from '@/hooks/useInject';
@@ -222,7 +231,17 @@ const product = ref<IProduct>();
 const cartItems = ref<ICartItem[]>([]);
 const itemInCart = ref();
 const cartId = ref('');
-const colorSelected = ref<IColor>() || null;
+
+const colorsList = ref<IColor[]>([]);
+const colorSelected = ref(0) || null;
+
+const findColor = () => {
+  return colorsList.value.filter(color => product.value?.colors.includes(color.id));
+};
+
+const findColorById = (id: number) => {
+  return colorsList.value.find(color => color.id === id);
+};
 
 const addToCart = () => {
   if (product.value) {
@@ -274,16 +293,12 @@ const saveCart = () => {
   cartItemsQuantity.value = (JSON.parse(localStorage.getItem('cart') ?? '') ?? []).length;
 };
 
-watch(
-  colorSelected,
-  newColor => {
-    if (newColor) {
-      cartId.value = product.value?.id + newColor.name;
-      getProductFromCart();
-    }
-  },
-  { deep: true }
-);
+watch(colorSelected, newColor => {
+  if (product.value && newColor) {
+    cartId.value = product.value.id + findColorById(newColor).name;
+    getProductFromCart();
+  }
+});
 
 watch(
   cartItems,
@@ -332,16 +347,12 @@ const saveWishlist = () => {
   localStorage.setItem('wishlist', JSON.stringify(wishlistItems.value));
 };
 
-watch(
-  colorSelected,
-  newColor => {
-    if (newColor) {
-      wishlistId.value = product.value?.id + newColor.name;
-      getProductFromWishlist();
-    }
-  },
-  { deep: true }
-);
+watch(colorSelected, newColor => {
+  if (product.value && newColor) {
+    wishlistId.value = product.value.id + findColorById(newColor).name;
+    getProductFromWishlist();
+  }
+});
 
 watch(
   wishlistItems,
@@ -449,18 +460,24 @@ onBeforeRouteUpdate(async to => {
 onMounted(async () => {
   product.value = await fetchProductById(+route.params.id);
   sortOptions.value = await fetchSortOptions();
+  colorsList.value = await fetchAllColors();
   getReviews();
   if (product.value) colorSelected.value = product.value.colors[0];
   initCart();
   initWishlist();
   getRelatedProducts();
   createSwiper();
+  // findColor();
 });
 </script>
 
 <style lang="scss" scoped>
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
+
+.like {
+  cursor: pointer;
+}
 
 .product-container {
   background: $image-background-color;

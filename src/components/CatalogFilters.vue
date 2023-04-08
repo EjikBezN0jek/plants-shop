@@ -33,15 +33,13 @@
       <div class="colors">
         <h3>Potter colors</h3>
 
-        {{ colorsSelected }}
-
         <div class="colors-list">
           <div
             v-for="color in colorsList"
             :key="color.id">
             <Checkbox
               v-model="colorsSelected"
-              :value="color.name"
+              :value="color.id"
               :input-id="color.name"
               :aria-label="color.name"
               class="color"
@@ -94,7 +92,7 @@ import RangeSlider from '@/components/RangeSlider.vue';
 interface IProps {
   categoriesList?: ICategory[];
   colorsList?: IColor[];
-  colorsSelected: string[];
+  colorsSelected: number[];
   category: string;
   prices?: IPrices;
   pricesSelected?: IPrices;
@@ -104,7 +102,7 @@ interface IProps {
 const props = defineProps<IProps>();
 
 interface IEmits {
-  (e: 'update:colorsSelected', query: string[]): void;
+  (e: 'update:colorsSelected', query: number[]): void;
   (e: 'update:category', name: string): void;
   (e: 'update:pricesSelected', query: IPrices): void;
   (e: 'update:badges', query: IBadge[]): void;

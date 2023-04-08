@@ -29,8 +29,8 @@
               <div class="row">
                 <div
                   class="color"
-                  :class="product.color.name"
-                  :style="{ background: product.color.code }" />
+                  :class="findColor(product)?.name"
+                  :style="{ background: findColor(product)?.code }" />
               </div>
 
               <div class="row">
@@ -74,8 +74,8 @@
             <template #body="slotProps">
               <div
                 class="color"
-                :class="slotProps.data.color.name"
-                :style="{ background: slotProps.data.color.code }"></div>
+                :class="findColor(slotProps.data)?.name"
+                :style="{ background: findColor(slotProps.data)?.code }"></div>
             </template>
           </Column>
           <Column header="PRICE">
@@ -132,14 +132,22 @@ import Button from 'primevue/button';
 
 import type { ICartItem } from '@/types/cartItem';
 import type { IWishlistItem } from '@/types/wishlistItem';
+import type { IColor } from '@/types/color';
 
 import { CartItemsQuantityKey } from '@/symbols';
 import { useInject } from '@/hooks/useInject';
+
+import { fetchAllColors } from '@/api/catalog';
 
 const cartItemsQuantity = useInject(CartItemsQuantityKey);
 
 const wishlistItems = ref<IWishlistItem[]>([]);
 const cartItems = ref<ICartItem[]>([]);
+const colorsList = ref<IColor[]>([]);
+
+const findColor = (product: IWishlistItem) => {
+  return colorsList.value.find(color => product.color === color.id);
+};
 
 const addToCart = (product: IWishlistItem) => {
   const formatProduct = {
@@ -186,6 +194,7 @@ watch(wishlistItems, saveWishlist, { deep: true });
 onMounted(async () => {
   initWishlist();
   initCart();
+  colorsList.value = await fetchAllColors();
 });
 </script>
 

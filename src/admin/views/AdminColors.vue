@@ -34,7 +34,7 @@ onMounted(async () => {
 
   colors.value = await Promise.all(
     rawColors.map(async (color: IColor) => {
-      const count = (await fetchAllProducts({ colors_like: color.name })).data.length;
+      const count = (await fetchAllProducts({ colors_like: color.id })).data.length;
       return { ...color, count };
     })
   );

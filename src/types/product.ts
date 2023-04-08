@@ -1,9 +1,8 @@
-import type { IColor } from '@/types/color';
 export interface IProduct {
   id: number;
   name: string;
   price: number;
-  colors: IColor[];
+  colors: number[];
   categories: string[];
   rating: number;
   badges: string[];

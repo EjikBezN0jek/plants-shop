@@ -6,13 +6,11 @@
       "name": "Aenean ultricies ",
       "price": 450,
       "colors": [
-        {
-          "id": 2,
-          "name": "black",
-          "code": "#000000"
-        }
+        2
       ],
-      "categories": ["indoor"],
+      "categories": [
+        "indoor"
+      ],
       "rating": 1.5,
       "badges": [],
       "description": "Duis id turpis scelerisque mi suscipit laoreet eu in lacus.",
@@ -24,15 +22,15 @@
       "name": "Oak",
       "price": 1000,
       "colors": [
-        {
-          "id": 1,
-          "name": "red",
-          "code": "#FF0000"
-        }
+        1
       ],
-      "categories": ["outdoor"],
+      "categories": [
+        "outdoor"
+      ],
       "rating": 0,
-      "badges": ["hot"],
+      "badges": [
+        "hot"
+      ],
       "description": "Sed sodales gravida turpis sit amet vulputate. Etiam id lorem facilisis sem scelerisque vulputate et at velit.",
       "img": "product-04.jpg"
     },
@@ -42,18 +40,12 @@
       "name": "Aenean ultricies",
       "price": 450,
       "colors": [
-        {
-          "id": 2,
-          "name": "black",
-          "code": "#000000"
-        },
-        {
-          "id": 4,
-          "name": "white",
-          "code": "#FFFFFF"
-        }
+        2,
+        4
       ],
-      "categories": ["indoor"],
+      "categories": [
+        "indoor"
+      ],
       "rating": 0,
       "badges": [],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -65,15 +57,15 @@
       "name": "Sociis natoque",
       "price": 150,
       "colors": [
-        {
-          "id": 3,
-          "name": "gray",
-          "code": "#808080"
-        }
+        3
       ],
-      "categories": ["potted"],
+      "categories": [
+        "potted"
+      ],
       "rating": 5,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Sed sodales gravida turpis sit amet vulputate.",
       "img": "product-06.jpg"
     },
@@ -83,20 +75,16 @@
       "name": "New Product",
       "price": 80,
       "colors": [
-        {
-          "id": 2,
-          "name": "black",
-          "code": "#000000"
-        },
-        {
-          "id": 4,
-          "name": "white",
-          "code": "#FFFFFF"
-        }
+        2,
+        4
       ],
-      "categories": ["outdoor"],
+      "categories": [
+        "outdoor"
+      ],
       "rating": 4,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": " Nunc felis nisl, facilisis non justo ac, pellentesque sodales dui.",
       "img": "product-07.jpg"
     },
@@ -106,25 +94,18 @@
       "name": "Bonsai",
       "price": 150,
       "colors": [
-        {
-          "id": 1,
-          "name": "red",
-          "code": "#FF0000"
-        },
-        {
-          "id": 2,
-          "name": "black",
-          "code": "#000000"
-        },
-        {
-          "id": 3,
-          "name": "gray",
-          "code": "#808080"
-        }
+        1,
+        2,
+        3
       ],
-      "categories": ["potted", "indoor"],
+      "categories": [
+        "potted",
+        "indoor"
+      ],
       "rating": null,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "img": "product-08.jpg"
     },
@@ -133,15 +114,15 @@
       "name": "Qwerty",
       "price": 50,
       "colors": [
-        {
-          "id": 1,
-          "name": "red",
-          "code": "#FF0000"
-        }
+        1
       ],
-      "categories": ["ggggg"],
+      "categories": [
+        "ggggg"
+      ],
       "rating": 3,
-      "badges": ["hot"],
+      "badges": [
+        "hot"
+      ],
       "description": "qwe",
       "reviews": [],
       "img": "product-09.jpg",
@@ -152,30 +133,23 @@
       "name": "test",
       "price": 10000,
       "colors": [
-        {
-          "id": 4,
-          "name": "white",
-          "code": "#FFFFFF"
-        },
-        {
-          "id": 3,
-          "name": "gray",
-          "code": "#808080"
-        },
-        {
-          "id": 2,
-          "name": "black",
-          "code": "#000000"
-        },
-        {
-          "id": 1,
-          "name": "red",
-          "code": "#FF0000"
-        }
+        1,
+        2,
+        3,
+        4
       ],
-      "categories": ["ggggg", "outdoor", "indoor", "potted"],
+      "categories": [
+        "ggggg",
+        "outdoor",
+        "indoor",
+        "potted"
+      ],
       "rating": 0,
-      "badges": ["new", "hot", "sale"],
+      "badges": [
+        "new",
+        "hot",
+        "sale"
+      ],
       "description": "test",
       "reviews": [],
       "img": "product-10.jpg",
@@ -187,15 +161,15 @@
       "name": "Calamagrostis",
       "price": 150,
       "colors": [
-        {
-          "id": 1,
-          "name": "red",
-          "code": "#FF0000"
-        }
+        1
       ],
-      "categories": ["outdoor"],
+      "categories": [
+        "outdoor"
+      ],
       "rating": 0,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Morbi lobortis fringilla turpis vitae luctus. Cras varius eu erat posuere laoreet.",
       "img": "product-12.jpg"
     },
@@ -205,20 +179,17 @@
       "name": "Carduus",
       "price": 199,
       "colors": [
-        {
-          "id": 2,
-          "name": "black",
-          "code": "#000000"
-        },
-        {
-          "id": 1,
-          "name": "red",
-          "code": "#FF0000"
-        }
+        1,
+        2
       ],
-      "categories": ["indoor"],
+      "categories": [
+        "indoor"
+      ],
       "rating": 1.5,
-      "badges": ["new", "sale"],
+      "badges": [
+        "new",
+        "sale"
+      ],
       "description": "Duis id turpis scelerisque mi suscipit laoreet eu in lacus.",
       "img": "product-13.jpg"
     },
@@ -228,15 +199,17 @@
       "name": "Dianthus",
       "price": 990,
       "colors": [
-        {
-          "id": 1,
-          "name": "red",
-          "code": "#FF0000"
-        }
+        1
       ],
-      "categories": ["indoor"],
+      "categories": [
+        "indoor"
+      ],
       "rating": 0,
-      "badges": ["new", "hot", "sale"],
+      "badges": [
+        "new",
+        "hot",
+        "sale"
+      ],
       "description": "Sed sodales gravida turpis sit amet vulputate. Etiam id lorem facilisis sem scelerisque vulputate et at velit.",
       "img": "product-14.jpg"
     },
@@ -246,20 +219,17 @@
       "name": "Geranium",
       "price": 560,
       "colors": [
-        {
-          "id": 2,
-          "name": "black",
-          "code": "#000000"
-        },
-        {
-          "id": 4,
-          "name": "white",
-          "code": "#FFFFFF"
-        }
+        2,
+        4
       ],
-      "categories": ["indoor", "ggggg"],
+      "categories": [
+        "indoor",
+        "ggggg"
+      ],
       "rating": 0,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "img": "product-15.jpg"
     },
@@ -269,15 +239,16 @@
       "name": "Iris",
       "price": 770,
       "colors": [
-        {
-          "id": 3,
-          "name": "gray",
-          "code": "#808080"
-        }
+        3
       ],
-      "categories": ["potted", "ggggg"],
+      "categories": [
+        "potted",
+        "ggggg"
+      ],
       "rating": 5,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Sed sodales gravida turpis sit amet vulputate.",
       "img": "product-16.jpg"
     },
@@ -287,20 +258,16 @@
       "name": "Matricaria",
       "price": 630,
       "colors": [
-        {
-          "id": 2,
-          "name": "black",
-          "code": "#000000"
-        },
-        {
-          "id": 4,
-          "name": "white",
-          "code": "#FFFFFF"
-        }
+        2,
+        4
       ],
-      "categories": ["outdoor"],
+      "categories": [
+        "outdoor"
+      ],
       "rating": 0,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Nunc felis nisl, facilisis non justo ac, pellentesque sodales dui. Sed sodales gravida turpis sit amet vulputate.",
       "img": "product-17.jpg"
     },
@@ -310,25 +277,18 @@
       "name": "Rosa",
       "price": 890,
       "colors": [
-        {
-          "id": 1,
-          "name": "red",
-          "code": "#FF0000"
-        },
-        {
-          "id": 2,
-          "name": "black",
-          "code": "#000000"
-        },
-        {
-          "id": 4,
-          "name": "white",
-          "code": "#FFFFFF"
-        }
+        1,
+        2,
+        4
       ],
-      "categories": ["potted", "indoor"],
+      "categories": [
+        "potted",
+        "indoor"
+      ],
       "rating": 0,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "img": "product-18.jpg"
     },
@@ -337,15 +297,16 @@
       "name": "Viola",
       "price": 245,
       "colors": [
-        {
-          "id": 1,
-          "name": "red",
-          "code": "#FF0000"
-        }
+        1
       ],
-      "categories": ["ggggg"],
+      "categories": [
+        "ggggg"
+      ],
       "rating": 0,
-      "badges": ["hot", "sale"],
+      "badges": [
+        "hot",
+        "sale"
+      ],
       "description": "Sed sodales gravida turpis sit amet vulputate. Sed sodales gravida turpis sit amet vulputate. Sed sodales gravida turpis sit amet vulputate.",
       "reviews": [],
       "img": "product-19.jpg",
@@ -356,30 +317,23 @@
       "name": "Trifolium",
       "price": 765,
       "colors": [
-        {
-          "id": 4,
-          "name": "white",
-          "code": "#FFFFFF"
-        },
-        {
-          "id": 3,
-          "name": "gray",
-          "code": "#808080"
-        },
-        {
-          "id": 2,
-          "name": "black",
-          "code": "#000000"
-        },
-        {
-          "id": 1,
-          "name": "red",
-          "code": "#FF0000"
-        }
+        1,
+        2,
+        3,
+        4
       ],
-      "categories": ["ggggg", "outdoor", "indoor", "potted"],
+      "categories": [
+        "ggggg",
+        "outdoor",
+        "indoor",
+        "potted"
+      ],
       "rating": 0,
-      "badges": ["new", "hot", "sale"],
+      "badges": [
+        "new",
+        "hot",
+        "sale"
+      ],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "reviews": [],
       "img": "product-20.jpg",
@@ -391,15 +345,16 @@
       "name": "Iris",
       "price": 770,
       "colors": [
-        {
-          "id": 3,
-          "name": "gray",
-          "code": "#808080"
-        }
+        3
       ],
-      "categories": ["potted", "ggggg"],
+      "categories": [
+        "potted",
+        "ggggg"
+      ],
       "rating": 5,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Sed sodales gravida turpis sit amet vulputate.",
       "img": "product-22.jpg"
     },
@@ -409,15 +364,15 @@
       "name": "Matricaria",
       "price": 630,
       "colors": [
-        {
-          "id": 2,
-          "name": "black",
-          "code": "#000000"
-        }
+        2
       ],
-      "categories": ["outdoor"],
+      "categories": [
+        "outdoor"
+      ],
       "rating": 0,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Nunc felis nisl, facilisis non justo ac, pellentesque sodales dui. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "img": "product-23.jpg"
     },
@@ -426,15 +381,16 @@
       "name": "Viola",
       "price": 245,
       "colors": [
-        {
-          "id": 1,
-          "name": "red",
-          "code": "#FF0000"
-        }
+        1
       ],
-      "categories": ["ggggg"],
+      "categories": [
+        "ggggg"
+      ],
       "rating": 0,
-      "badges": ["hot", "sale"],
+      "badges": [
+        "hot",
+        "sale"
+      ],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "reviews": [],
       "img": "product-25.jpg",
@@ -445,20 +401,19 @@
       "name": "Trifolium",
       "price": 765,
       "colors": [
-        {
-          "id": 4,
-          "name": "white",
-          "code": "#FFFFFF"
-        },
-        {
-          "id": 1,
-          "name": "red",
-          "code": "#FF0000"
-        }
+        1,
+        4
       ],
-      "categories": ["ggggg", "indoor", "potted"],
+      "categories": [
+        "ggggg",
+        "indoor",
+        "potted"
+      ],
       "rating": 0,
-      "badges": ["new", "sale"],
+      "badges": [
+        "new",
+        "sale"
+      ],
       "description": "test",
       "reviews": [],
       "img": "product-26.jpg",
@@ -469,15 +424,16 @@
       "name": "Test",
       "price": 155,
       "colors": [
-        {
-          "id": 1,
-          "name": "red",
-          "code": "#FF0000"
-        }
+        1
       ],
-      "categories": ["potted", "ggggg"],
+      "categories": [
+        "potted",
+        "ggggg"
+      ],
       "rating": 0,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "Test test test test",
       "img": "product-30.jpg",
       "id": 27
@@ -487,15 +443,16 @@
       "name": "Test2",
       "price": 460,
       "colors": [
-        {
-          "id": 1,
-          "name": "red",
-          "code": "#FF0000"
-        }
+        1
       ],
-      "categories": ["indoor", "outdoor"],
+      "categories": [
+        "indoor",
+        "outdoor"
+      ],
       "rating": 0,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "qwwqeweqw",
       "img": "product-30.jpg",
       "id": 28
@@ -505,25 +462,17 @@
       "name": "Admin Test",
       "price": 350,
       "colors": [
-        {
-          "id": 1,
-          "name": "red",
-          "code": "#FF0000"
-        },
-        {
-          "id": 2,
-          "name": "black",
-          "code": "#000000"
-        },
-        {
-          "id": 3,
-          "name": "gray",
-          "code": "#808080"
-        }
+        1,
+        2,
+        3
       ],
-      "categories": ["indoor"],
+      "categories": [
+        "indoor"
+      ],
       "rating": 0,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "weqweqwe",
       "img": "product-30.jpg",
       "id": 29
@@ -533,15 +482,15 @@
       "name": "erwerwer",
       "price": 2312,
       "colors": [
-        {
-          "id": 1,
-          "name": "red",
-          "code": "#FF0000"
-        }
+        1
       ],
-      "categories": ["potted"],
+      "categories": [
+        "potted"
+      ],
       "rating": 0,
-      "badges": ["new"],
+      "badges": [
+        "new"
+      ],
       "description": "we werwerwe ",
       "img": "product-30.jpg",
       "id": 30
@@ -1137,6 +1086,12 @@
       "password": "$2a$10$FiITW63uf33zDWVLMG9n6OFRyV4IHcuKpgch7TB/tqYReEYmF.iMC",
       "name": "Admin",
       "id": 7
+    },
+    {
+      "email": "3467356@sds.cod",
+      "password": "$2a$10$kJ3bCtUqJHJwVQNA9nliGOhTY8HPom0ZQ27YzWYL90isqp6A6oQ6C",
+      "name": "Test",
+      "id": 8
     }
   ],
   "sort-options": {
