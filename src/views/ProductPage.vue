@@ -467,7 +467,6 @@ onMounted(async () => {
   initWishlist();
   getRelatedProducts();
   createSwiper();
-  // findColor();
 });
 </script>
 
