@@ -36,3 +36,7 @@ export const fetchOrderById = async (id: number): Promise<IOrder> => (await api.
 export const changeOrderStatus = async (id: number, order: IOrder) => await api.patch(`orders/${id}`, order);
 
 export const addColor = async (color: IColor) => await api.post('colors', color);
+
+export const addEditingColor = async (color: IColor) => await api.patch(`colors/${color.id}`, color);
+
+export const removeColor = async (id: number) => await api.delete(`colors/${id}`);

@@ -256,6 +256,12 @@ const toggleFilters = () => {
 .colors-list {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
+  width: 100px;
+
+  @include sm {
+    width: 200px;
+  }
 }
 
 .prices {

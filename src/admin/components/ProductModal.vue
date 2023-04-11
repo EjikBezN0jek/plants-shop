@@ -136,9 +136,10 @@
                 type="checkbox"
                 name="color"
                 class="color"
-                :value="color.name"
+                :value="color.id"
                 v-model="state.colors"
-                :class="color.name" />
+                :class="color.name"
+                :style="{ background: color.code }" />
             </div>
           </div>
         </div>
@@ -216,7 +217,6 @@ const v$ = useVuelidate(rules, props.state);
 <style scoped lang="scss">
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
-
 
 .category,
 .pi-times {
@@ -300,12 +300,14 @@ const v$ = useVuelidate(rules, props.state);
 
 .modal-card {
   background-color: #fefefe;
-  margin: 0 auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
   padding: 20px;
   border-radius: 10px;
   width: 50%;
-  height: 560px;
-  transform: translate(0, 50%);
+  max-height: 650px;
+  transform: translate(-50%, -50%);
 }
 
 .modal-header {

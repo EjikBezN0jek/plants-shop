@@ -4,6 +4,7 @@
 
     <Dialog
       v-model:visible="isSuccessful"
+      @hide="closeModal()"
       :breakpoints="{ '960px': '80vw' }"
       :style="{ width: '30vw' }"
       :modal="true"
@@ -15,52 +16,28 @@
         <i
           class="pi pi-check-circle"
           :style="{ fontSize: '5rem', color: 'var(--green-500)' }"></i>
-        <h5>Color added Successful!</h5>
+        <h5>Color Successful!</h5>
       </div>
     </Dialog>
 
+    <ColorModal
+      v-if="isModalOpen"
+      @close-modal="closeModal"
+      :colors="colors"
+      v-model:state="state"
+      :submitted="submitted"
+      :is-edit-color="isEditColor"
+      @handle-submit="handleSubmit"
+      @remove-color="removeHandler" />
+
     <div class="color-container">
-      <form
-        class="form"
-        @submit.prevent="handleSubmit(!v$.$invalid)">
-        <h2>Add new color</h2>
-        <div class="row">
-          <div class="input-wrapper">
-            <label for="name">Name</label>
-            <InputText
-              id="name"
-              type="text"
-              v-model="v$.name.$model" />
-          </div>
-          <ColorPicker v-model="v$.code.$model" />
-        </div>
-
-        <div class="row">
-          <small
-            v-if="v$.name.$invalid && submitted"
-            class="p-error"
-            >{{ v$.name.required.$message.replace('Value', 'Name') }}</small
-          >
-
-          <small
-            v-if="v$.code.$invalid && submitted"
-            class="p-error"
-            >{{ v$.code.required.$message.replace('Value', 'Color') }}</small
-          >
-        </div>
-
-        <Button
-          class="p-button-lg"
-          type="submit"
-          >Add</Button
-        >
-      </form>
-
+      <Button @click="openModal">ADD NEW COLOR</Button>
       <div class="items">
         <div
           v-for="color in colors"
           :key="color.id"
-          class="item-card">
+          class="item-card"
+          @click="editColor(color)">
           <div
             class="color"
             :class="color.name"
@@ -70,6 +47,8 @@
         </div>
       </div>
     </div>
+    <Toast />
+    <ConfirmDialog></ConfirmDialog>
   </div>
 </template>
 
@@ -79,24 +58,35 @@ import { fetchAllColors, fetchAllProducts } from '@/api/catalog';
 
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
-import InputText from 'primevue/inputtext';
-import ColorPicker from 'primevue/colorpicker';
+
+import ColorModal from '@/admin/components/ColorModal.vue';
 
 import { required } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 
-import type { IColor } from '@/types/color';
+import ConfirmDialog from 'primevue/confirmdialog';
+import Toast from 'primevue/toast';
 
-import { addColor } from '../api/admin';
+import { useConfirm } from 'primevue/useconfirm';
+import { useToast } from 'primevue/usetoast';
+
+import type { IColor } from '@/types/color';
+import type { IProduct } from '@/types/product';
+
+import { addColor, addEditingColor, removeColor, addEditingProduct } from '../api/admin';
 
 interface ICountableColor extends IColor {
   count: number;
 }
 
+const confirm = useConfirm();
+const toast = useToast();
+
 const colors = ref<ICountableColor[]>();
 const submitted = ref(false);
 
 const state = ref({
+  id: null,
   name: '',
   code: '',
 });
@@ -110,20 +100,26 @@ const v$ = useVuelidate(rules, state);
 const handleSubmit = (isFormValid: any) => {
   submitted.value = true;
   if (isFormValid) {
-    placeColor();
-    resetForm();
-    getColors();
+    if (isEditColor.value) {
+      placeEditingColor();
+    } else {
+      placeColor();
+    }
+    closeModal();
+    toggleDialog();
   }
 };
 
 const rawColors = ref<IColor[]>();
+const allProducts = ref<IProduct[]>();
 
 const getColors = async () => {
   rawColors.value = await fetchAllColors();
 
   colors.value = await Promise.all(
     rawColors.value.map(async (color: IColor) => {
-      const count = (await fetchAllProducts({ colors_like: color.id })).data.length;
+      allProducts.value = (await fetchAllProducts({ colors_like: color.id })).data;
+      const count = allProducts.value.length;
       return { ...color, count };
     })
   );
@@ -135,7 +131,6 @@ const placeColor = async () => {
     code: '#' + state.value.code,
   };
   addColor(newColor);
-  toggleDialog();
 };
 const isSuccessful = ref(false);
 
@@ -143,10 +138,76 @@ const toggleDialog = () => {
   isSuccessful.value = !isSuccessful.value;
 };
 
-const resetForm = () => {
+const cleanForm = () => {
   state.value.name = '';
   state.value.code = '';
   submitted.value = false;
+};
+
+const isModalOpen = ref(false);
+const body = document.querySelector('body');
+
+const openModal = () => {
+  isModalOpen.value = true;
+  body.style.overflow = 'hidden';
+};
+
+const closeModal = () => {
+  isModalOpen.value = false;
+  isEditColor.value = false;
+  body.style.overflow = 'auto';
+  cleanForm();
+  getColors();
+};
+
+const isEditColor = ref(false);
+
+const editColor = (color: IColor) => {
+  isEditColor.value = true;
+  openModal(color);
+  state.value.id = color.id;
+  state.value.name = color.name;
+  state.value.code = color.code.replace(/#/g, '');
+};
+
+const placeEditingColor = () => {
+  const editingColor = {
+    id: state.value.id,
+    name: state.value.name,
+    code: '#' + state.value.code,
+  };
+  addEditingColor(editingColor);
+};
+const editingProductColors = ref<number[]>();
+const productId = ref(0);
+
+const placeEditingProduct = async () => {
+  const newProduct = {
+    id: productId.value,
+    colors: editingProductColors.value,
+  };
+  addEditingProduct(newProduct);
+};
+
+const removeHandler = (id: number) => {
+  confirm.require({
+    message: 'Do you want to delete this color?',
+    header: 'Delete Confirmation',
+    icon: 'pi pi-info-circle',
+    acceptClass: 'p-button-danger',
+    accept: async () => {
+      allProducts.value = (await fetchAllProducts({ colors_like: id })).data;
+      allProducts.value.forEachl(item => {
+        editingProductColors.value = item.colors.filter(color => color !== id);
+        productId.value = item.id;
+        placeEditingProduct();
+      });
+      removeColor(id);
+      toast.add({ severity: 'info', summary: 'Confirmed', detail: 'Color deleted', life: 3000 });
+      closeModal();
+      getColors();
+    },
+  });
 };
 
 onMounted(async () => {
@@ -162,6 +223,10 @@ onMounted(async () => {
   flex-wrap: wrap;
 }
 
+.item-card {
+  cursor: pointer;
+}
+
 .row {
   display: flex;
   gap: 10px;
@@ -170,10 +235,10 @@ onMounted(async () => {
   justify-content: space-between;
 }
 
-.color-container {
-  display: flex;
-  gap: 50px;
-}
+// .color-container {
+//   display: flex;
+//   gap: 50px;
+// }
 
 ::v-deep(.p-colorpicker-preview) {
   height: 36px;

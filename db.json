@@ -494,6 +494,27 @@
       "description": "we werwerwe ",
       "img": "product-30.jpg",
       "id": 30
+    },
+    {
+      "date": 1681222116542,
+      "name": "oooo",
+      "price": 3,
+      "colors": [
+        15,
+        11,
+        14,
+        13
+      ],
+      "categories": [
+        "potted"
+      ],
+      "rating": 0,
+      "badges": [
+        "new"
+      ],
+      "description": "ooooo",
+      "img": "product-30.jpg",
+      "id": 31
     }
   ],
   "categories": [
@@ -538,36 +559,6 @@
       "id": 4,
       "name": "white",
       "code": "#FFFFFF"
-    },
-    {
-      "name": "Test",
-      "code": "#ea00ff",
-      "id": 5
-    },
-    {
-      "name": "Oak",
-      "code": "#522222",
-      "id": 6
-    },
-    {
-      "name": "qwe",
-      "code": "#d6cbcb",
-      "id": 7
-    },
-    {
-      "name": "sdsdsds",
-      "code": "#4000ff",
-      "id": 8
-    },
-    {
-      "name": "Qwerty",
-      "code": "#11ff00",
-      "id": 9
-    },
-    {
-      "name": "Admin",
-      "code": "#d5ff00",
-      "id": 10
     }
   ],
   "badges": [

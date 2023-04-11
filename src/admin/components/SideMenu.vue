@@ -159,7 +159,7 @@ onMounted(() => {
   height: 100%;
   position: fixed;
   align-items: flex-start;
-  z-index: 11111;
+  z-index: 100;
   justify-content: space-between;
   background: $primary-color;
 }
