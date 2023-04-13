@@ -38,6 +38,7 @@
             v-for="color in colorsList"
             :key="color.id">
             <Checkbox
+              :title="color.name"
               v-model="colorsSelected"
               :value="color.id"
               :input-id="color.name"

@@ -91,7 +91,6 @@ interface IEmits {
   (e: 'closeModal'): void;
   (e: 'handleSubmit', query: any): void;
   (e: 'removeColor', query: any): void;
-  // (e: 'editColor', query: IColor): void;
   (e: 'update:state', query: object): void;
 }
 
@@ -189,7 +188,7 @@ const v$ = useVuelidate(rules, props.state);
   background-color: #fefefe;
   padding: 20px;
   border-radius: 10px;
-  width: 30%;
+  width: 315px;
   height: 240px;
   transform: translate(-50%, -50%);
 }

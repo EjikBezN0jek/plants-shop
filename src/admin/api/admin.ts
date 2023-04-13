@@ -39,4 +39,4 @@ export const addColor = async (color: IColor) => await api.post('colors', color)
 
 export const addEditingColor = async (color: IColor) => await api.patch(`colors/${color.id}`, color);
 
-export const removeColor = async (id: number) => await api.delete(`colors/${id}`);
+export const removeColor = async (id: string) => await api.delete(`colors/${id}`);

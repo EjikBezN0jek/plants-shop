@@ -44,6 +44,7 @@
         v-if="colorSelected">
         <p class="characteristic-name">Potter colors:</p>
         <input
+          :title="color.name"
           v-for="color in findColor()"
           :key="color.id"
           type="radio"
@@ -79,6 +80,7 @@
         class="cart-buttons">
         <Button
           class="p-button-lg product-btn"
+          :class="{ 'disabled-btn': !colorSelected }"
           @click="addToCart"
           >ADD TO CART</Button
         >
@@ -86,7 +88,11 @@
         <i
           class="like pi"
           style="font-size: 2rem"
-          :class="{ 'pi-heart': !itemInWishlist, 'pi-heart-fill': itemInWishlist }"
+          :class="{
+            'pi-heart': !itemInWishlist,
+            'pi-heart-fill': itemInWishlist,
+            'pi-ban': !colorSelected,
+          }"
           @click="toggleWishlist"></i>
       </div>
     </div>
@@ -244,7 +250,7 @@ const findColorById = (id: number) => {
 };
 
 const addToCart = () => {
-  if (product.value) {
+  if (product.value && colorSelected.value) {
     const formatProduct = {
       cartId: cartId.value,
       quantity: 1,
@@ -321,7 +327,7 @@ const toggleWishlist = () => {
   if (itemInWishlist.value) {
     removeProductFromWishlist();
   } else {
-    if (product.value) {
+    if (product.value && colorSelected.value) {
       const formatProduct = {
         wishlistId: wishlistId.value,
         id: product.value.id,
@@ -567,6 +573,7 @@ onMounted(async () => {
 }
 
 .color {
+  cursor: pointer;
   flex-shrink: 0;
   border: 4px solid $image-background-color;
 

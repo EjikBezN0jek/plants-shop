@@ -6,7 +6,7 @@
       "name": "Aenean ultricies ",
       "price": 450,
       "colors": [
-        2
+        11
       ],
       "categories": [
         "indoor"
@@ -22,7 +22,7 @@
       "name": "Oak",
       "price": 1000,
       "colors": [
-        1
+        10
       ],
       "categories": [
         "outdoor"
@@ -40,8 +40,8 @@
       "name": "Aenean ultricies",
       "price": 450,
       "colors": [
-        2,
-        4
+        11,
+        13
       ],
       "categories": [
         "indoor"
@@ -57,7 +57,7 @@
       "name": "Sociis natoque",
       "price": 150,
       "colors": [
-        3
+        12
       ],
       "categories": [
         "potted"
@@ -75,8 +75,8 @@
       "name": "New Product",
       "price": 80,
       "colors": [
-        2,
-        4
+        11,
+        13
       ],
       "categories": [
         "outdoor"
@@ -94,9 +94,9 @@
       "name": "Bonsai",
       "price": 150,
       "colors": [
-        1,
-        2,
-        3
+        10,
+        11,
+        12
       ],
       "categories": [
         "potted",
@@ -114,7 +114,7 @@
       "name": "Qwerty",
       "price": 50,
       "colors": [
-        1
+        10
       ],
       "categories": [
         "ggggg"
@@ -133,10 +133,10 @@
       "name": "test",
       "price": 10000,
       "colors": [
-        1,
-        2,
-        3,
-        4
+        10,
+        11,
+        12,
+        13
       ],
       "categories": [
         "ggggg",
@@ -161,7 +161,7 @@
       "name": "Calamagrostis",
       "price": 150,
       "colors": [
-        1
+        10
       ],
       "categories": [
         "outdoor"
@@ -179,8 +179,8 @@
       "name": "Carduus",
       "price": 199,
       "colors": [
-        1,
-        2
+        10,
+        11
       ],
       "categories": [
         "indoor"
@@ -199,7 +199,7 @@
       "name": "Dianthus",
       "price": 990,
       "colors": [
-        1
+        10
       ],
       "categories": [
         "indoor"
@@ -219,8 +219,8 @@
       "name": "Geranium",
       "price": 560,
       "colors": [
-        2,
-        4
+        11,
+        13
       ],
       "categories": [
         "indoor",
@@ -239,7 +239,7 @@
       "name": "Iris",
       "price": 770,
       "colors": [
-        3
+        12
       ],
       "categories": [
         "potted",
@@ -258,8 +258,8 @@
       "name": "Matricaria",
       "price": 630,
       "colors": [
-        2,
-        4
+        11,
+        13
       ],
       "categories": [
         "outdoor"
@@ -277,9 +277,9 @@
       "name": "Rosa",
       "price": 890,
       "colors": [
-        1,
-        2,
-        4
+        10,
+        11,
+        13
       ],
       "categories": [
         "potted",
@@ -297,7 +297,7 @@
       "name": "Viola",
       "price": 245,
       "colors": [
-        1
+        10
       ],
       "categories": [
         "ggggg"
@@ -317,10 +317,10 @@
       "name": "Trifolium",
       "price": 765,
       "colors": [
-        1,
-        2,
-        3,
-        4
+        10,
+        11,
+        12,
+        13
       ],
       "categories": [
         "ggggg",
@@ -345,7 +345,7 @@
       "name": "Iris",
       "price": 770,
       "colors": [
-        3
+        12
       ],
       "categories": [
         "potted",
@@ -364,7 +364,7 @@
       "name": "Matricaria",
       "price": 630,
       "colors": [
-        2
+        11
       ],
       "categories": [
         "outdoor"
@@ -381,7 +381,7 @@
       "name": "Viola",
       "price": 245,
       "colors": [
-        1
+        10
       ],
       "categories": [
         "ggggg"
@@ -401,8 +401,8 @@
       "name": "Trifolium",
       "price": 765,
       "colors": [
-        1,
-        4
+        10,
+        13
       ],
       "categories": [
         "ggggg",
@@ -424,7 +424,7 @@
       "name": "Test",
       "price": 155,
       "colors": [
-        1
+        10
       ],
       "categories": [
         "potted",
@@ -443,7 +443,7 @@
       "name": "Test2",
       "price": 460,
       "colors": [
-        1
+        10
       ],
       "categories": [
         "indoor",
@@ -462,9 +462,9 @@
       "name": "Admin Test",
       "price": 350,
       "colors": [
-        1,
-        2,
-        3
+        10,
+        11,
+        12
       ],
       "categories": [
         "indoor"
@@ -482,7 +482,7 @@
       "name": "erwerwer",
       "price": 2312,
       "colors": [
-        1
+        10
       ],
       "categories": [
         "potted"
@@ -498,13 +498,8 @@
     {
       "date": 1681222116542,
       "name": "oooo",
-      "price": 3,
-      "colors": [
-        15,
-        11,
-        14,
-        13
-      ],
+      "price": 30,
+      "colors": [],
       "categories": [
         "potted"
       ],
@@ -541,24 +536,29 @@
   ],
   "colors": [
     {
-      "id": 1,
+      "id": 10,
       "name": "red",
       "code": "#FF0000"
     },
     {
-      "id": 2,
+      "id": 11,
       "name": "black",
       "code": "#000000"
     },
     {
-      "id": 3,
+      "id": 12,
       "name": "gray",
       "code": "#808080"
     },
     {
-      "id": 4,
+      "id": 13,
       "name": "white",
       "code": "#FFFFFF"
+    },
+    {
+      "name": "Test",
+      "code": "#573535",
+      "id": 15
     }
   ],
   "badges": [

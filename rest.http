@@ -1,6 +1,9 @@
 
 
-GET http://localhost:3000/products/colors?name_like=black
+GET http://localhost:3000/products?colors_like=5
+
+
+
 
 
 

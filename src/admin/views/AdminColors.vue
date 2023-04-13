@@ -118,7 +118,7 @@ const getColors = async () => {
 
   colors.value = await Promise.all(
     rawColors.value.map(async (color: IColor) => {
-      allProducts.value = (await fetchAllProducts({ colors_like: color.id })).data;
+      allProducts.value = (await fetchAllProducts({ colors_like: [color.id] })).data;
       const count = allProducts.value.length;
       return { ...color, count };
     })
@@ -197,7 +197,7 @@ const removeHandler = (id: number) => {
     acceptClass: 'p-button-danger',
     accept: async () => {
       allProducts.value = (await fetchAllProducts({ colors_like: id })).data;
-      allProducts.value.forEachl(item => {
+      allProducts.value.forEach(item => {
         editingProductColors.value = item.colors.filter(color => color !== id);
         productId.value = item.id;
         placeEditingProduct();
@@ -235,10 +235,6 @@ onMounted(async () => {
   justify-content: space-between;
 }
 
-// .color-container {
-//   display: flex;
-//   gap: 50px;
-// }
 
 ::v-deep(.p-colorpicker-preview) {
   height: 36px;

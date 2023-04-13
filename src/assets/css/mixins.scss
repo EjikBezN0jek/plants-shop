@@ -146,6 +146,19 @@ h4 {
   background: $secondary-color;
 }
 
+.disabled-btn {
+  color: #ffffff;
+  border-radius: 3px;
+  background: $secondary-color;
+  border-color: $secondary-color;
+  cursor: auto;
+  &:hover {
+    background: $secondary-color;
+    color: #ffffff;
+    border-color: $secondary-color;
+  }
+}
+
 .color {
   -webkit-appearance: none;
   -moz-appearance: none;
