@@ -2,8 +2,8 @@
   <div class="modal">
     <div class="modal-card">
       <div class="modal-header">
-        <h2 v-if="isEditColor">Edit color</h2>
-        <h2 v-else>New color</h2>
+        <h2 v-if="isEditCategory">Edit category</h2>
+        <h2 v-else>New category</h2>
         <i
           class="pi pi-times"
           style="font-size: 1.5rem"
@@ -13,49 +13,50 @@
       <form
         class="form"
         @submit.prevent="emit('handleSubmit', !v$.$invalid)">
-        <div class="row">
-          <div class="input-wrapper">
-            <label for="name">Name</label>
-            <InputText
-              id="name"
-              type="text"
-              v-model="v$.name.$model" />
-          </div>
-          <ColorPicker v-model="v$.code.$model" />
-        </div>
-
-        <div class="row">
+        <div class="input-wrapper">
+          <label for="name">Name</label>
+          <InputText
+            id="name"
+            type="text"
+            v-model="v$.name.$model" />
           <small
             v-if="v$.name.$invalid && submitted"
             class="p-error"
             >{{ v$.name.required.$message.replace('Value', 'Name') }}</small
           >
+        </div>
 
+        <div class="input-wrapper">
+          <label for="label">Label</label>
+          <InputText
+            id="label"
+            type="text"
+            v-model="v$.label.$model" />
           <small
-            v-if="v$.code.$invalid && submitted"
+            v-if="v$.label.$invalid && submitted"
             class="p-error"
-            >{{ v$.code.required.$message.replace('Value', 'Color') }}</small
+            >{{ v$.label.required.$message.replace('Value', 'Label') }}</small
           >
         </div>
 
         <div
           class="row"
-          v-if="isEditColor">
+          v-if="isEditCategory">
           <Button
             type="submit"
             class="form-btn"
-            >EDIT COLOR</Button
+            >EDIT CATEGORY</Button
           >
 
           <Button
             icon="pi pi-ban"
-            @click="emit('removeColor', state.id)" />
+            @click="emit('removeCategory', state.id)" />
         </div>
         <Button
           type="submit"
           class="form-btn"
           v-else
-          >ADD NEW COLOR</Button
+          >ADD NEW CATEGORY</Button
         >
       </form>
     </div>
@@ -65,24 +66,23 @@
 <script setup lang="ts">
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
-import ColorPicker from 'primevue/colorpicker';
 
 import { required } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 
 import { useVModelWrapper } from '@/hooks/useVModelWrapper';
 
-import { IColor } from '@/types/color';
+import { ICategory } from '@/types/category';
 
 interface IProps {
-  colors?: IColor[];
+  categories?: ICategory[];
   submitted: boolean;
   state: {
     id: number;
-    code: string;
+    label: string;
     name: string;
   };
-  isEditColor: boolean;
+  isEditCategory: boolean;
 }
 
 const props = defineProps<IProps>();
@@ -90,7 +90,7 @@ const props = defineProps<IProps>();
 interface IEmits {
   (e: 'closeModal'): void;
   (e: 'handleSubmit', query: any): void;
-  (e: 'removeColor', query: any): void;
+  (e: 'removeCategory', query: any): void;
   (e: 'update:state', query: object): void;
 }
 
@@ -100,7 +100,7 @@ const state = useVModelWrapper(props, emit, 'state');
 
 const rules = {
   name: { required },
-  code: { required },
+  label: { required },
 };
 
 const v$ = useVuelidate(rules, props.state);
@@ -116,20 +116,6 @@ const v$ = useVuelidate(rules, props.state);
   align-items: flex-end;
   width: 100%;
   justify-content: space-between;
-}
-
-.color-container {
-  display: flex;
-  gap: 50px;
-}
-
-::v-deep(.p-colorpicker-panel) {
-  z-index: 999999;
-}
-
-::v-deep(.p-colorpicker-preview) {
-  height: 36px;
-  width: 36px;
 }
 
 .input-wrapper {
@@ -189,7 +175,7 @@ const v$ = useVuelidate(rules, props.state);
   padding: 20px;
   border-radius: 10px;
   width: 315px;
-  height: 240px;
+  height: 328px;
   transform: translate(-50%, -50%);
 }
 
@@ -197,5 +183,9 @@ const v$ = useVuelidate(rules, props.state);
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+::v-deep(.p-inputtext) {
+  width: 100%;
 }
 </style>

@@ -143,19 +143,31 @@ const colorsList = ref<IColor[]>();
 const colorsSelected = ref<number[]>([]);
 
 //Category
-const route = useRoute();
-const categoryFromUrl = route.params.category;
 
 const categoriesList = ref<ICategory[]>();
-const categorySelected = ref('');
+const categorySelected = ref(0);
 const categorySelectedLabel = ref('All');
+
+const findCategoryByName = (name: string) => {
+  if (categoriesList.value) return categoriesList.value.find(item => item.name === name);
+};
+
+const route = useRoute();
+const categoryFromUrl = findCategoryByName(route.params.category)?.name;
+
+const findCategoryById = (id: number) => {
+  if (categoriesList.value) return categoriesList.value.find(item => item.id === id);
+};
 
 const router = useRouter();
 const goToCategory = () => {
-  router.push({ name: 'catalog', params: { category: categorySelected.value } });
+  router.push({
+    name: 'catalog',
+    params: { category: findCategoryById(categorySelected.value)?.name },
+  });
   refetchProducts();
-  if (categoriesList.value && categorySelected.value) {
-    categorySelectedLabel.value = categoriesList.value.find(item => item.name === categorySelected.value).label;
+  if (categoriesList.value && categorySelected.value !== 0) {
+    categorySelectedLabel.value = findCategoryById(categorySelected.value)?.label;
   } else {
     categorySelectedLabel.value = 'All';
   }

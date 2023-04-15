@@ -3,6 +3,7 @@ import type { IProduct } from '@/types/product';
 import type { IReview } from '@/types/review';
 import type { IOrder } from '@/types/order';
 import type { IColor } from '@/types/color';
+import type { ICategory } from '@/types/category';
 
 import type { IResponseList } from '@/types/';
 
@@ -39,4 +40,10 @@ export const addColor = async (color: IColor) => await api.post('colors', color)
 
 export const addEditingColor = async (color: IColor) => await api.patch(`colors/${color.id}`, color);
 
-export const removeColor = async (id: string) => await api.delete(`colors/${id}`);
+export const removeColor = async (id: number) => await api.delete(`colors/${id}`);
+
+export const addCategory = async (category: ICategory) => await api.post('categories', category);
+
+export const addEditingCategory = async (category: ICategory) => await api.patch(`categories/${category.id}`, category);
+
+export const removeCategory = async (id: number) => await api.delete(`categories/${id}`);

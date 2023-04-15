@@ -23,5 +23,6 @@ import SideMenu from '@/admin/components/SideMenu.vue';
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 20px;
 }
 </style>

@@ -96,7 +96,7 @@
                   <input
                     type="checkbox"
                     name="category"
-                    :value="category.name"
+                    :value="category.id"
                     v-model="state.categories" />
                   {{ category.label }}
                 </label>

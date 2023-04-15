@@ -3,7 +3,7 @@ export interface IProduct {
   name: string;
   price: number;
   colors: number[];
-  categories: string[];
+  categories: number[];
   rating: number;
   badges: string[];
   description: string;

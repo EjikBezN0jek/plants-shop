@@ -31,7 +31,11 @@
       @remove-color="removeHandler" />
 
     <div class="color-container">
-      <Button @click="openModal">ADD NEW COLOR</Button>
+      <Button
+        @click="openModal"
+        class="color-btn"
+        >ADD NEW COLOR</Button
+      >
       <div class="items">
         <div
           v-for="color in colors"
@@ -61,9 +65,6 @@ import Button from 'primevue/button';
 
 import ColorModal from '@/admin/components/ColorModal.vue';
 
-import { required } from '@vuelidate/validators';
-import { useVuelidate } from '@vuelidate/core';
-
 import ConfirmDialog from 'primevue/confirmdialog';
 import Toast from 'primevue/toast';
 
@@ -90,12 +91,6 @@ const state = ref({
   name: '',
   code: '',
 });
-
-const rules = {
-  name: { required },
-  code: { required },
-};
-const v$ = useVuelidate(rules, state);
 
 const handleSubmit = (isFormValid: any) => {
   submitted.value = true;
@@ -132,6 +127,7 @@ const placeColor = async () => {
   };
   addColor(newColor);
 };
+
 const isSuccessful = ref(false);
 
 const toggleDialog = () => {
@@ -164,7 +160,7 @@ const isEditColor = ref(false);
 
 const editColor = (color: IColor) => {
   isEditColor.value = true;
-  openModal(color);
+  openModal();
   state.value.id = color.id;
   state.value.name = color.name;
   state.value.code = color.code.replace(/#/g, '');
@@ -219,6 +215,16 @@ onMounted(async () => {
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
 
+.color-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.color-btn {
+  align-self: center;
+}
+
 .items {
   flex-wrap: wrap;
 }
@@ -233,12 +239,6 @@ onMounted(async () => {
   align-items: flex-end;
   width: 100%;
   justify-content: space-between;
-}
-
-
-::v-deep(.p-colorpicker-preview) {
-  height: 36px;
-  width: 36px;
 }
 
 .input-wrapper {
@@ -265,5 +265,10 @@ onMounted(async () => {
   &.white {
     border: 1px solid $complementary-color;
   }
+}
+
+::v-deep(.p-colorpicker-preview) {
+  height: 36px;
+  width: 36px;
 }
 </style>

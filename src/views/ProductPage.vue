@@ -34,9 +34,9 @@
       <div class="characteristic">
         <span class="characteristic-name">Categories:</span>
         <p
-          v-for="category in product.categories"
-          :key="category">
-          {{ category }}
+          v-for="category in findCategory()"
+          :key="category.id">
+          {{ category.label }}
         </p>
       </div>
       <div
@@ -172,6 +172,7 @@ import type { IReview } from '@/types/review';
 import type { ISortOptions } from '@/types/sortOptions';
 import type { ISorting } from '@/types/sorting';
 import type { IColor } from '@/types/color';
+import type { ICategory } from '@/types/category';
 
 import {
   fetchProductById,
@@ -180,6 +181,7 @@ import {
   addReview,
   fetchSortOptions,
   fetchAllColors,
+  fetchAllCategories,
 } from '@/api/catalog';
 
 import { UserKey, CartItemsQuantityKey } from '@/symbols';
@@ -241,12 +243,18 @@ const cartId = ref('');
 const colorsList = ref<IColor[]>([]);
 const colorSelected = ref(0) || null;
 
+const categoriesList = ref<ICategory[]>([]);
+
 const findColor = () => {
   return colorsList.value.filter(color => product.value?.colors.includes(color.id));
 };
 
 const findColorById = (id: number) => {
   return colorsList.value.find(color => color.id === id);
+};
+
+const findCategory = () => {
+  return categoriesList.value.filter(category => product.value?.categories.includes(category.id));
 };
 
 const addToCart = () => {
@@ -467,6 +475,7 @@ onMounted(async () => {
   product.value = await fetchProductById(+route.params.id);
   sortOptions.value = await fetchSortOptions();
   colorsList.value = await fetchAllColors();
+  categoriesList.value = await fetchAllCategories();
   getReviews();
   if (product.value) colorSelected.value = product.value.colors[0];
   initCart();

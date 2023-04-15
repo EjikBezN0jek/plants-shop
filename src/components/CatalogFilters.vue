@@ -16,16 +16,16 @@
         <h3>Categories</h3>
         <button
           class="category"
-          @click="categorySelected = ''"
+          @click="categorySelected = 0"
           :class="{ active: isActiveCategory() }">
           All
         </button>
         <button
-          v-for="{ id, name, label } in categoriesList"
+          v-for="{ id, label } in categoriesList"
           :key="id"
           class="category"
-          :class="{ active: isActiveCategory(name) }"
-          @click="categorySelected = name">
+          :class="{ active: isActiveCategory(id) }"
+          @click="categorySelected = id">
           {{ label }}
         </button>
       </div>
@@ -94,7 +94,7 @@ interface IProps {
   categoriesList?: ICategory[];
   colorsList?: IColor[];
   colorsSelected: number[];
-  category: string;
+  category: number;
   prices?: IPrices;
   pricesSelected?: IPrices;
   badges: string[];
@@ -104,7 +104,7 @@ const props = defineProps<IProps>();
 
 interface IEmits {
   (e: 'update:colorsSelected', query: number[]): void;
-  (e: 'update:category', name: string): void;
+  (e: 'update:category', id: number): void;
   (e: 'update:pricesSelected', query: IPrices): void;
   (e: 'update:badges', query: IBadge[]): void;
 }
@@ -115,7 +115,7 @@ const categorySelected = useVModelWrapper(props, emit, 'category');
 const pricesSelected = useVModelWrapper(props, emit, 'pricesSelected');
 const badgesSelected = useVModelWrapper(props, emit, 'badges');
 
-const isActiveCategory = (category = '') => {
+const isActiveCategory = (category = 0) => {
   return category === props.category;
 };
 

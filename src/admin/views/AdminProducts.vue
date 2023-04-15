@@ -72,19 +72,20 @@
         <template #body="slotProps">
           <div class="colors">
             <div
-              v-for="color in slotProps.data.colors"
+              v-for="color in findColors(slotProps.data)"
               :key="color.id"
               class="color"
-              :class="color"></div>
+              :class="color.name"
+              :style="{ background: color.code }"></div>
           </div>
         </template>
       </Column>
       <Column header="CATEGORIES">
         <template #body="slotProps">
           <div
-            v-for="category in slotProps.data.categories"
-            :key="category">
-            <p>{{ category }}</p>
+            v-for="category in findCategories(slotProps.data)"
+            :key="category.id">
+            <p>{{ category.label }}</p>
           </div>
         </template>
       </Column>
@@ -200,6 +201,14 @@ const state = ref({
 });
 
 const { pagination, setPagination, setCurrentPage, resetCurrentPage } = usePagination();
+
+const findColors = (product: IProduct) => {
+  if (colors.value) return colors.value.filter(color => product.colors.includes(color.id));
+};
+
+const findCategories = (product: IProduct) => {
+  if (categories.value) return categories.value.filter(category => product.categories.includes(category.id));
+};
 
 const isModalOpen = ref(false);
 const body = document.querySelector('body');
@@ -368,7 +377,6 @@ onMounted(async () => {
 .row {
   display: flex;
   justify-content: space-between;
-  padding: 20px 0;
 }
 
 .table {
