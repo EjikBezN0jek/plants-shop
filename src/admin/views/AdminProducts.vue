@@ -117,9 +117,9 @@
       <Column header="BADGES">
         <template #body="slotProps">
           <div
-            v-for="badge in slotProps.data.badges"
-            :key="badge">
-            {{ badge }}
+            v-for="badge in findBadge(slotProps.data)"
+            :key="badge.id">
+            {{ badge.label }}
           </div>
         </template>
       </Column>
@@ -190,7 +190,7 @@ const badges = ref<IBadge[]>();
 const categories = ref<ICategory[]>();
 
 const state = ref({
-  id: null,
+  id: 0,
   name: '',
   categories: [],
   colors: [],
@@ -208,6 +208,10 @@ const findColors = (product: IProduct) => {
 
 const findCategories = (product: IProduct) => {
   if (categories.value) return categories.value.filter(category => product.categories.includes(category.id));
+};
+
+const findBadge = (product: IProduct) => {
+  if (badges.value) return badges.value.filter(badge => product.badges.includes(badge.id));
 };
 
 const isModalOpen = ref(false);

@@ -117,7 +117,7 @@
                   <input
                     type="checkbox"
                     name="badge"
-                    :value="badge.name"
+                    :value="badge.id"
                     v-model="state.badges" />
                   {{ badge.label }}
                 </label>

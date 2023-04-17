@@ -128,7 +128,7 @@ const editBadge = (badge: IBadge) => {
   state.value.id = badge.id;
   state.value.name = badge.name;
   state.value.label = badge.label;
-  state.value.color = badge.color;
+  state.value.color = badge.color.replace(/#/g, '');
 };
 
 const handleSubmit = (isFormValid: any) => {
@@ -148,7 +148,7 @@ const placeBadge = async () => {
   const newBadge = {
     name: state.value.name,
     label: state.value.label,
-    color: state.value.color,
+    color: '#' + state.value.color,
   };
   addBadge(newBadge);
 };
@@ -158,7 +158,7 @@ const placeEditingBadge = () => {
     id: state.value.id,
     name: state.value.name,
     label: state.value.label,
-    color: state.value.color,
+    color: '#' + state.value.color,
   };
   addEditingBadge(editingBadge);
 };
@@ -216,6 +216,10 @@ onMounted(async () => {
 <style scoped lang="scss">
 @import '@/assets/css/variables.scss';
 @import '@/assets/css/mixins.scss';
+
+.item-card {
+  cursor: pointer;
+}
 
 .badge-container {
   display: flex;

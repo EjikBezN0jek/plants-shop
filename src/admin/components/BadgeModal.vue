@@ -39,13 +39,16 @@
           >
         </div>
 
-        <ColorPicker v-model="v$.color.$model" />
+        <div class="input-wrapper">
+          <p>Background Color</p>
+          <ColorPicker v-model="v$.color.$model" />
 
-        <small
-          v-if="v$.color.$invalid && submitted"
-          class="p-error"
-          >{{ v$.color.required.$message.replace('Value', 'Color') }}</small
-        >
+          <small
+            v-if="v$.color.$invalid && submitted"
+            class="p-error"
+            >{{ v$.color.required.$message.replace('Value', 'Color') }}</small
+          >
+        </div>
 
         <div
           class="row"
@@ -130,6 +133,10 @@ const v$ = useVuelidate(rules, props.state);
   width: 36px;
 }
 
+::v-deep(.p-colorpicker-preview.p-inputtext) {
+  width: 36px;
+}
+
 .row {
   display: flex;
   gap: 10px;
@@ -195,7 +202,7 @@ const v$ = useVuelidate(rules, props.state);
   padding: 20px;
   border-radius: 10px;
   width: 315px;
-  height: 328px;
+  height: 358px;
   transform: translate(-50%, -50%);
 }
 
