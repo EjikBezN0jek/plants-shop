@@ -41,7 +41,7 @@
 
             <p
               class="order-status"
-              :class="order.status.name">
+              :style="{ color: order.status.color }">
               {{ order.status.label }}
             </p>
           </div>

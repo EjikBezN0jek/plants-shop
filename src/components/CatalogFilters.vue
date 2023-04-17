@@ -58,7 +58,7 @@
           class="field-checkbox">
           <Checkbox
             v-model="badgesSelected"
-            :value="name"
+            :value="id"
             :input-id="name"
             :aria-label="label" />
           <label :for="name">{{ label }}</label>
@@ -97,7 +97,7 @@ interface IProps {
   category: number;
   prices?: IPrices;
   pricesSelected?: IPrices;
-  badges: string[];
+  badges: number[];
   badgesList?: IBadge[];
 }
 const props = defineProps<IProps>();
@@ -106,7 +106,7 @@ interface IEmits {
   (e: 'update:colorsSelected', query: number[]): void;
   (e: 'update:category', id: number): void;
   (e: 'update:pricesSelected', query: IPrices): void;
-  (e: 'update:badges', query: IBadge[]): void;
+  (e: 'update:badges', query: number[]): void;
 }
 const emit = defineEmits<IEmits>();
 

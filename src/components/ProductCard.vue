@@ -6,10 +6,10 @@
     <div class="badges">
       <div
         class="badge"
-        v-for="badge in product.badges"
-        :key="badge"
-        :class="badge">
-        {{ badge.toUpperCase() }}
+        v-for="badge in findBadge()"
+        :key="badge.id"
+        :style="{ background: badge.color }">
+        {{ badge.label }}
       </div>
     </div>
     <img
@@ -37,18 +37,24 @@
 <script setup lang="ts">
 import type { IProduct } from '@/types/product';
 import type { IColor } from '@/types/color';
+import type { IBadge } from '@/types/badge';
 
 import Rating from 'primevue/rating';
 
 interface IProps {
   product?: IProduct;
   colorsList?: IColor[];
+  badgesList?: IBadge[];
 }
 
 const props = defineProps<IProps>();
 
 const findColor = () => {
   if (props.colorsList) return props.colorsList.filter(color => props.product?.colors.includes(color.id));
+};
+
+const findBadge = () => {
+  if (props.badgesList) return props.badgesList.filter(badge => props.product?.badges.includes(badge.id));
 };
 </script>
 

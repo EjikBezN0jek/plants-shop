@@ -89,7 +89,7 @@ const isSuccessful = ref(false);
 const isEditCategory = ref(false);
 
 const state = ref({
-  id: null,
+  id: 0,
   name: '',
   label: '',
 });

@@ -87,7 +87,7 @@ const colors = ref<ICountableColor[]>();
 const submitted = ref(false);
 
 const state = ref({
-  id: null,
+  id: 0,
   name: '',
   code: '',
 });

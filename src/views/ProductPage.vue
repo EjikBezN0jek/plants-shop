@@ -16,10 +16,10 @@
         <div class="badges info-badges">
           <div
             class="badge"
-            v-for="badge in product.badges"
-            :key="badge"
-            :class="badge">
-            {{ badge.toUpperCase() }}
+            v-for="badge in findBadge()"
+            :key="badge.id"
+            :style="{ background: badge.color }">
+            {{ badge.label }}
           </div>
         </div>
       </div>
@@ -139,7 +139,8 @@
     <h2 v-if="relatedProducts?.length">Related Products</h2>
     <ProductCarousel
       :products="relatedProducts"
-      :colors-list="colorsList"></ProductCarousel>
+      :colors-list="colorsList"
+      :badges-list="badgesList"></ProductCarousel>
   </div>
 
   <AuthModal
@@ -173,6 +174,7 @@ import type { ISortOptions } from '@/types/sortOptions';
 import type { ISorting } from '@/types/sorting';
 import type { IColor } from '@/types/color';
 import type { ICategory } from '@/types/category';
+import type { IBadge } from '@/types/badge';
 
 import {
   fetchProductById,
@@ -182,6 +184,7 @@ import {
   fetchSortOptions,
   fetchAllColors,
   fetchAllCategories,
+  fetchAllBadges,
 } from '@/api/catalog';
 
 import { UserKey, CartItemsQuantityKey } from '@/symbols';
@@ -245,6 +248,8 @@ const colorSelected = ref(0) || null;
 
 const categoriesList = ref<ICategory[]>([]);
 
+const badgesList = ref<IBadge[]>([]);
+
 const findColor = () => {
   return colorsList.value.filter(color => product.value?.colors.includes(color.id));
 };
@@ -255,6 +260,10 @@ const findColorById = (id: number) => {
 
 const findCategory = () => {
   return categoriesList.value.filter(category => product.value?.categories.includes(category.id));
+};
+
+const findBadge = () => {
+  return badgesList.value.filter(badge => product.value?.badges.includes(badge.id));
 };
 
 const addToCart = () => {
@@ -476,6 +485,7 @@ onMounted(async () => {
   sortOptions.value = await fetchSortOptions();
   colorsList.value = await fetchAllColors();
   categoriesList.value = await fetchAllCategories();
+  badgesList.value = await fetchAllBadges();
   getReviews();
   if (product.value) colorSelected.value = product.value.colors[0];
   initCart();

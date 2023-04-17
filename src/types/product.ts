@@ -5,7 +5,7 @@ export interface IProduct {
   colors: number[];
   categories: number[];
   rating: number;
-  badges: string[];
+  badges: number[];
   description: string;
   img: string;
 }

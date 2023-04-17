@@ -39,7 +39,8 @@
               v-for="product in products"
               :key="product.id"
               :product="product"
-              :colors-list="colorsList" />
+              :colors-list="colorsList"
+              :badges-list="badgesList" />
           </div>
           <h2 v-else>No products!</h2>
 
@@ -148,12 +149,12 @@ const categoriesList = ref<ICategory[]>();
 const categorySelected = ref(0);
 const categorySelectedLabel = ref('All');
 
-const findCategoryByName = (name: string) => {
+const findCategoryByName = (name: string | string[]) => {
   if (categoriesList.value) return categoriesList.value.find(item => item.name === name);
 };
 
 const route = useRoute();
-const categoryFromUrl = findCategoryByName(route.params.category)?.name;
+const categoryFromUrl = route.params.category;
 
 const findCategoryById = (id: number) => {
   if (categoriesList.value) return categoriesList.value.find(item => item.id === id);
@@ -179,7 +180,7 @@ const pricesSelected = ref<IPrices>();
 
 //Badges
 const badgesList = ref<IBadge[]>();
-const badgesSelected = ref<string[]>([]);
+const badgesSelected = ref<number[]>([]);
 
 //Observer
 const observerItem = ref();
@@ -203,12 +204,12 @@ const initObserver = () => {
 const sortOptions = ref<ISortOptions>();
 
 onMounted(async () => {
-  if (categoryFromUrl) categorySelected.value = categoryFromUrl;
+  categoriesList.value = await fetchAllCategories();
+  if (categoryFromUrl) categorySelected.value = findCategoryByName(categoryFromUrl).id;
   prices.value = await fetchAllPrices();
   pricesSelected.value = { min: prices.value.max * 0.0025, max: prices.value.max * 1 };
   getProducts();
   initObserver();
-  categoriesList.value = await fetchAllCategories();
   colorsList.value = await fetchAllColors();
   badgesList.value = await fetchAllBadges();
   sortOptions.value = await fetchSortOptions();

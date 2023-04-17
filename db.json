@@ -5,12 +5,8 @@
       "date": 1602721000000,
       "name": "Aenean ultricies ",
       "price": 450,
-      "colors": [
-        11
-      ],
-      "categories": [
-        11
-      ],
+      "colors": [11],
+      "categories": [11],
       "rating": 1.5,
       "badges": [],
       "description": "Duis id turpis scelerisque mi suscipit laoreet eu in lacus.",
@@ -21,16 +17,10 @@
       "date": 1682728703051,
       "name": "Oak",
       "price": 1000,
-      "colors": [
-        10
-      ],
-      "categories": [
-        11
-      ],
+      "colors": [10],
+      "categories": [11],
       "rating": 0,
-      "badges": [
-        "hot"
-      ],
+      "badges": [11],
       "description": "Sed sodales gravida turpis sit amet vulputate. Etiam id lorem facilisis sem scelerisque vulputate et at velit.",
       "img": "product-04.jpg"
     },
@@ -39,13 +29,8 @@
       "date": 1702728100000,
       "name": "Aenean ultricies",
       "price": 450,
-      "colors": [
-        11,
-        13
-      ],
-      "categories": [
-        11
-      ],
+      "colors": [11, 13],
+      "categories": [11],
       "rating": 0,
       "badges": [],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -56,16 +41,10 @@
       "date": 1202728701000,
       "name": "Sociis natoque",
       "price": 150,
-      "colors": [
-        12
-      ],
-      "categories": [
-        10
-      ],
+      "colors": [12],
+      "categories": [10],
       "rating": 5,
-      "badges": [
-        "new"
-      ],
+      "badges": [10],
       "description": "Sed sodales gravida turpis sit amet vulputate.",
       "img": "product-06.jpg"
     },
@@ -74,17 +53,10 @@
       "date": 1648728703051,
       "name": "New Product",
       "price": 80,
-      "colors": [
-        11,
-        13
-      ],
-      "categories": [
-        12
-      ],
+      "colors": [11, 13],
+      "categories": [12],
       "rating": 4,
-      "badges": [
-        "new"
-      ],
+      "badges": [10],
       "description": " Nunc felis nisl, facilisis non justo ac, pellentesque sodales dui.",
       "img": "product-07.jpg"
     },
@@ -93,19 +65,10 @@
       "date": 1652804153237,
       "name": "Bonsai",
       "price": 150,
-      "colors": [
-        10,
-        11,
-        12
-      ],
-      "categories": [
-        10,
-        11
-      ],
-      "rating": null,
-      "badges": [
-        "new"
-      ],
+      "colors": [10, 11, 12],
+      "categories": [10, 11],
+      "rating": 0,
+      "badges": [10],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "img": "product-08.jpg"
     },
@@ -113,16 +76,10 @@
       "date": 1652905430128,
       "name": "Qwerty",
       "price": 50,
-      "colors": [
-        10
-      ],
-      "categories": [
-        13
-      ],
+      "colors": [10],
+      "categories": [13],
       "rating": 3,
-      "badges": [
-        "hot"
-      ],
+      "badges": [11],
       "description": "qwe",
       "reviews": [],
       "img": "product-09.jpg",
@@ -132,24 +89,10 @@
       "date": 1653312426685,
       "name": "test",
       "price": 10000,
-      "colors": [
-        10,
-        11,
-        12,
-        13
-      ],
-      "categories": [
-        10,
-        11,
-        12,
-        13
-      ],
+      "colors": [10, 11, 12, 13],
+      "categories": [10, 11, 12, 13],
       "rating": 0,
-      "badges": [
-        "new",
-        "hot",
-        "sale"
-      ],
+      "badges": [10, 11, 12],
       "description": "test",
       "reviews": [],
       "img": "product-10.jpg",
@@ -160,16 +103,10 @@
       "date": 1642728703051,
       "name": "Calamagrostis",
       "price": 150,
-      "colors": [
-        10
-      ],
-      "categories": [
-        12
-      ],
+      "colors": [10],
+      "categories": [12],
       "rating": 0,
-      "badges": [
-        "new"
-      ],
+      "badges": [10],
       "description": "Morbi lobortis fringilla turpis vitae luctus. Cras varius eu erat posuere laoreet.",
       "img": "product-12.jpg"
     },
@@ -178,18 +115,10 @@
       "date": 1602721000000,
       "name": "Carduus",
       "price": 199,
-      "colors": [
-        10,
-        11
-      ],
-      "categories": [
-        11
-      ],
+      "colors": [10, 11],
+      "categories": [11],
       "rating": 1.5,
-      "badges": [
-        "new",
-        "sale"
-      ],
+      "badges": [10, 12],
       "description": "Duis id turpis scelerisque mi suscipit laoreet eu in lacus.",
       "img": "product-13.jpg"
     },
@@ -198,18 +127,10 @@
       "date": 1682728703051,
       "name": "Dianthus",
       "price": 990,
-      "colors": [
-        10
-      ],
-      "categories": [
-        11
-      ],
+      "colors": [10],
+      "categories": [11],
       "rating": 0,
-      "badges": [
-        "new",
-        "hot",
-        "sale"
-      ],
+      "badges": [10, 11, 12],
       "description": "Sed sodales gravida turpis sit amet vulputate. Etiam id lorem facilisis sem scelerisque vulputate et at velit.",
       "img": "product-14.jpg"
     },
@@ -218,18 +139,10 @@
       "date": 1702728100000,
       "name": "Geranium",
       "price": 560,
-      "colors": [
-        11,
-        13
-      ],
-      "categories": [
-        11,
-        13
-      ],
+      "colors": [11, 13],
+      "categories": [11, 13],
       "rating": 0,
-      "badges": [
-        "new"
-      ],
+      "badges": [10],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "img": "product-15.jpg"
     },
@@ -238,17 +151,10 @@
       "date": 1202728701000,
       "name": "Iris",
       "price": 770,
-      "colors": [
-        12
-      ],
-      "categories": [
-        10,
-        13
-      ],
+      "colors": [12],
+      "categories": [10, 13],
       "rating": 5,
-      "badges": [
-        "new"
-      ],
+      "badges": [10],
       "description": "Sed sodales gravida turpis sit amet vulputate.",
       "img": "product-16.jpg"
     },
@@ -257,17 +163,10 @@
       "date": 1648728703051,
       "name": "Matricaria",
       "price": 630,
-      "colors": [
-        11,
-        13
-      ],
-      "categories": [
-        12
-      ],
+      "colors": [11, 13],
+      "categories": [12],
       "rating": 0,
-      "badges": [
-        "new"
-      ],
+      "badges": [10],
       "description": "Nunc felis nisl, facilisis non justo ac, pellentesque sodales dui. Sed sodales gravida turpis sit amet vulputate.",
       "img": "product-17.jpg"
     },
@@ -276,19 +175,10 @@
       "date": 1652804153237,
       "name": "Rosa",
       "price": 890,
-      "colors": [
-        10,
-        11,
-        13
-      ],
-      "categories": [
-        10,
-        11
-      ],
+      "colors": [10, 11, 13],
+      "categories": [10, 11],
       "rating": 0,
-      "badges": [
-        "new"
-      ],
+      "badges": [10],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "img": "product-18.jpg"
     },
@@ -296,17 +186,10 @@
       "date": 1652905430128,
       "name": "Viola",
       "price": 245,
-      "colors": [
-        10
-      ],
-      "categories": [
-        13
-      ],
+      "colors": [10],
+      "categories": [13],
       "rating": 0,
-      "badges": [
-        "hot",
-        "sale"
-      ],
+      "badges": [11, 12],
       "description": "Sed sodales gravida turpis sit amet vulputate. Sed sodales gravida turpis sit amet vulputate. Sed sodales gravida turpis sit amet vulputate.",
       "reviews": [],
       "img": "product-19.jpg",
@@ -316,24 +199,10 @@
       "date": 1653312426685,
       "name": "Trifolium",
       "price": 765,
-      "colors": [
-        10,
-        11,
-        12,
-        13
-      ],
-      "categories": [
-        10,
-        11,
-        12,
-        13
-      ],
+      "colors": [10, 11, 12, 13],
+      "categories": [10, 11, 12, 13],
       "rating": 0,
-      "badges": [
-        "new",
-        "hot",
-        "sale"
-      ],
+      "badges": [10, 11, 12],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "reviews": [],
       "img": "product-20.jpg",
@@ -344,17 +213,10 @@
       "date": 1202728701000,
       "name": "Iris",
       "price": 770,
-      "colors": [
-        12
-      ],
-      "categories": [
-        10,
-        13
-      ],
+      "colors": [12],
+      "categories": [10, 13],
       "rating": 5,
-      "badges": [
-        "new"
-      ],
+      "badges": [10],
       "description": "Sed sodales gravida turpis sit amet vulputate.",
       "img": "product-22.jpg"
     },
@@ -363,16 +225,10 @@
       "date": 1648728703051,
       "name": "Matricaria",
       "price": 630,
-      "colors": [
-        11
-      ],
-      "categories": [
-        12
-      ],
+      "colors": [11],
+      "categories": [12],
       "rating": 0,
-      "badges": [
-        "new"
-      ],
+      "badges": [10],
       "description": "Nunc felis nisl, facilisis non justo ac, pellentesque sodales dui. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "img": "product-23.jpg"
     },
@@ -380,17 +236,10 @@
       "date": 1652905430128,
       "name": "Viola",
       "price": 245,
-      "colors": [
-        10
-      ],
-      "categories": [
-        13
-      ],
+      "colors": [10],
+      "categories": [13],
       "rating": 0,
-      "badges": [
-        "hot",
-        "sale"
-      ],
+      "badges": [11, 12],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "reviews": [],
       "img": "product-25.jpg",
@@ -400,20 +249,10 @@
       "date": 1653312426685,
       "name": "Trifolium",
       "price": 765,
-      "colors": [
-        10,
-        13
-      ],
-      "categories": [
-        10,
-        11,
-        13
-      ],
+      "colors": [10, 13],
+      "categories": [10, 11, 13],
       "rating": 0,
-      "badges": [
-        "new",
-        "sale"
-      ],
+      "badges": [10, 12],
       "description": "test",
       "reviews": [],
       "img": "product-26.jpg",
@@ -423,17 +262,10 @@
       "date": 1680183133753,
       "name": "Test",
       "price": 155,
-      "colors": [
-        10
-      ],
-      "categories": [
-        10,
-        13
-      ],
+      "colors": [10],
+      "categories": [10, 13],
       "rating": 0,
-      "badges": [
-        "new"
-      ],
+      "badges": [10],
       "description": "Test test test test",
       "img": "product-30.jpg",
       "id": 27
@@ -442,17 +274,10 @@
       "date": 1680183331949,
       "name": "Test2",
       "price": 460,
-      "colors": [
-        10
-      ],
-      "categories": [
-        11,
-        12
-      ],
+      "colors": [10],
+      "categories": [11, 12],
       "rating": 0,
-      "badges": [
-        "new"
-      ],
+      "badges": [10],
       "description": "qwwqeweqw",
       "img": "product-30.jpg",
       "id": 28
@@ -461,18 +286,10 @@
       "date": 1680187093649,
       "name": "Admin Test",
       "price": 350,
-      "colors": [
-        10,
-        11,
-        12
-      ],
-      "categories": [
-        11
-      ],
+      "colors": [10, 11, 12],
+      "categories": [11],
       "rating": 0,
-      "badges": [
-        "new"
-      ],
+      "badges": [10],
       "description": "weqweqwe",
       "img": "product-30.jpg",
       "id": 29
@@ -481,16 +298,10 @@
       "date": 1680530274862,
       "name": "erwerwer",
       "price": 2312,
-      "colors": [
-        10
-      ],
-      "categories": [
-        10
-      ],
+      "colors": [10],
+      "categories": [10],
       "rating": 0,
-      "badges": [
-        "new"
-      ],
+      "badges": [10],
       "description": "we werwerwe ",
       "img": "product-30.jpg",
       "id": 30
@@ -500,13 +311,9 @@
       "name": "oooo",
       "price": 30,
       "colors": [],
-      "categories": [
-        10
-      ],
+      "categories": [10],
       "rating": 0,
-      "badges": [
-        "new"
-      ],
+      "badges": [10],
       "description": "ooooo",
       "img": "product-30.jpg",
       "id": 31
@@ -532,6 +339,11 @@
       "id": 13,
       "name": "ggggg",
       "label": "Gggqqq"
+    },
+    {
+      "name": "Test",
+      "label": "Test",
+      "id": 14
     }
   ],
   "colors": [
@@ -568,19 +380,22 @@
   ],
   "badges": [
     {
-      "id": 1,
+      "id": 10,
       "name": "new",
-      "label": "NEW"
+      "label": "NEW",
+      "color": "#4caf50"
     },
     {
-      "id": 2,
+      "id": 11,
       "name": "hot",
-      "label": "HOT"
+      "label": "HOT",
+      "color": "#FFA500"
     },
     {
-      "id": 3,
+      "id": 12,
       "name": "sale",
-      "label": "SALE"
+      "label": "SALE",
+      "color": "#FF0000"
     }
   ],
   "countries": [
@@ -730,7 +545,8 @@
       "status": {
         "id": 3,
         "name": "on-the-way",
-        "label": "On the way"
+        "label": "On the way",
+        "color": "#D3965E"
       },
       "userId": 1,
       "id": 1
@@ -771,7 +587,8 @@
       "status": {
         "id": 2,
         "name": "ready-to-ship",
-        "label": "Ready to ship"
+        "label": "Ready to ship",
+        "color": "#D3D35E"
       },
       "userId": 1,
       "id": 2
@@ -812,7 +629,8 @@
       "status": {
         "id": 4,
         "name": "delivered",
-        "label": "Delivered"
+        "label": "Delivered",
+        "color": "#4caf50"
       },
       "userId": 1,
       "id": 3
@@ -867,7 +685,8 @@
       "status": {
         "id": 4,
         "name": "delivered",
-        "label": "Delivered"
+        "label": "Delivered",
+        "color": "#4caf50"
       },
       "userId": 1,
       "id": 4
@@ -920,7 +739,8 @@
       "status": {
         "id": 1,
         "name": "pending",
-        "label": "Pending"
+        "label": "Pending",
+        "color": "#5E94D3"
       },
       "productsTotal": 600,
       "shippingCost": 5,
@@ -961,7 +781,8 @@
       "status": {
         "id": 1,
         "name": "pending",
-        "label": "Pending"
+        "label": "Pending",
+        "color": "#5E94D3"
       },
       "productsTotal": 125,
       "shippingCost": 5,
@@ -973,22 +794,26 @@
     {
       "id": 1,
       "name": "pending",
-      "label": "Pending"
+      "label": "Pending",
+      "color": "#5E94D3"
     },
     {
       "id": 2,
       "name": "ready-to-ship",
-      "label": "Ready to ship"
+      "label": "Ready to ship",
+      "color": "#D3D35E"
     },
     {
       "id": 3,
       "name": "on-the-way",
-      "label": "On the way"
+      "label": "On the way",
+      "color": "#D3965E"
     },
     {
       "id": 4,
       "name": "delivered",
-      "label": "Delivered"
+      "label": "Delivered",
+      "color": "#4caf50"
     }
   ],
   "reviews": [

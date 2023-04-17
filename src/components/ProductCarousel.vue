@@ -6,6 +6,7 @@
         :key="product.id"
         :product="product"
         :colors-list="colorsList"
+        :badges-list="badgesList"
         class="swiper-slide" />
     </div>
     <div class="swiper-button-prev"></div>
@@ -19,10 +20,12 @@ import ProductCard from '@/components/ProductCard.vue';
 
 import type { IProduct } from '@/types/product';
 import type { IColor } from '@/types/color';
+import type { IBadge } from '@/types/badge';
 
 interface IProps {
   products?: IProduct[];
   colorsList?: IColor[];
+  badgesList?: IBadge[];
 }
 
 const props = defineProps<IProps>();

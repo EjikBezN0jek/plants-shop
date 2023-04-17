@@ -273,7 +273,7 @@ const placeProduct = () => {
     colors: state.value.colors,
     categories: state.value.categories,
     rating: 0,
-    badges: ['new'],
+    badges: [10],
     description: state.value.description,
     img: 'product-30.jpg',
   };
