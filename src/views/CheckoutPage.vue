@@ -397,6 +397,10 @@ onMounted(async () => {
   display: flex;
   justify-content: space-between;
   gap: 15px;
+
+  & .input-wrapper {
+    width: 50%;
+  }
 }
 
 .checkout {
